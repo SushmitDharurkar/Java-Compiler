@@ -278,20 +278,6 @@ public class Scanner {
 			char c = chars[i];
 			switch (c) {
 				/*
-				 * Whitespace - Increment pos and line if newline but don't to tokens list
-				 * Do we need to increment posInLine as well?
-				 * */
-				case ' ':
-					pos++;
-					//posInLine++; Not sure about this
-					break;
-				case '\n':
-					pos++;
-					line++;
-					posInLine=1;
-					break;
-			
-				/*
 				 * Single Length Separators
 				 * */
 				case ';':
@@ -357,11 +343,6 @@ public class Scanner {
 					pos++;
 					posInLine++;
 					break;
-				case '/':
-					tokens.add(new Token(Kind.OP_DIV, pos, 1, line, posInLine));
-					pos++;
-					posInLine++;
-					break;
 				case '%':
 					tokens.add(new Token(Kind.OP_MOD, pos, 1, line, posInLine));
 					pos++;
@@ -369,12 +350,13 @@ public class Scanner {
 					break;
 					
 				/*
-				 * Double Length Operators
+				 * Double Length Operators	
 				 * */					
-				//Do we increment pos by length of token?
+				//Do we increment pos and posInLine by length of token?
+				//Check the if cases
 				case '*':		
 					//Power case has '**'
-					if (i+1 != chars.length && chars[i+1] == '*') {
+					if (i+1 < chars.length && chars[i+1] == '*') {
 						tokens.add(new Token(Kind.OP_POWER, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -388,7 +370,7 @@ public class Scanner {
 					break;
 					
 				case '=':		
-					if (i+1 != chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_EQ, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -402,7 +384,7 @@ public class Scanner {
 					break;
 				
 				case '!':		
-					if (i+1 != chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_NEQ, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -416,13 +398,13 @@ public class Scanner {
 					break;
 				
 				case '<':		
-					if (i+1 != chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_LE, pos, 2, line, posInLine));
 						i++;
 						pos++;
 						posInLine++;
 					}
-					else if (i+1 != chars.length && chars[i+1] == '-') {
+					else if (i+1 < chars.length && chars[i+1] == '-') {
 						tokens.add(new Token(Kind.OP_LARROW, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -436,7 +418,7 @@ public class Scanner {
 					break;
 				
 				case '>':		
-					if (i+1 != chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_GE, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -450,7 +432,7 @@ public class Scanner {
 					break;
 					
 				case '-':
-					if (i+1 != chars.length && chars[i+1] == '>') {
+					if (i+1 < chars.length && chars[i+1] == '>') {
 						tokens.add(new Token(Kind.OP_RARROW, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -473,6 +455,47 @@ public class Scanner {
 					tokens.add(new Token(Kind.INTEGER_LITERAL, pos, 1, line, posInLine));
 					pos++;
 					posInLine++;
+					break;
+					
+				/*
+				 * Single Line Comments
+				 * Skip these but keep incrementing pointers
+				 * */	
+				
+				case '/':
+					if (i+1 < chars.length && chars[i+1] == '/') {
+						i=i+2;
+						pos=pos+2;
+						//posInLine += 2; Not sure about this
+						while(i < chars.length && chars[i] != '\n') {
+							pos++;
+							i++;
+						}
+						if (i < chars.length && chars[i] == '\n') {
+							pos++;
+							line++;
+							posInLine = 1;
+						}
+					}
+					else {
+						tokens.add(new Token(Kind.OP_DIV, pos, 1, line, posInLine));
+						pos++;
+						posInLine++;
+					}
+					break;	
+					
+				/*
+				 * Whitespace - Increment pos and line if newline but don't to tokens list
+				 * Do we need to increment posInLine as well?
+				 * */
+				case ' ':
+					pos++;
+					//posInLine++; Not sure about this
+					break;
+				case '\n':
+					pos++;
+					line++;
+					posInLine=1;
 					break;
 					
 			}
