@@ -16,6 +16,8 @@ package cop5556fa17;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.Character;
+import java.lang.Integer;
 
 public class Scanner {
 	
@@ -446,15 +448,17 @@ public class Scanner {
 					break;						
 				
 				/*
-				 * Integer Literal
-				 * 
+				 * Integer Literal 
+				 * Only 0
 				 * For these check java int overflow
 				 * */
 					
 				case '0':
-					tokens.add(new Token(Kind.INTEGER_LITERAL, pos, 1, line, posInLine));
-					pos++;
-					posInLine++;
+					if (Character.isDigit(c)) {	//Is this needed??
+						tokens.add(new Token(Kind.INTEGER_LITERAL, pos, 1, line, posInLine));
+						pos++;
+						posInLine++;
+					}
 					break;
 					
 				/*
@@ -499,8 +503,39 @@ public class Scanner {
 					break;
 					
 			}
+			
+			/*
+			 * Integer Literal 
+			 * Convert to int
+			 * For these check java int overflow and throw Lexical Exception
+			 * */
+			
+			if (c != '0' && Character.isDigit(c)) {
+				int startPos = pos;
+				int len = 1;
+				int startposInLine = posInLine;	
+				i++;
+				pos++;
+				posInLine++;
+				while (i < chars.length && Character.isDigit(chars[i])) {
+					i++;
+					len++;
+					pos++;
+					posInLine++;
+				}
+				if (!Character.isDigit(chars[i])) {
+					i--;
+				}
+				try {
+					int val = Integer.parseInt(String.copyValueOf(chars, startPos, len));
+				}
+				catch(NumberFormatException e){
+					//Add line number
+					throw new LexicalException("Error!! Integer Overflow at: " + startPos, startPos);
+				}
+				tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, len ,line, startposInLine));
+			}
 		}
-		
 		tokens.add(new Token(Kind.EOF, pos, 0, line, posInLine)); //Adding EOF token
 		return this;
 

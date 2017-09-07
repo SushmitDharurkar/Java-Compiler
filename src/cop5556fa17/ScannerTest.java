@@ -180,6 +180,31 @@ public class ScannerTest {
 		checkNextIsEOF(scanner);
 	}
 	
+	@Test
+	public void integerLiteral() throws LexicalException {
+		String input = ",123456\n05460;";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, COMMA, 0, 1, 1, 1);
+		checkNext(scanner, INTEGER_LITERAL, 1, 6, 1, 2);
+		checkNext(scanner, INTEGER_LITERAL, 8, 1, 2, 1);
+		checkNext(scanner, INTEGER_LITERAL, 9, 4, 2, 2);
+		checkNext(scanner, SEMI, 13, 1, 2, 6);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test
+	public void integerOverflow() throws LexicalException {
+		String input = "12345678901234567890;";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, INTEGER_LITERAL, 0, 20, 1, 1);
+		checkNext(scanner, SEMI, 20, 1, 1, 21);
+		checkNextIsEOF(scanner);
+	}
+	
 	/**
 	 * This example shows how to test that your scanner is behaving when the
 	 * input is illegal.  In this case, we are giving it a String literal
