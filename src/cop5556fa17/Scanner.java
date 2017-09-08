@@ -16,6 +16,7 @@ package cop5556fa17;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.lang.Character;
 import java.lang.Integer;
 
@@ -233,10 +234,12 @@ public class Scanner {
 	 * from the input string plus and additional EOFchar at the end.
 	 */
 	final char[] chars;  
-
-
-
 	
+	/*
+	 * Hash table for keywords
+	 */
+	HashMap<String,Integer> hmKeywords; 
+
 	/**
 	 * position of the next token to be returned by a call to nextToken
 	 */
@@ -247,6 +250,17 @@ public class Scanner {
 		this.chars = Arrays.copyOf(inputString.toCharArray(), numChars + 1); // input string terminated with null char
 		chars[numChars] = EOFchar;
 		tokens = new ArrayList<Token>();
+		hmKeywords = new HashMap<>();
+		
+		/*
+		 * Populating Hash Table with keywords
+		 * */
+		for (Kind k : Kind.values()) {
+			String s = k.toString();
+			if (s.charAt(0) == 'K' && s.charAt(1) == 'W' && s.charAt(2) == '_') {
+				hmKeywords.put(k.toString().substring(3),0);
+			}
+		}
 	}
 	
 	/*Add this later to reduce lines of code
@@ -274,8 +288,7 @@ public class Scanner {
 			return this;
 		}*/
 		
-		
-		//for (char c : chars) {		//Input char array
+		//Input char array
 		for (int i =0; i< chars.length - 1; i++) { //-1 for EOFchar
 			char c = chars[i];
 			switch (c) {
@@ -358,7 +371,7 @@ public class Scanner {
 				//Check the if cases
 				case '*':		
 					//Power case has '**'
-					if (i+1 < chars.length && chars[i+1] == '*') {
+					if (i+1 < chars.length-1 && chars[i+1] == '*') {
 						tokens.add(new Token(Kind.OP_POWER, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -372,7 +385,7 @@ public class Scanner {
 					break;
 					
 				case '=':		
-					if (i+1 < chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length-1 && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_EQ, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -386,7 +399,7 @@ public class Scanner {
 					break;
 				
 				case '!':		
-					if (i+1 < chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length-1 && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_NEQ, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -400,13 +413,13 @@ public class Scanner {
 					break;
 				
 				case '<':		
-					if (i+1 < chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length-1 && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_LE, pos, 2, line, posInLine));
 						i++;
 						pos++;
 						posInLine++;
 					}
-					else if (i+1 < chars.length && chars[i+1] == '-') {
+					else if (i+1 < chars.length-1 && chars[i+1] == '-') {
 						tokens.add(new Token(Kind.OP_LARROW, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -420,7 +433,7 @@ public class Scanner {
 					break;
 				
 				case '>':		
-					if (i+1 < chars.length && chars[i+1] == '=') {
+					if (i+1 < chars.length-1 && chars[i+1] == '=') {
 						tokens.add(new Token(Kind.OP_GE, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -434,7 +447,7 @@ public class Scanner {
 					break;
 					
 				case '-':
-					if (i+1 < chars.length && chars[i+1] == '>') {
+					if (i+1 < chars.length-1 && chars[i+1] == '>') {
 						tokens.add(new Token(Kind.OP_RARROW, pos, 2, line, posInLine));
 						i++;
 						pos++;
@@ -467,15 +480,15 @@ public class Scanner {
 				 * */	
 				
 				case '/':
-					if (i+1 < chars.length && chars[i+1] == '/') {
+					if (i+1 < chars.length-1 && chars[i+1] == '/') {
 						i=i+2;
 						pos=pos+2;
 						//posInLine += 2; Not sure about this
-						while(i < chars.length && chars[i] != '\n') {
+						while(i < chars.length-1 && chars[i] != '\n') {
 							pos++;
 							i++;
 						}
-						if (i < chars.length && chars[i] == '\n') {
+						if (i < chars.length-1 && chars[i] == '\n') {
 							pos++;
 							line++;
 							posInLine = 1;
@@ -494,7 +507,7 @@ public class Scanner {
 				 * */
 				case ' ':
 					pos++;
-					//posInLine++; Not sure about this
+					posInLine++; //Not sure about this
 					break;
 				case '\n':
 					pos++;
@@ -517,13 +530,13 @@ public class Scanner {
 				i++;
 				pos++;
 				posInLine++;
-				while (i < chars.length && Character.isDigit(chars[i])) {
+				while (i < chars.length-1 && Character.isDigit(chars[i])) {
 					i++;
 					len++;
 					pos++;
 					posInLine++;
 				}
-				if (!Character.isDigit(chars[i])) {
+				if (i < chars.length-1 && !Character.isDigit(chars[i])) {
 					i--;
 				}
 				try {
@@ -535,6 +548,41 @@ public class Scanner {
 				}
 				tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, len ,line, startposInLine));
 			}
+			
+			/* 
+			 * Identifier, Keywords and Boolean Literal
+			 * For getting keywords use hash table
+			 * Check for boolean literal 
+			 */
+			if (Character.isJavaIdentifierStart(c)) {
+				int startPos = pos;
+				int len = 1;
+				int startposInLine = posInLine;
+				i++;
+				pos++;
+				posInLine++;
+				while(i < chars.length-1 && Character.isJavaIdentifierPart(chars[i])) {
+					i++;
+					len++;
+					pos++;
+					posInLine++;
+				}
+				
+				if (i < chars.length-1 && !Character.isJavaIdentifierPart(chars[i])) {
+					i--;
+				}
+				
+				String s = String.copyValueOf(chars, startPos, len);
+				if (s.equals("true") || s.equals("false")) {
+					tokens.add(new Token(Kind.BOOLEAN_LITERAL, startPos, len ,line, startposInLine));
+				}
+				else if (hmKeywords.containsKey(s)) {
+					//tokens.add(new Token(Kind., startPos, len ,line, startposInLine));
+				}
+				else {
+					tokens.add(new Token(Kind.IDENTIFIER, startPos, len ,line, startposInLine));	
+				}
+			}
 		}
 		tokens.add(new Token(Kind.EOF, pos, 0, line, posInLine)); //Adding EOF token
 		return this;
@@ -543,7 +591,7 @@ public class Scanner {
 
 
 	/**
-	 * Returns true if the internal interator has more Tokens
+	 * Returns true if the internal iterator has more Tokens
 	 * 
 	 * @return
 	 */
