@@ -233,6 +233,19 @@ public class ScannerTest {
 		checkNextIsEOF(scanner);
 	}
 	
+	@Test
+	public void keywords() throws LexicalException {
+		String input = "int boolean";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, KW_int, 0, 3, 1, 1);
+		checkNext(scanner, KW_boolean, 4, 7, 1, 5);
+		//checkNext(scanner, IDENTIFIER, 4, 2, 1, 5);
+		//checkNext(scanner, SEMI, 6, 1, 1, 7);
+		checkNextIsEOF(scanner);
+	}
+	
 	/**
 	 * This example shows how to test that your scanner is behaving when the
 	 * input is illegal.  In this case, we are giving it a String literal

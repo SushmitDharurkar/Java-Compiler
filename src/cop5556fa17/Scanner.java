@@ -238,7 +238,7 @@ public class Scanner {
 	/*
 	 * Hash table for keywords
 	 */
-	HashMap<String,Integer> hmKeywords; 
+	HashMap<String,Kind> hmKeywords; 
 
 	/**
 	 * position of the next token to be returned by a call to nextToken
@@ -258,7 +258,7 @@ public class Scanner {
 		for (Kind k : Kind.values()) {
 			String s = k.toString();
 			if (s.charAt(0) == 'K' && s.charAt(1) == 'W' && s.charAt(2) == '_') {
-				hmKeywords.put(k.toString().substring(3),0);
+				hmKeywords.put(k.toString().substring(3), k);
 			}
 		}
 	}
@@ -573,12 +573,15 @@ public class Scanner {
 				}
 				
 				String s = String.copyValueOf(chars, startPos, len);
+				//Boolean Literal
 				if (s.equals("true") || s.equals("false")) {
 					tokens.add(new Token(Kind.BOOLEAN_LITERAL, startPos, len ,line, startposInLine));
 				}
+				//Keyword
 				else if (hmKeywords.containsKey(s)) {
-					//tokens.add(new Token(Kind., startPos, len ,line, startposInLine));
+					tokens.add(new Token(hmKeywords.get(s), startPos, len ,line, startposInLine));
 				}
+				//Identifier
 				else {
 					tokens.add(new Token(Kind.IDENTIFIER, startPos, len ,line, startposInLine));	
 				}
