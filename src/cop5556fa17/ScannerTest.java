@@ -132,6 +132,22 @@ public class ScannerTest {
 	}
 	
 	@Test
+	public void whiteSpaces() throws LexicalException {
+		String input = "; ;\t;\r;\n;\r\n;\f;";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, SEMI, 0, 1, 1, 1);
+		checkNext(scanner, SEMI, 2, 1, 1, 3);
+		checkNext(scanner, SEMI, 4, 1, 1, 5);
+		checkNext(scanner, SEMI, 6, 1, 2, 1);
+		checkNext(scanner, SEMI, 8, 1, 3, 1);
+		checkNext(scanner, SEMI, 10, 1, 4, 1);
+		checkNext(scanner, SEMI, 12, 1, 4, 3);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test
 	public void testParan() throws LexicalException {
 		String input = "()\n[]";
 		Scanner scanner = new Scanner(input).scan();
@@ -241,6 +257,19 @@ public class ScannerTest {
 		show(scanner);
 		checkNext(scanner, KW_int, 0, 3, 1, 1);
 		checkNext(scanner, KW_boolean, 4, 7, 1, 5);
+		//checkNext(scanner, IDENTIFIER, 4, 2, 1, 5);
+		//checkNext(scanner, SEMI, 6, 1, 1, 7);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test
+	public void stringLiterals() throws LexicalException {
+		String input = "\"F\'o'\tur\"";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, STRING_LITERAL, 0, 9, 1, 1);
+		//checkNext(scanner, KW_boolean, 4, 7, 1, 5);
 		//checkNext(scanner, IDENTIFIER, 4, 2, 1, 5);
 		//checkNext(scanner, SEMI, 6, 1, 1, 7);
 		checkNextIsEOF(scanner);

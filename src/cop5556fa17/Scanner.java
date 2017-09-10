@@ -247,6 +247,7 @@ public class Scanner {
 
 	Scanner(String inputString) {
 		int numChars = inputString.length();
+		//System.out.println(numChars);
 		this.chars = Arrays.copyOf(inputString.toCharArray(), numChars + 1); // input string terminated with null char
 		chars[numChars] = EOFchar;
 		tokens = new ArrayList<Token>();
@@ -502,23 +503,98 @@ public class Scanner {
 					break;	
 					
 				/*
-				 * Whitespace - Increment pos and line if newline but don't to tokens list
-				 * Do we need to increment posInLine as well?
+				 * Whitespace - Increment pos, posInLine and line if newline but don't to tokens list
 				 * */
-				case ' ':
+				case ' ': case '\t': case '\f':
 					pos++;
-					posInLine++; //Not sure about this
+					posInLine++; 
 					break;
-				case '\n':
+				case '\n': 
 					pos++;
 					line++;
 					posInLine=1;
 					break;
-					
+				case '\r':
+					//Should I increment pos by 1 or 2?
+					if (i+1 < chars.length-1 && chars[i+1] == '\n') {
+						i++;
+						pos++;
+					}
+					pos++;
+					line++;
+					posInLine=1;
+					break;
+			}
+			
+			/* 
+			 * Identifiers, Keywords and Boolean Literals
+			 * For getting keywords use hash table
+			 * Check for boolean literals 
+			 */
+			if (Character.isJavaIdentifierStart(c)) {
+				int startPos = pos;
+				int len = 1;
+				int startposInLine = posInLine;
+				i++;
+				pos++;
+				posInLine++;
+				while(i < chars.length-1 && Character.isJavaIdentifierPart(chars[i])) {
+					i++;
+					len++;
+					pos++;
+					posInLine++;
+				}
+				
+				if (i < chars.length-1 && !Character.isJavaIdentifierPart(chars[i])) {
+					i--;
+				}
+				
+				String s = String.copyValueOf(chars, startPos, len);
+				//Boolean Literals
+				if (s.equals("true") || s.equals("false")) {
+					tokens.add(new Token(Kind.BOOLEAN_LITERAL, startPos, len ,line, startposInLine));
+				}
+				//Keywords
+				else if (hmKeywords.containsKey(s)) {
+					tokens.add(new Token(hmKeywords.get(s), startPos, len ,line, startposInLine));
+				}
+				//Identifiers
+				else {
+					tokens.add(new Token(Kind.IDENTIFIER, startPos, len ,line, startposInLine));	
+				}
 			}
 			
 			/*
-			 * Integer Literal 
+			 * String Literals
+			 * newline and return not allowed
+			 */
+			
+			if (c == '"') {
+				int startPos = pos;
+				int len = 1;
+				int startposInLine = posInLine;	
+				i++;
+				pos++;
+				posInLine++;
+				//System.out.println("as\tkj\\c\b\"n\f'aa's\"adk\r\na");
+				while (i < chars.length-1 && chars[i] != '"') {
+					//System.out.print(chars[i]);
+					if (chars[i] == '\n' || chars[i] == '\r') {
+						throw new LexicalException("Newline character in string literal", startPos);
+					}
+					i++;
+					len++;
+					pos++;
+					posInLine++;
+				}
+				if (i < chars.length-1 && chars[i] == '"') {
+					len++;
+				}
+				tokens.add(new Token(Kind.STRING_LITERAL, startPos, len ,line, startposInLine));
+			}
+			
+			/*
+			 * Integer Literals 
 			 * Convert to int
 			 * For these check java int overflow and throw Lexical Exception
 			 * */
@@ -549,43 +625,7 @@ public class Scanner {
 				tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, len ,line, startposInLine));
 			}
 			
-			/* 
-			 * Identifier, Keywords and Boolean Literal
-			 * For getting keywords use hash table
-			 * Check for boolean literal 
-			 */
-			if (Character.isJavaIdentifierStart(c)) {
-				int startPos = pos;
-				int len = 1;
-				int startposInLine = posInLine;
-				i++;
-				pos++;
-				posInLine++;
-				while(i < chars.length-1 && Character.isJavaIdentifierPart(chars[i])) {
-					i++;
-					len++;
-					pos++;
-					posInLine++;
-				}
-				
-				if (i < chars.length-1 && !Character.isJavaIdentifierPart(chars[i])) {
-					i--;
-				}
-				
-				String s = String.copyValueOf(chars, startPos, len);
-				//Boolean Literal
-				if (s.equals("true") || s.equals("false")) {
-					tokens.add(new Token(Kind.BOOLEAN_LITERAL, startPos, len ,line, startposInLine));
-				}
-				//Keyword
-				else if (hmKeywords.containsKey(s)) {
-					tokens.add(new Token(hmKeywords.get(s), startPos, len ,line, startposInLine));
-				}
-				//Identifier
-				else {
-					tokens.add(new Token(Kind.IDENTIFIER, startPos, len ,line, startposInLine));	
-				}
-			}
+			
 		}
 		tokens.add(new Token(Kind.EOF, pos, 0, line, posInLine)); //Adding EOF token
 		return this;
