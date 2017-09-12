@@ -524,108 +524,125 @@ public class Scanner {
 					line++;
 					posInLine=1;
 					break;
-			}
-			
-			/* 
-			 * Identifiers, Keywords and Boolean Literals
-			 * For getting keywords use hash table
-			 * Check for boolean literals 
-			 */
-			if (Character.isJavaIdentifierStart(c)) {
-				int startPos = pos;
-				int len = 1;
-				int startposInLine = posInLine;
-				i++;
-				pos++;
-				posInLine++;
-				while(i < chars.length-1 && Character.isJavaIdentifierPart(chars[i])) {
-					i++;
-					len++;
-					pos++;
-					posInLine++;
-				}
-				
-				if (i < chars.length-1 && !Character.isJavaIdentifierPart(chars[i])) {
-					i--;
-				}
-				
-				String s = String.copyValueOf(chars, startPos, len);
-				//Boolean Literals
-				if (s.equals("true") || s.equals("false")) {
-					tokens.add(new Token(Kind.BOOLEAN_LITERAL, startPos, len ,line, startposInLine));
-				}
-				//Keywords
-				else if (hmKeywords.containsKey(s)) {
-					tokens.add(new Token(hmKeywords.get(s), startPos, len ,line, startposInLine));
-				}
-				//Identifiers
-				else {
-					tokens.add(new Token(Kind.IDENTIFIER, startPos, len ,line, startposInLine));	
-				}
-			}
-			
-			/*
-			 * String Literals
-			 * newline and return not allowed
-			 */
-			
-			if (c == '"') {
-				int startPos = pos;
-				int len = 1;
-				int startposInLine = posInLine;	
-				i++;
-				pos++;
-				posInLine++;
-				//System.out.println("as\tkj\\c\b\"n\f'aa's\"adk\r\na");
-				while (i < chars.length-1 && chars[i] != '"') {
-					//System.out.print(chars[i]);
-					if (chars[i] == '\n' || chars[i] == '\r') {
-						throw new LexicalException("Newline character in string literal", startPos);
+					
+				default:
+					
+					/* 
+					 * Identifiers, Keywords and Boolean Literals
+					 * For getting keywords use hash table
+					 * Check for boolean literals 
+					 */
+					//if (Character.isJavaIdentifierStart(c)) {
+					if (Character.isLetter(c) || c == '_' || c == '$') {
+						int startPos = pos;
+						int len = 1;
+						int startposInLine = posInLine;
+						i++;
+						pos++;
+						posInLine++;
+						//while(i < chars.length-1 && Character.isJavaIdentifierPart(chars[i])) {
+						while(i < chars.length-1 && (Character.isLetterOrDigit(chars[i]) 
+								|| chars[i] == '_' || chars[i] == '$')) {
+							i++;
+							len++;
+							pos++;
+							posInLine++;
+						}
+						
+						//if (i < chars.length-1 && !Character.isJavaIdentifierPart(chars[i])) {
+						if (i < chars.length-1 && !(Character.isLetterOrDigit(chars[i])
+								|| chars[i] == '_' || chars[i] == '$')) {
+							i--;
+						}
+						
+						String s = String.copyValueOf(chars, startPos, len);
+						//Boolean Literals
+						if (s.equals("true") || s.equals("false")) {
+							tokens.add(new Token(Kind.BOOLEAN_LITERAL, startPos, len ,line, startposInLine));
+						}
+						//Keywords
+						else if (hmKeywords.containsKey(s)) {
+							tokens.add(new Token(hmKeywords.get(s), startPos, len ,line, startposInLine));
+						}
+						//Identifiers
+						else {
+							tokens.add(new Token(Kind.IDENTIFIER, startPos, len ,line, startposInLine));	
+						}
 					}
-					i++;
-					len++;
-					pos++;
-					posInLine++;
-				}
-				if (i < chars.length-1 && chars[i] == '"') {
-					len++;
-				}
-				tokens.add(new Token(Kind.STRING_LITERAL, startPos, len ,line, startposInLine));
+				
+					/*
+					 * String Literals
+					 * newline and return not allowed
+					 */
+					
+					else if (c == '"') {
+						int startPos = pos;
+						int len = 1;
+						int startposInLine = posInLine;	
+						i++;
+						pos++;
+						posInLine++;
+						//System.out.println("as\tkj\\c\b\"n\f'aa's\"adk\r\na");
+						while (i < chars.length-1 && chars[i] != '"') {
+							//System.out.print(chars[i]);
+							if (chars[i] == '\n' || chars[i] == '\r') {
+								throw new LexicalException("Newline character in string literal", startPos);
+							}
+							i++;
+							len++;
+							pos++;
+							posInLine++;
+						}
+						if (i < chars.length-1 && chars[i] == '"') {
+							len++;
+							tokens.add(new Token(Kind.STRING_LITERAL, startPos, len ,line, startposInLine));
+						}
+						else if (i >= chars.length-1) {	//Eof
+							throw new LexicalException("Missing closing \" in the string literal!!", pos);
+						}
+					}	
+				
+					/*
+					 * Integer Literals 
+					 * Convert to int
+					 * For these check java int overflow and throw Lexical Exception
+					 * */
+					
+					else if (c != '0' && Character.isDigit(c)) {
+						int startPos = pos;
+						int len = 1;
+						int startposInLine = posInLine;	
+						i++;
+						pos++;
+						posInLine++;
+						while (i < chars.length-1 && Character.isDigit(chars[i])) {
+							i++;
+							len++;
+							pos++;
+							posInLine++;
+						}
+						if (i < chars.length-1 && !Character.isDigit(chars[i])) {
+							i--;
+						}
+						try {
+							int val = Integer.parseInt(String.copyValueOf(chars, startPos, len));
+						}
+						catch(NumberFormatException e){
+							//Add line number
+							throw new LexicalException("Error!! Integer Overflow at: " + startPos, startPos);
+						}
+						tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, len ,line, startposInLine));
+					}	
+						
+					/*
+					 * Illegal Characters (not included in grammar)
+					 * Show pos as well
+					 * */
+					else {
+						throw new LexicalException("Illegal character found!!", pos);
+					}		
+					break;
 			}
-			
-			/*
-			 * Integer Literals 
-			 * Convert to int
-			 * For these check java int overflow and throw Lexical Exception
-			 * */
-			
-			if (c != '0' && Character.isDigit(c)) {
-				int startPos = pos;
-				int len = 1;
-				int startposInLine = posInLine;	
-				i++;
-				pos++;
-				posInLine++;
-				while (i < chars.length-1 && Character.isDigit(chars[i])) {
-					i++;
-					len++;
-					pos++;
-					posInLine++;
-				}
-				if (i < chars.length-1 && !Character.isDigit(chars[i])) {
-					i--;
-				}
-				try {
-					int val = Integer.parseInt(String.copyValueOf(chars, startPos, len));
-				}
-				catch(NumberFormatException e){
-					//Add line number
-					throw new LexicalException("Error!! Integer Overflow at: " + startPos, startPos);
-				}
-				tokens.add(new Token(Kind.INTEGER_LITERAL, startPos, len ,line, startposInLine));
-			}
-			
-			
 		}
 		tokens.add(new Token(Kind.EOF, pos, 0, line, posInLine)); //Adding EOF token
 		return this;

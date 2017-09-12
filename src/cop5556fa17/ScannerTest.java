@@ -148,6 +148,18 @@ public class ScannerTest {
 	}
 	
 	@Test
+	public void whiteSpaces1() throws LexicalException {
+		String input = "12345\n654321 int";
+		Scanner scanner = new Scanner(input).scan() ;
+		show(input);
+		show(scanner);
+		checkNext(scanner, INTEGER_LITERAL, 0, 5, 1, 1);
+		checkNext(scanner, INTEGER_LITERAL, 6, 6, 2, 1);
+		checkNext(scanner, KW_int, 13, 3, 2, 8);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test
 	public void testParan() throws LexicalException {
 		String input = "()\n[]";
 		Scanner scanner = new Scanner(input).scan();
@@ -236,6 +248,20 @@ public class ScannerTest {
 	}
 	
 	@Test
+	public void identifier1() throws LexicalException {
+		String input = "a_bc$d21_";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, IDENTIFIER, 0, 9, 1, 1);
+		/*checkNext(scanner, SEMI, 4, 1, 1, 5);
+		checkNext(scanner, IDENTIFIER, 5, 3, 1, 6);
+		checkNext(scanner, COMMA, 8, 1, 1, 9);
+		checkNext(scanner, INTEGER_LITERAL, 9, 1, 1, 10);*/
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test
 	public void booleanLiteral() throws LexicalException {
 		String input = "true;false!$ab";
 		Scanner scanner = new Scanner(input).scan();
@@ -273,6 +299,20 @@ public class ScannerTest {
 		//checkNext(scanner, IDENTIFIER, 4, 2, 1, 5);
 		//checkNext(scanner, SEMI, 6, 1, 1, 7);
 		checkNextIsEOF(scanner);
+	}
+	
+	@Test
+	public void illegalCharacters() throws LexicalException {
+		String input = "\b";
+		show(input);
+		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
+		try {
+			new Scanner(input).scan();
+		} catch (LexicalException e) {  //
+			show(e);
+			assertEquals(0,e.getPos());
+			throw e;
+		}
 	}
 	
 	/**
