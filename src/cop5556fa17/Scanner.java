@@ -479,20 +479,25 @@ public class Scanner {
 				 * Single Line Comments
 				 * Skip these but keep incrementing pointers
 				 * */	
-				
+				// Add code for \r and \r\n
 				case '/':
 					if (i+1 < chars.length-1 && chars[i+1] == '/') {
 						i=i+2;
 						pos=pos+2;
 						//posInLine += 2; Not sure about this
-						while(i < chars.length-1 && chars[i] != '\n') {
+						while(i < chars.length-1 && chars[i] != '\n' && chars[i] != '\r') {
 							pos++;
 							i++;
 						}
-						if (i < chars.length-1 && chars[i] == '\n') {
+						if (i < chars.length-1 && (chars[i] == '\n' || chars[i] == '\r')) {
 							pos++;
 							line++;
 							posInLine = 1;
+							//Should I increment pos by 1 or 2?
+							if (chars[i] == '\r' && i+1 < chars.length-1 && chars[i+1] == '\n') {
+								i++;
+								pos++;
+							}
 						}
 					}
 					else {
@@ -582,11 +587,33 @@ public class Scanner {
 						i++;
 						pos++;
 						posInLine++;
-						//System.out.println("as\tkj\\c\b\"n\f'aa's\"adk\r\na");
 						while (i < chars.length-1 && chars[i] != '"') {
-							//System.out.print(chars[i]);
 							if (chars[i] == '\n' || chars[i] == '\r') {
-								throw new LexicalException("Newline character in string literal", startPos);
+								throw new LexicalException("Newline character in string literal", pos);
+							}
+							
+							char ch = chars[i];
+							if (ch == '\\') { // handle escape
+								if (i+1 < chars.length-1) {
+									i++;
+									ch = chars[i];
+									switch (ch) {
+									case 'b': case 't': case 'f': case '\'': case '\\':
+										len++;
+										pos++;
+										posInLine++;
+										break;
+									case '\"':
+										i--;
+										break;
+									case 'r':
+										throw new LexicalException("Newline character in string literal", pos);
+									case 'n':
+										throw new LexicalException("Newline character in string literal", pos);
+									default:
+										throw new LexicalException("Invalid escape character in string literal", pos);
+									}
+								}
 							}
 							i++;
 							len++;
@@ -625,7 +652,7 @@ public class Scanner {
 							i--;
 						}
 						try {
-							int val = Integer.parseInt(String.copyValueOf(chars, startPos, len));
+							Integer.parseInt(String.copyValueOf(chars, startPos, len));
 						}
 						catch(NumberFormatException e){
 							//Add line number

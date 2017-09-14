@@ -120,14 +120,14 @@ public class ScannerTest {
 	 */
 	@Test
 	public void testSemi() throws LexicalException {
-		String input = ";;\n;;";
+		String input = ";;\r\n;;";	//\r\n are counted as 2
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
 		checkNext(scanner, SEMI, 0, 1, 1, 1);
 		checkNext(scanner, SEMI, 1, 1, 1, 2);
-		checkNext(scanner, SEMI, 3, 1, 2, 1);
-		checkNext(scanner, SEMI, 4, 1, 2, 2);
+		checkNext(scanner, SEMI, 4, 1, 2, 1);
+		checkNext(scanner, SEMI, 5, 1, 2, 2);
 		checkNextIsEOF(scanner);
 	}
 	
@@ -142,8 +142,8 @@ public class ScannerTest {
 		checkNext(scanner, SEMI, 4, 1, 1, 5);
 		checkNext(scanner, SEMI, 6, 1, 2, 1);
 		checkNext(scanner, SEMI, 8, 1, 3, 1);
-		checkNext(scanner, SEMI, 10, 1, 4, 1);
-		checkNext(scanner, SEMI, 12, 1, 4, 3);
+		checkNext(scanner, SEMI, 11, 1, 4, 1);
+		checkNext(scanner, SEMI, 13, 1, 4, 3);
 		checkNextIsEOF(scanner);
 	}
 	
@@ -199,12 +199,12 @@ public class ScannerTest {
 	
 	@Test
 	public void comments() throws LexicalException {
-		String input = ";//a\n,";
+		String input = ";//absanc\r\n,";
 		Scanner scanner = new Scanner(input).scan();
 		show(input);
 		show(scanner);
 		checkNext(scanner, SEMI, 0, 1, 1, 1);
-		checkNext(scanner, COMMA, 5, 1, 2, 1);
+		checkNext(scanner, COMMA, 11, 1, 2, 1);
 		checkNextIsEOF(scanner);
 	}
 	
@@ -225,12 +225,19 @@ public class ScannerTest {
 	@Test
 	public void integerOverflow() throws LexicalException {
 		String input = "12345678901234567890;";
-		Scanner scanner = new Scanner(input).scan();
-		show(input);
-		show(scanner);
-		checkNext(scanner, INTEGER_LITERAL, 0, 20, 1, 1);
-		checkNext(scanner, SEMI, 20, 1, 1, 21);
-		checkNextIsEOF(scanner);
+		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
+		try {
+			Scanner scanner = new Scanner(input).scan();
+			show(input);
+			show(scanner);
+			checkNext(scanner, INTEGER_LITERAL, 0, 20, 1, 1);
+			checkNext(scanner, SEMI, 20, 1, 1, 21);
+			checkNextIsEOF(scanner);
+		} catch (LexicalException e) {  //
+			show(e);
+			assertEquals(0,e.getPos());
+			throw e;
+		}
 	}
 	
 	@Test
@@ -302,17 +309,48 @@ public class ScannerTest {
 	}
 	
 	@Test
-	public void illegalCharacters() throws LexicalException {
-		String input = "\b";
+	public void escapeSeq() throws LexicalException {
+		String input = "\" \\tabc \\\"";
+		Scanner scanner = new Scanner(input).scan();
+		show(input);
+		show(scanner);
+		checkNext(scanner, STRING_LITERAL, 0, 10, 1, 1);
+		//checkNext(scanner, KW_boolean, 4, 7, 1, 5);
+		//checkNext(scanner, IDENTIFIER, 4, 2, 1, 5);
+		//checkNext(scanner, SEMI, 6, 1, 1, 7);
+		checkNextIsEOF(scanner);
+	}
+	
+	@Test
+	public void escapeSeqExcep() throws LexicalException {
+		String input = "\"abc\\cn  ";
 		show(input);
 		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
 		try {
 			new Scanner(input).scan();
 		} catch (LexicalException e) {  //
 			show(e);
-			assertEquals(0,e.getPos());
+			assertEquals(4,e.getPos());
 			throw e;
 		}
+	}
+	
+	@Test
+	public void illegalCharacters() throws LexicalException {
+		//String input = "\\n";
+		String input = "ab#cd";
+		show(input);
+		thrown.expect(LexicalException.class);  //Tell JUnit to expect a LexicalException
+		try {
+			new Scanner(input).scan();
+		} catch (LexicalException e) {  //
+			show(e);
+			assertEquals(2,e.getPos());
+			throw e;
+		}
+		/*Scanner scanner = new Scanner(input).scan();
+		checkNext(scanner, INTEGER_LITERAL, 5, 2, 1, 3);
+		checkNextIsEOF(scanner);*/
 	}
 	
 	/**
