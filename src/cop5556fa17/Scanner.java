@@ -598,19 +598,14 @@ public class Scanner {
 									i++;
 									ch = chars[i];
 									switch (ch) {
-									case 'b': case 't': case 'f': case '\'': case '\\':
+									case 'b': case 't': case 'f': case '\"': case '\'': case '\\': case 'r': case 'n':
 										len++;
 										pos++;
 										posInLine++;
 										break;
-									case '\"':
-										i--;
-										break;
-									case 'r':
-										throw new LexicalException("Newline character in string literal", pos);
-									case 'n':
-										throw new LexicalException("Newline character in string literal", pos);
 									default:
+										pos++;
+										posInLine++;
 										throw new LexicalException("Invalid escape character in string literal", pos);
 									}
 								}
@@ -622,6 +617,8 @@ public class Scanner {
 						}
 						if (i < chars.length-1 && chars[i] == '"') {
 							len++;
+							pos++;
+							posInLine++;
 							tokens.add(new Token(Kind.STRING_LITERAL, startPos, len ,line, startposInLine));
 						}
 						else if (i >= chars.length-1) {	//Eof
