@@ -57,7 +57,7 @@ public class ScannerTest {
 
 
 	/**
-	 * Retrieves the next token and checks that its kind, position, length, line, and position in line
+	 *  Retrieves the next token and checks that its kind, position, length, line, and position in line
 	 * match the given parameters.
 	 * 
 	 * @param scanner
