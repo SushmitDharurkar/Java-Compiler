@@ -42,6 +42,10 @@ public class SimpleParser {
 		program();
 		matchEOF();
 	}
+
+	void consume(){
+		t = scanner.nextToken();
+	}
 	
 
 	/**
@@ -52,24 +56,50 @@ public class SimpleParser {
 	 * @throws SyntaxException
 	 */
 	void program() throws SyntaxException {
+		if(t.kind == IDENTIFIER){
+			consume();
+			/*while (declaration() || statement()){
+				if(t.kind == SEMI){
+					consume();
+				}
+			}*/
+		}
 		//TODO  implement this
 		throw new UnsupportedOperationException();
 	}
 
-	
+	/*void declaration(){
+
+	}
+
+	void statement(){
+
+	}*/
 
 	/**
-	 * Expression ::=  OrExpression  OP_Q  Expression OP_COLON Expression    | OrExpression
+	 * Expression ::=  OrExpression  OP_Q  Expression OP_COLON Expression  | OrExpression
 	 * 
 	 * Our test cases may invoke this routine directly to support incremental development.
 	 * 
 	 * @throws SyntaxException
 	 */
 	void expression() throws SyntaxException {
-		//TODO implement this.
+		orExpression();
+		if(t.kind == OP_Q){
+			consume();
+		}
+		expression();
+		if (t.kind == OP_COLON){
+			consume();
+		}
+		orExpression();
+
+		//TODO  implement this
 		throw new UnsupportedOperationException();
 	}
 
+	void orExpression() {
+	}
 
 
 	/**
