@@ -90,13 +90,34 @@ public class SimpleParserTest {
 	public void expression1() throws SyntaxException, LexicalException {
 		String input = "2";
 		show(input);
-		Scanner scanner = new Scanner(input).scan();  
-		show(scanner);   
-		SimpleParser parser = new SimpleParser(scanner);  
-		parser.expression();  //Call expression directly.  
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		SimpleParser parser = new SimpleParser(scanner);
+		parser.expression();  //Call expression directly.
+	}
+
+	/*@Test
+	public void function() throws SyntaxException, LexicalException {
+		String input = "sin (";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		SimpleParser parser = new SimpleParser(scanner);
+		parser.functionApplication();  //Call expression directly.
+	}*/
+
+	@Test
+	public void lhsSelector() throws SyntaxException, LexicalException {
+		String input = "[ r,  \n  A]";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		SimpleParser parser = new SimpleParser(scanner);
+		parser.lhsSelector();  //Call expression directly.
 	}
 
 
-	
-	}
+
+
+}
 
