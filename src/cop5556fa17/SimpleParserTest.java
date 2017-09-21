@@ -71,6 +71,16 @@ public class SimpleParserTest {
 		SimpleParser parser = new SimpleParser(scanner);  //
 		parser.parse();
 	}
+
+	@Test
+	public void testDec2() throws LexicalException, SyntaxException {
+		String input = "prog boolean flag;";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
+		show(scanner);   //Display the Scanner
+		SimpleParser parser = new SimpleParser(scanner);  //
+		parser.parse();
+	}
 	
 
 	/**
