@@ -73,6 +73,9 @@ public class SimpleParser {
 				}
 			}
 		}
+		else {
+		    throw new SyntaxException(t, "No Input provided.");
+        }
 	}
 
 	/*

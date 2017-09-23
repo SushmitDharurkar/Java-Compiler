@@ -54,6 +54,16 @@ public class SimpleParserTest {
 		}
 	}
 
+	/*@Test
+	public void all() throws LexicalException, SyntaxException {
+		String input = "prog int k;";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
+		show(scanner);   //Display the Scanner
+		SimpleParser parser = new SimpleParser(scanner);  //
+		parser.parse();
+	}*/
+
 	
 	/** Another example.  This is a legal program and should pass when 
 	 * your parser is implemented.
@@ -72,9 +82,19 @@ public class SimpleParserTest {
 		parser.parse();
 	}
 
-	@Test
+	/*@Test
 	public void testDec2() throws LexicalException, SyntaxException {
-		String input = "prog boolean flag;";
+		String input = "prog float flag;";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
+		show(scanner);   //Display the Scanner
+		SimpleParser parser = new SimpleParser(scanner);  //
+		parser.parse();
+	}*/
+
+	@Test
+	public void testDec3() throws LexicalException, SyntaxException {
+		String input = "prog boolean flag; int sajk;";
 		show(input);
 		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
 		show(scanner);   //Display the Scanner
@@ -106,15 +126,26 @@ public class SimpleParserTest {
 		parser.expression();  //Call expression directly.
 	}
 
-	/*@Test
-	public void function() throws SyntaxException, LexicalException {
-		String input = "sin (";
+	@Test
+	public void expression2() throws SyntaxException, LexicalException {
+		String input = "5*8";
 		show(input);
 		Scanner scanner = new Scanner(input).scan();
 		show(scanner);
 		SimpleParser parser = new SimpleParser(scanner);
-		parser.functionApplication();  //Call expression directly.
-	}*/
+		parser.expression();  //Call expression directly.
+	}
+
+	@Test
+	public void function() throws SyntaxException, LexicalException {
+		String input = "sin [2,5]";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		SimpleParser parser = new SimpleParser(scanner);
+		//parser.functionApplication();  //Call expression directly.
+		parser.expression();
+	}
 
 	@Test
 	public void lhsSelector() throws SyntaxException, LexicalException {
