@@ -82,18 +82,42 @@ public class SimpleParserTest {
 		parser.parse();
 	}
 
-	/*@Test
+	@Test
 	public void testDec2() throws LexicalException, SyntaxException {
 		String input = "prog float flag;";
 		show(input);
 		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
 		show(scanner);   //Display the Scanner
 		SimpleParser parser = new SimpleParser(scanner);  //
-		parser.parse();
-	}*/
+		thrown.expect(SyntaxException.class);
+		try {
+			parser.parse();  //Parse the program
+		}
+		catch (SyntaxException e) {
+			show(e);
+			throw e;
+		}
+	}
 
 	@Test
 	public void testDec3() throws LexicalException, SyntaxException {
+		String input = "prog int flag";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
+		show(scanner);   //Display the Scanner
+		SimpleParser parser = new SimpleParser(scanner);  //
+		thrown.expect(SyntaxException.class);
+		try {
+			parser.parse();  //Parse the program
+		}
+		catch (SyntaxException e) {
+			show(e);
+			throw e;
+		}
+	}
+
+	@Test
+	public void testDec4() throws LexicalException, SyntaxException {
 		String input = "prog boolean flag; int sajk;";
 		show(input);
 		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
@@ -148,6 +172,25 @@ public class SimpleParserTest {
 	}
 
 	@Test
+	public void function1() throws SyntaxException, LexicalException {
+		String input = "x [2,5]";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		SimpleParser parser = new SimpleParser(scanner);
+		thrown.expect(SyntaxException.class);
+		try {
+			//parser.expression(); //This is not throwing an exception
+			parser.functionName();
+			//parser.functionApplication();  //Call expression directly.
+		}
+		catch (SyntaxException e) {
+			show(e);
+			throw e;
+		}
+	}
+
+	@Test
 	public void lhsSelector() throws SyntaxException, LexicalException {
 		String input = "[ r,  \n  A]";
 		show(input);
@@ -157,8 +200,21 @@ public class SimpleParserTest {
 		parser.lhsSelector();  //Call expression directly.
 	}
 
-
-
-
+	@Test
+	public void xySelector() throws SyntaxException, LexicalException {
+		String input = "x, a";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		SimpleParser parser = new SimpleParser(scanner);
+		thrown.expect(SyntaxException.class);
+		try {
+			parser.xySelector();  //Call expression directly.
+		}
+		catch (SyntaxException e) {
+			show(e);
+			throw e;
+		}
+	}
 }
 

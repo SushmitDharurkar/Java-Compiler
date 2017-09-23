@@ -4,6 +4,7 @@ package cop5556fa17;
 
 import java.util.Arrays;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
 import cop5556fa17.SimpleParser.SyntaxException;
@@ -46,6 +47,16 @@ public class SimpleParser {
 	void consume(){
 		t = scanner.nextToken();
 	}
+
+	void match(Kind k) throws SyntaxException{
+		if (t.kind == k){
+			consume();
+		}
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line +
+			".\nExpected token: " + k);
+		}
+	}
 	
 
 	/**
@@ -68,13 +79,11 @@ public class SimpleParser {
 				else if (t.kind == IDENTIFIER){
 					statement();
 				}
-				if(t.kind == SEMI){
-					consume();
-				}
+				match(SEMI);
 			}
 		}
 		else {
-		    throw new SyntaxException(t, "No Input provided.");
+		    throw new SyntaxException(t, "Input not valid. \nProgram should start with an IDENTIFIER.");
         }
 	}
 
@@ -92,6 +101,9 @@ public class SimpleParser {
 		else if (t.kind == KW_url || t.kind == KW_file){
 			sourceSinkDeclaration();
 		}
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
+		}
 	}
 
 	/*
@@ -100,14 +112,10 @@ public class SimpleParser {
 
 	void variableDeclaration() throws SyntaxException{
 		varType();
-		if (t.kind == IDENTIFIER){
-			consume();
-		}
+		match(IDENTIFIER);
 		if (t.kind == OP_ASSIGN){
+			consume();
 			expression();
-		}
-		else {
-			return;
 		}
 	}
 
@@ -122,6 +130,9 @@ public class SimpleParser {
         else if (t.kind == KW_boolean){
 	        consume();
         }
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
+		}
     }
 
     /*
@@ -130,12 +141,8 @@ public class SimpleParser {
 
 	void sourceSinkDeclaration() throws SyntaxException{
 		sourceSinkType();
-		if (t.kind == IDENTIFIER){
-			consume();
-		}
-		if (t.kind == OP_ASSIGN){
-			consume();
-		}
+		match(IDENTIFIER);
+		match(OP_ASSIGN);
 		source();
 	}
 
@@ -154,6 +161,9 @@ public class SimpleParser {
         else if (t.kind == IDENTIFIER){
             consume();
         }
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
+		}
     }
 
     /*
@@ -167,6 +177,9 @@ public class SimpleParser {
         else if (t.kind == KW_file){
             consume();
         }
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
+		}
     }
 
     /*
@@ -175,29 +188,18 @@ public class SimpleParser {
     * */
 
     void imageDeclaration() throws SyntaxException{
-    	if (t.kind == KW_image){
-    		consume();
-    		if (t.kind == LSQUARE){
-				consume();
-				expression();
-				if (t.kind == COMMA){
-					consume();
-				}
-				expression();
-				if (t.kind == RSQUARE){
-					consume();
-				}
-			}
-			if (t.kind == IDENTIFIER){
-    			consume();
-    			if (t.kind == OP_LARROW){
-    				consume();
-    				source();
-				}
-				else {
-    				return;
-				}
-			}
+    	match(KW_image);
+		if (t.kind == LSQUARE){
+			consume();
+			expression();
+			match(COMMA);
+			expression();
+			match(RSQUARE);
+		}
+		match(IDENTIFIER);
+		if (t.kind == OP_LARROW){
+			consume();
+			source();
 		}
 	}
 
@@ -207,32 +209,30 @@ public class SimpleParser {
 	* */
 
 	void statement() throws SyntaxException{
-		if (t.kind == IDENTIFIER){
+		match(IDENTIFIER);
+		if (t.kind == OP_RARROW){
 			consume();
-			if (t.kind == OP_RARROW){
-				consume();
-				sink();
-			}
-			else if (t.kind == OP_LARROW){
-				consume();
-				source();
-			}
-			else if (t.kind == LSQUARE){
-				consume();
-				lhsSelector();
-				if (t.kind == RSQUARE){
-					consume();
-					if (t.kind == OP_ASSIGN){
-						consume();
-					}
-					expression();
-				}
-			}
-			else if (t.kind == OP_ASSIGN){
-				consume();
-			}
+			sink();
+		}
+		else if (t.kind == OP_LARROW){
+			consume();
+			source();
+		}
+		else if (t.kind == LSQUARE){
+			consume();
+			lhsSelector();
+			match(RSQUARE);
+			match(OP_ASSIGN);
 			expression();
 		}
+		else if (t.kind == OP_ASSIGN){
+			consume();
+			expression();
+		}
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
+		}
+
 	}
 
 	/*
@@ -246,6 +246,9 @@ public class SimpleParser {
 		}
 		else if (t.kind == KW_SCREEN){
 			consume();
+		}
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
 	}
 
@@ -263,13 +266,8 @@ public class SimpleParser {
 		if(t.kind == OP_Q){
 			consume();
 			expression();
-			if (t.kind == OP_COLON){
-				consume();
-			}
+			match(OP_COLON);
 			expression();
-		}
-		else {
-			return;
 		}
 	}
 
@@ -360,7 +358,6 @@ public class SimpleParser {
 			consume();
 			unaryExpression();
 		}
-		//Maybe I should check here
 		else {
 			unaryExpressionNotPlusMinus();
 		}
@@ -393,8 +390,7 @@ public class SimpleParser {
 				break;
 			default:
 				// Nothing matched
-				// Not sure about errors and when to throw exceptions
-				throw new SyntaxException(t, "Error!");
+				throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
 	}
 
@@ -409,11 +405,8 @@ public class SimpleParser {
         else if (t.kind == LPAREN){
 	        consume();
 	        expression();
-	        if (t.kind == RPAREN){
-	            consume();
-            }
+	        match(RPAREN);
         }
-        //Maybe I should check here
         else {
             functionApplication();
         }
@@ -424,40 +417,11 @@ public class SimpleParser {
 	* */
 
 	void identOrPixelSelectorExpression() throws SyntaxException{
-        if (t.kind == IDENTIFIER){
-            consume();
-        }
+        match(IDENTIFIER);
         if (t.kind == LSQUARE){
             consume();
             selector();
-            if (t.kind == RSQUARE){
-                consume();
-            }
-        }
-        else {
-            return;
-        }
-    }
-
-	/*
-	* Lhs::=​ ​ ​ IDENTIFIER​ ​ ( ​ ​ LSQUARE​ ​ LhsSelector​ ​ RSQUARE​ ​ ​ ​ | ​ ​ ε ​ ​ )
-	* */
-
-	void lhs() throws SyntaxException{
-	    if (t.kind == IDENTIFIER){
-	        consume();
-        }
-        if (t.kind == LSQUARE){
-	        consume();
-	        if (t.kind == LSQUARE){     //Do I need to check this?
-	            lhsSelector();
-            }
-            if (t.kind == RSQUARE){
-	            consume();
-            }
-        }
-        else{
-            return;
+            match(RSQUARE);
         }
     }
 
@@ -470,16 +434,15 @@ public class SimpleParser {
 		if (t.kind == LPAREN){
 			consume();
 			expression();
-			if (t.kind == RPAREN){
-				consume();
-			}
+			match(RPAREN);
 		}
 		else if(t.kind == LSQUARE){
 			consume();
 			selector();
-			if (t.kind == RSQUARE){
-				consume();
-			}
+			match(RSQUARE);
+		}
+		else {
+			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
 	}
 
@@ -494,10 +457,9 @@ public class SimpleParser {
 			case KW_cart_y: case KW_polar_a: case KW_polar_r:
 				consume();
 				break;
-			// Nothing matched
-			// Not sure about errors and when to throw exceptions
 			default:
-				throw new SyntaxException(t, "Error!");
+				// Nothing matched
+				throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
 	}
 
@@ -507,18 +469,14 @@ public class SimpleParser {
 	* */
 
 	void lhsSelector() throws SyntaxException{
-		if (t.kind == LSQUARE){
-			consume();
-		}
+		match(LSQUARE);
 		if (t.kind == KW_x){
 			xySelector();
 		}
 		else if (t.kind == KW_r){
 			raSelector();
 		}
-		if (t.kind == RSQUARE){
-			consume();
-		}
+		match(RSQUARE);
 	}
 
 	/*
@@ -527,15 +485,9 @@ public class SimpleParser {
 	* */
 
 	void xySelector() throws SyntaxException{
-		if (t.kind == KW_x){
-			consume();
-		}
-		if (t.kind == COMMA) {
-			consume();
-		}
-		if (t.kind == KW_y){
-			consume();
-		}
+		match(KW_x);
+		match(COMMA);
+		match(KW_y);
 	}
 
 	/*
@@ -544,15 +496,9 @@ public class SimpleParser {
 	* */
 
 	void raSelector() throws SyntaxException{
-		if (t.kind == KW_r){
-			consume();
-			if (t.kind == COMMA){
-				consume();
-				if (t.kind == KW_A){
-					consume();
-				}
-			}
-		}
+		match(KW_r);
+		match(COMMA);
+		match(KW_A);
 	}
 
 	/*
@@ -561,9 +507,7 @@ public class SimpleParser {
 
 	void selector() throws SyntaxException{
 		expression();
-		if(t.kind == COMMA){
-			consume();
-		}
+		match(COMMA);
 		expression();
 	}
 
