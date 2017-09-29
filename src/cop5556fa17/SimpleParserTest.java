@@ -125,7 +125,17 @@ public class SimpleParserTest {
 		SimpleParser parser = new SimpleParser(scanner);  //
 		parser.parse();
 	}
-	
+
+	@Test
+	public void imgOut() throws LexicalException, SyntaxException {
+		String input = "prog abc -> SCREEN;";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();  //Create a Scanner and initialize it
+		show(scanner);   //Display the Scanner
+		SimpleParser parser = new SimpleParser(scanner);  //
+		parser.parse();
+	}
+
 
 	/**
 	 * This example invokes the method for expression directly. 
@@ -180,8 +190,9 @@ public class SimpleParserTest {
 		SimpleParser parser = new SimpleParser(scanner);
 		thrown.expect(SyntaxException.class);
 		try {
+			parser.parse();
 			//parser.expression(); //This is not throwing an exception
-			parser.functionName();
+			//parser.functionName();
 			//parser.functionApplication();  //Call expression directly.
 		}
 		catch (SyntaxException e) {

@@ -4,7 +4,6 @@ package cop5556fa17;
 
 import java.util.Arrays;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
 import cop5556fa17.SimpleParser.SyntaxException;
@@ -69,6 +68,7 @@ public class SimpleParser {
 	void program() throws SyntaxException {
 		if(t.kind == IDENTIFIER){
 			consume();
+			//Should I throw error here?
 			while (t.kind == KW_int || t.kind == KW_boolean || t.kind == KW_image
 					|| t.kind == KW_url || t.kind == KW_file || t.kind == IDENTIFIER){
 
@@ -376,6 +376,7 @@ public class SimpleParser {
 				unaryExpression();
 				break;
 			case INTEGER_LITERAL:
+			case BOOLEAN_LITERAL:
 			case LPAREN:
 			case KW_sin: case KW_cos: case KW_atan: case KW_abs: case KW_cart_x:
 			case KW_cart_y: case KW_polar_a: case KW_polar_r:
@@ -395,7 +396,7 @@ public class SimpleParser {
 	}
 
 	/*
-	* Primary​ ​ ::=​ ​ INTEGER_LITERAL​ ​ | ​ ​ LPAREN​ ​ Expression​ ​ RPAREN​ ​ | ​ ​ FunctionApplication
+	* Primary​ ​ ::=​ ​ INTEGER_LITERAL​ ​ | ​ ​ LPAREN​ ​ Expression​ ​ RPAREN​ ​ | ​ ​ FunctionApplication | BOOLEAN_LITERAL
 	* */
 
 	void primary() throws SyntaxException{
@@ -406,6 +407,9 @@ public class SimpleParser {
 	        consume();
 	        expression();
 	        match(RPAREN);
+        }
+		else if (t.kind == BOOLEAN_LITERAL){
+	        consume();
         }
         else {
             functionApplication();
