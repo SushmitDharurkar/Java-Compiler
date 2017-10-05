@@ -2,15 +2,15 @@ package cop5556fa17;
 
 
 
-import java.util.Arrays;
-
+import cop5556fa17.AST.*;
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
-import cop5556fa17.SimpleParser.SyntaxException;
+
+import java.util.ArrayList;
 
 import static cop5556fa17.Scanner.Kind.*;
 
-public class SimpleParser {
+public class Parser {
 
 	@SuppressWarnings("serial")
 	public class SyntaxException extends Exception {
@@ -26,10 +26,12 @@ public class SimpleParser {
 
 	Scanner scanner;
 	Token t;
+	Token firstToken;	//Don't know exactly what this is
 
-	SimpleParser(Scanner scanner) {
+	Parser(Scanner scanner) {
 		this.scanner = scanner;
 		t = scanner.nextToken();
+		firstToken = t;
 	}
 
 	/**
@@ -38,18 +40,21 @@ public class SimpleParser {
 	 * 
 	 * @throws SyntaxException
 	 */
-	public void parse() throws SyntaxException {
-		program();
+	public Program parse() throws SyntaxException {
+		Program p = program();
 		matchEOF();
+		return p;
 	}
 
 	void consume(){
 		t = scanner.nextToken();
 	}
 
-	void match(Kind k) throws SyntaxException{
+	Token match(Kind k) throws SyntaxException{
 		if (t.kind == k){
+			Token temp = t;
 			consume();
+			return temp;
 		}
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line +
@@ -65,22 +70,26 @@ public class SimpleParser {
 	 * 
 	 * @throws SyntaxException
 	 */
-	void program() throws SyntaxException {
+	Program program() throws SyntaxException {
 		if(t.kind == IDENTIFIER){
+			Token name = t;
 			consume();
-			//Should I throw error here?
+			ArrayList<ASTNode> decsAndStatements = new ArrayList<>();
+
 			while (t.kind == KW_int || t.kind == KW_boolean || t.kind == KW_image
 					|| t.kind == KW_url || t.kind == KW_file || t.kind == IDENTIFIER){
 
 				if (t.kind == KW_int || t.kind == KW_boolean || t.kind == KW_image
 						|| t.kind == KW_url || t.kind == KW_file){
-					declaration();
+					decsAndStatements.add(declaration());
 				}
 				else if (t.kind == IDENTIFIER){
-					statement();
+					decsAndStatements.add(statement());
 				}
 				match(SEMI);
 			}
+
+			return new Program(firstToken, name, decsAndStatements);
 		}
 		else {
 		    throw new SyntaxException(t, "Input not valid. \nProgram should start with an IDENTIFIER.");
@@ -91,75 +100,89 @@ public class SimpleParser {
 	* Declaration​ ​ ::​ ​ = ​ ​ ​ VariableDeclaration​ ​ ​ ​ ​ ​ | ​ ​ ​ ​ ​ ImageDeclaration​ ​ ​ ​ | ​ ​ ​ ​ SourceSinkDeclaration
 	* */
 
-	void declaration() throws SyntaxException{
+	Declaration declaration() throws SyntaxException{
+		Declaration d = null;
 		if (t.kind == KW_int || t.kind == KW_boolean){
-			variableDeclaration();
+			d = variableDeclaration();
 		}
 		else if (t.kind == KW_image){
-			imageDeclaration();
+			d = imageDeclaration();
 		}
 		else if (t.kind == KW_url || t.kind == KW_file){
-			sourceSinkDeclaration();
+			d = sourceSinkDeclaration();
 		}
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
+		return d;
 	}
 
 	/*
 	* VariableDeclaration​ ​ ​ ::=​ ​ ​ VarType​ ​ IDENTIFIER​ ​ ​ ( ​ ​ ​ = ​ ​ ​ Expression​ ​ ​ | ​ ​ ε ​ ​ )
 	* */
 
-	void variableDeclaration() throws SyntaxException{
-		varType();
-		match(IDENTIFIER);
+	Declaration_Variable variableDeclaration() throws SyntaxException{
+		Expression e = null;
+		Token type = varType();
+		Token name = match(IDENTIFIER);
 		if (t.kind == OP_ASSIGN){
 			consume();
-			expression();
+			e = expression();
 		}
+		return new Declaration_Variable(firstToken, type, name, e);
 	}
 
 	/*
 	* VarType​ ​ ::=​ ​ KW_int​ ​ | ​ ​ KW_boolean
 	* */
 
-	void varType() throws SyntaxException{
-	    if (t.kind == KW_int){
-	        consume();
+	Token varType() throws SyntaxException{
+	    Token type = null;
+		if (t.kind == KW_int){
+	        type = t;
+	    	consume();
         }
         else if (t.kind == KW_boolean){
-	        consume();
+			type = t;
+	    	consume();
         }
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
+		return type;
     }
 
     /*
     * SourceSinkDeclaration​ ​ ::=​ ​ SourceSinkType​ ​ IDENTIFIER​ ​ ​ OP_ASSIGN​ ​ ​ Source
     * */
 
-	void sourceSinkDeclaration() throws SyntaxException{
-		sourceSinkType();
-		match(IDENTIFIER);
+	Declaration_SourceSink sourceSinkDeclaration() throws SyntaxException{
+		Token type = sourceSinkType();
+		Token name = match(IDENTIFIER);
 		match(OP_ASSIGN);
-		source();
+		Source s = source();
+		return new Declaration_SourceSink(firstToken, type, name, s);
 	}
 
     /*
     * Source​ ​ ::=​ ​ STRING_LITERAL​ ​ ​ | ​ ​ OP_AT​ ​ Expression​ ​ | ​ ​ IDENTIFIER
     * */
 
-    void source() throws SyntaxException{
-        if (t.kind == STRING_LITERAL){
-            consume();
+    Source source() throws SyntaxException{
+        Token temp = null;
+    	if (t.kind == STRING_LITERAL){
+            temp = t;
+    		consume();
+    		return new Source_StringLiteral(firstToken, temp.toString());
         }
         else if (t.kind == OP_AT){
             consume();
-            expression();
+            return new Source_CommandLineParam(firstToken, expression());
         }
         else if (t.kind == IDENTIFIER){
-            consume();
+            temp = t;
+        	consume();
+        	return new Source_Ident(firstToken, temp);
         }
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
@@ -170,16 +193,20 @@ public class SimpleParser {
     * SourceSinkType​ ​ :=​ ​ KW_url​ ​ | ​ ​ KW_file
     * */
 
-    void sourceSinkType() throws SyntaxException{
-        if (t.kind == KW_url){
-            consume();
+    Token sourceSinkType() throws SyntaxException{
+        Token name = null;
+    	if (t.kind == KW_url){
+            name = t;
+        	consume();
         }
         else if (t.kind == KW_file){
-            consume();
+            name = t;
+    		consume();
         }
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
+		return name;
     }
 
     /*
@@ -187,52 +214,61 @@ public class SimpleParser {
 ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ IDENTIFIER​ ​ ( ​ ​ OP_LARROW​ ​ Source​ ​ | ​ ​ ε ​ ​ )
     * */
 
-    void imageDeclaration() throws SyntaxException{
+    Declaration_Image imageDeclaration() throws SyntaxException{
     	match(KW_image);
+    	Expression xSize = null;
+		Expression ySize = null;
+		Token name = null;
+    	Source s = null;
 		if (t.kind == LSQUARE){
 			consume();
-			expression();
+			xSize = expression();
 			match(COMMA);
-			expression();
+			ySize = expression();
 			match(RSQUARE);
 		}
-		match(IDENTIFIER);
+		name = match(IDENTIFIER);
 		if (t.kind == OP_LARROW){
 			consume();
-			source();
+			s = source();
 		}
+		return new Declaration_Image(firstToken, xSize, ySize, name, s);
 	}
 
     /*
 	* Statement​ ​ ​ ::=​ ​ IDENTIFIER​ ​ ( ​ ​ ( ​ ​ LSQUARE​ ​ LhsSelector​ ​ RSQUARE​ ​ ​ ​ | ​ ​ ε ​ ​ ) ​ ​ ​ OP_ASSIGN​ ​ Expression​
 	* ​ | ​ ​ OP_RARROW Sink​ ​ | ​ ​ OP_LARROW​ ​ Source​ ​ )
+	*
+	* I don't have LHS function, need to check if causes errors
 	* */
 
-	void statement() throws SyntaxException{
-		match(IDENTIFIER);
+	Statement statement() throws SyntaxException{
+		Token name = match(IDENTIFIER);
+		Expression e = null;
+		LHS lhs = null;
 		if (t.kind == OP_RARROW){
 			consume();
-			sink();
+			return new Statement_Out(firstToken, name, sink());
 		}
 		else if (t.kind == OP_LARROW){
 			consume();
-			source();
+			return new Statement_In(firstToken, name, source());
 		}
 		else if (t.kind == LSQUARE){
 			consume();
-			lhsSelector();
+			lhs = lhsSelector(name);
 			match(RSQUARE);
 			match(OP_ASSIGN);
-			expression();
+			e = expression();
 		}
-		else if (t.kind == OP_ASSIGN){
+		else if (t.kind == OP_ASSIGN){	//If this case occurs then lhs will be null
 			consume();
-			expression();
+			e = expression();
 		}
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
-
+		return new Statement_Assign(firstToken, lhs, e);
 	}
 
 	/*
@@ -240,12 +276,15 @@ public class SimpleParser {
 	* Should I check for a file?
 	* */
 
-	void sink() throws SyntaxException{
+	Sink sink() throws SyntaxException{
 		if (t.kind == IDENTIFIER){
+			Token name = t;
 			consume();
+			return new Sink_Ident(firstToken, name);
 		}
 		else if (t.kind == KW_SCREEN){
 			consume();
+			return new Sink_SCREEN(firstToken);
 		}
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
@@ -261,86 +300,107 @@ public class SimpleParser {
 	 * 
 	 * @throws SyntaxException
 	 */
-	void expression() throws SyntaxException {
-		orExpression();
+	Expression expression() throws SyntaxException {	//Check if this is working correctly
+		Expression condition = orExpression();
+		Expression trueExpression = null;
+		Expression falseExpression = null;
 		if(t.kind == OP_Q){
 			consume();
-			expression();
+			trueExpression = expression();
 			match(OP_COLON);
-			expression();
+			falseExpression = expression();
 		}
+		return new Expression_Conditional(firstToken, condition, trueExpression, falseExpression);
 	}
 
 	/*
 	* OrExpression​ ​ ::=​ ​ AndExpression​ ​ ​ ​ ( ​ ​ ​ OP_OR​ ​ ​ AndExpression)*
 	* */
 
-	void orExpression() throws SyntaxException{
-		andExpression();
+	Expression orExpression() throws SyntaxException{
+		Expression e0 = andExpression();
 		while (t.kind == OP_OR){
+			Token op = t;
 			consume();
-			andExpression();
+			Expression e1 = andExpression();
+			e0 = new Expression_Binary(firstToken, e0, op, e1);
 		}
+		return e0;
 	}
 
 	/*
 	* AndExpression​ ​ ::=​ ​ EqExpression​ ​ ( ​ ​ OP_AND​ ​ ​ EqExpression​ ​ )*
 	* */
 
-	void andExpression() throws SyntaxException{
-		eqExpression();
+	Expression andExpression() throws SyntaxException{
+		Expression e0 = eqExpression();
 		while (t.kind == OP_AND){
+			Token op = t;
 			consume();
-			eqExpression();
+			Expression e1 = eqExpression();
+			e0 = new Expression_Binary(firstToken, e0, op, e1);
 		}
+		return e0;
 	}
 
 	/*
 	* EqExpression​ ​ ::=​ ​ RelExpression​ ​ ​ ( ​ ​ ​ (OP_EQ​ ​ | ​ ​ OP_NEQ​ ​ ) ​ ​ ​ RelExpression​ ​ )*
 	* */
 
-	void eqExpression() throws SyntaxException{
-		relExpression();
+	Expression eqExpression() throws SyntaxException{
+		Expression e0 = relExpression();
 		while (t.kind == OP_EQ || t.kind == OP_NEQ){
+			Token op = t;
 			consume();
-			relExpression();
+			Expression e1 = relExpression();
+			e0 = new Expression_Binary(firstToken, e0, op, e1);
 		}
+		return e0;
 	}
 
 	/*
 	* RelExpression​ ​ ::=​ ​ AddExpression​ ​ ( ​ ​ ​ ( ​ ​ OP_LT​ ​ ​ | ​ ​ OP_GT​ ​ | ​ ​ ​ OP_LE​ ​ ​ | ​ ​ OP_GE​ ​ ) ​ ​ ​ ​ AddExpression)*
 	* */
 
-	void relExpression() throws SyntaxException{
-		addExpression();
+	Expression relExpression() throws SyntaxException{
+		Expression e0 = addExpression();
 		while (t.kind == OP_LT || t.kind == OP_GT || t.kind == OP_LE || t.kind == OP_GE){
+			Token op = t;
 			consume();
-			addExpression();
+			Expression e1 = addExpression();
+			e0 = new Expression_Binary(firstToken, e0, op, e1);
 		}
+		return e0;
 	}
 
 	/*
 	* AddExpression​ ​ ::=​ ​ MultExpression​ ​ ​ ​ ( ​ ​ ​ (OP_PLUS​ ​ | ​ ​ OP_MINUS​ ​ ) ​ ​ MultExpression​ ​ )*
 	* */
 
-	void addExpression() throws SyntaxException{
-		multExpression();
+	Expression addExpression() throws SyntaxException{
+		Expression e0 = multExpression();
 		while (t.kind == OP_PLUS || t.kind == OP_MINUS){
+			Token op = t;
 			consume();
-			multExpression();
+			Expression e1 = multExpression();
+			e0 = new Expression_Binary(firstToken, e0, op, e1);
 		}
+		return e0;
 	}
 
 	/*
 	* MultExpression​ ​ :=​ ​ UnaryExpression​ ​ ( ​ ​ ( ​ ​ OP_TIMES​ ​ | ​ ​ OP_DIV​ ​ ​ | ​ ​ OP_MOD​ ​ ) ​ ​ UnaryExpression​ ​ )*
 	* */
 
-	void multExpression() throws SyntaxException{
-		unaryExpression();
+	Expression multExpression() throws SyntaxException{
+		Expression e0 = unaryExpression();
 		while (t.kind == OP_TIMES || t.kind == OP_DIV || t.kind == OP_MOD){
+			Token op = t;
 			consume();
-			unaryExpression();
+			Expression e1 = unaryExpression();
+			e0 = new Expression_Binary(firstToken, e0, op, e1);
 		}
+		return e0;
 	}
 
 	/*
@@ -349,17 +409,21 @@ public class SimpleParser {
 ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ | ​ ​ UnaryExpressionNotPlusMinus
 	* */
 
-	void unaryExpression() throws SyntaxException{
+	Expression unaryExpression() throws SyntaxException{	//Confusion here when to return
 		if (t.kind == OP_PLUS){
+			Token op = t;
 			consume();
-			unaryExpression();
+			Expression e = unaryExpression();
+			return new Expression_Unary(firstToken, op, e);
 		}
 		else if (t.kind == OP_MINUS){
+			Token op = t;
 			consume();
-			unaryExpression();
+			Expression e = unaryExpression();
+			return new Expression_Unary(firstToken, op, e);
 		}
 		else {
-			unaryExpressionNotPlusMinus();
+			return unaryExpressionNotPlusMinus();
 		}
 	}
 
@@ -369,7 +433,7 @@ public class SimpleParser {
 		| ​ ​ KW_Z​ ​ | ​ ​ KW_A​ ​ | KW_R​ ​ | ​ ​ KW_DEF_X​ ​ | ​ ​ KW_DEF_Y
 	* */
 
-	void unaryExpressionNotPlusMinus() throws SyntaxException{
+	Expression_PredefinedName unaryExpressionNotPlusMinus() throws SyntaxException{
 		switch (t.kind){
 			case OP_EXCL:
 				consume();
@@ -387,32 +451,46 @@ public class SimpleParser {
 				break;
 			case KW_x: case KW_y: case KW_r: case KW_a: case KW_X: case KW_Y:
 			case KW_Z: case KW_A: case KW_R: case KW_DEF_X: case KW_DEF_Y:
+				Kind kind = t.kind;
 				consume();
-				break;
+				return new Expression_PredefinedName(firstToken, kind);
+				//break;
 			default:
 				// Nothing matched
 				throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
+		return null;
 	}
 
 	/*
 	* Primary​ ​ ::=​ ​ INTEGER_LITERAL​ ​ | ​ ​ LPAREN​ ​ Expression​ ​ RPAREN​ ​ | ​ ​ FunctionApplication | BOOLEAN_LITERAL
 	* */
 
-	void primary() throws SyntaxException{
+	Expression primary() throws SyntaxException{
 	    if (t.kind == INTEGER_LITERAL){
-	        consume();
+	        Token int_lit = t;
+	    	consume();
+	    	return new Expression_IntLit(firstToken, int_lit.intVal());
         }
         else if (t.kind == LPAREN){
 	        consume();
-	        expression();
+	        Expression e = expression();
 	        match(RPAREN);
+	        return e;
         }
 		else if (t.kind == BOOLEAN_LITERAL){
-	        consume();
+	        boolean bool_lit;
+			if (t.length == 4) {
+				bool_lit = true;
+			}
+			else {
+				bool_lit = false;
+			}
+        	consume();
+        	return new Expression_BooleanLit(firstToken, bool_lit);//Need to find the value bool_lit
         }
         else {
-            functionApplication();
+            return functionApplication();
         }
     }
 
@@ -420,30 +498,34 @@ public class SimpleParser {
 	* IdentOrPixelSelectorExpression::=​ ​ ​ IDENTIFIER​ ​ ( ​ ​ LSQUARE​ ​ Selector​ ​ RSQUARE​ ​ ​ ​ | ​ ​ ε ​ ​ )
 	* */
 
-	void identOrPixelSelectorExpression() throws SyntaxException{
-        match(IDENTIFIER);
+	Expression identOrPixelSelectorExpression() throws SyntaxException{
+        Token temp = match(IDENTIFIER);
         if (t.kind == LSQUARE){
             consume();
-            selector();
+            Index index = selector();
             match(RSQUARE);
+            return new Expression_PixelSelector(firstToken, temp, index);
         }
+        return new Expression_Ident(firstToken, temp);
     }
 
 	/*
 	* FunctionApplication​ ​ ::=​ ​ FunctionName​ ​ ( ​ ​ LPAREN​ ​ Expression​ ​ RPAREN​ ​ ​ | ​ ​ LSQUARE​ ​ Selector​ ​ RSQUARE​ ​ )
 	* */
 
-	void functionApplication() throws SyntaxException{
-		functionName();
+	Expression_FunctionApp functionApplication() throws SyntaxException{
+		Kind function = functionName();
 		if (t.kind == LPAREN){
 			consume();
-			expression();
+			Expression arg = expression();
 			match(RPAREN);
+			return new Expression_FunctionAppWithExprArg(firstToken, function, arg);
 		}
 		else if(t.kind == LSQUARE){
 			consume();
-			selector();
+			Index arg = selector();
 			match(RSQUARE);
+			return new Expression_FunctionAppWithIndexArg(firstToken, function, arg);
 		}
 		else {
 			throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
@@ -455,12 +537,14 @@ public class SimpleParser {
 		|​ ​ KW_cart_x​ ​ | ​ ​ KW_cart_y​ ​ | ​ ​ KW_polar_a​ ​ | ​ ​ LW_polar_r
 	* */
 
-	void functionName() throws SyntaxException{
+	Kind functionName() throws SyntaxException{
 		switch (t.kind){
 			case KW_sin: case KW_cos: case KW_atan: case KW_abs: case KW_cart_x:
 			case KW_cart_y: case KW_polar_a: case KW_polar_r:
+				Kind function = t.kind;
 				consume();
-				break;
+				return function;
+				//break;
 			default:
 				// Nothing matched
 				throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
@@ -472,47 +556,56 @@ public class SimpleParser {
 	* Maybe add boolean returns depending on success or failures for function calls
 	* */
 
-	void lhsSelector() throws SyntaxException{
+	LHS lhsSelector(Token name) throws SyntaxException{
 		match(LSQUARE);
+		Index index = null;
 		if (t.kind == KW_x){
-			xySelector();
+			index = xySelector();
 		}
 		else if (t.kind == KW_r){
-			raSelector();
+			index = raSelector();
 		}
 		match(RSQUARE);
+		return new LHS(firstToken, name, index);
 	}
 
 	/*
 	* XySelector​ ​ ::=​ ​ KW_x​ ​ COMMA​ ​ KW_y
-	* Need to confirm flow of ifs
+	* Not sure how to return expressions here
 	* */
 
-	void xySelector() throws SyntaxException{
-		match(KW_x);
+	Index xySelector() throws SyntaxException{
+		Token t0 = match(KW_x);
+		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
-		match(KW_y);
+		Token t1 = match(KW_y);
+		Expression e1 = new Expression_PredefinedName(firstToken, t1.kind);
+		return new Index(firstToken, e0, e1);
 	}
 
 	/*
 	* RaSelector​ ​ ::=​ ​ KW_r​ ​ , ​ ​ KW_A
-	* Need to confirm flow of ifs
+	* Not sure how to return expressions here
 	* */
 
-	void raSelector() throws SyntaxException{
-		match(KW_r);
+	Index raSelector() throws SyntaxException{
+		Token t0 = match(KW_r);
+		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
-		match(KW_A);
+		Token t1 = match(KW_A);
+		Expression e1 = new Expression_PredefinedName(firstToken, t1.kind);
+		return new Index(firstToken, e0, e1);
 	}
 
 	/*
 	* Selector​ ​ ::=​ ​ ​ Expression​ ​ COMMA​ ​ Expression
 	* */
 
-	void selector() throws SyntaxException{
-		expression();
+	Index selector() throws SyntaxException{
+		Expression e0 = expression();
 		match(COMMA);
-		expression();
+		Expression e1 = expression();
+		return new Index(firstToken, e0, e1);
 	}
 
 
