@@ -26,12 +26,10 @@ public class Parser {
 
 	Scanner scanner;
 	Token t;
-	Token firstToken;	//Don't know exactly what this is
 
 	Parser(Scanner scanner) {
 		this.scanner = scanner;
 		t = scanner.nextToken();
-		firstToken = t;
 	}
 
 	/**
@@ -72,7 +70,7 @@ public class Parser {
 	 */
 	Program program() throws SyntaxException {
 		if(t.kind == IDENTIFIER){
-			Token name = t;
+			Token name = t, firstToken = t;
 			consume();
 			ArrayList<ASTNode> decsAndStatements = new ArrayList<>();
 
@@ -124,6 +122,7 @@ public class Parser {
 	Declaration_Variable variableDeclaration() throws SyntaxException{
 		Expression e = null;
 		Token type = varType();
+		Token firstToken = type;
 		Token name = match(IDENTIFIER);
 		if (t.kind == OP_ASSIGN){
 			consume();
@@ -158,6 +157,7 @@ public class Parser {
 
 	Declaration_SourceSink sourceSinkDeclaration() throws SyntaxException{
 		Token type = sourceSinkType();
+		Token firstToken = type;
 		Token name = match(IDENTIFIER);
 		match(OP_ASSIGN);
 		Source s = source();
@@ -170,6 +170,7 @@ public class Parser {
 
     Source source() throws SyntaxException{
         Token temp = null;
+        Token firstToken = t;
     	if (t.kind == STRING_LITERAL){
             temp = t;
     		consume();
@@ -215,7 +216,7 @@ public class Parser {
     * */
 
     Declaration_Image imageDeclaration() throws SyntaxException{
-    	match(KW_image);
+		Token firstToken = match(KW_image);
     	Expression xSize = null;
 		Expression ySize = null;
 		Token name = null;
@@ -244,6 +245,7 @@ public class Parser {
 
 	Statement statement() throws SyntaxException{
 		Token name = match(IDENTIFIER);
+		Token firstToken = name;
 		Expression e = null;
 		LHS lhs = null;
 		if (t.kind == OP_RARROW){
@@ -261,8 +263,9 @@ public class Parser {
 			match(OP_ASSIGN);
 			e = expression();
 		}
-		else if (t.kind == OP_ASSIGN){	//If this case occurs then lhs will be null
+		else if (t.kind == OP_ASSIGN){
 			consume();
+			lhs = new LHS(firstToken, name, null);
 			e = expression();
 		}
 		else {
@@ -277,6 +280,7 @@ public class Parser {
 	* */
 
 	Sink sink() throws SyntaxException{
+		Token firstToken = t;
 		if (t.kind == IDENTIFIER){
 			Token name = t;
 			consume();
@@ -301,6 +305,7 @@ public class Parser {
 	 * @throws SyntaxException
 	 */
 	Expression expression() throws SyntaxException {	//Check if this is working correctly
+		Token firstToken = t;
 		Expression condition = orExpression();
 		Expression trueExpression = null;
 		Expression falseExpression = null;
@@ -316,8 +321,10 @@ public class Parser {
 	/*
 	* OrExpression​ ​ ::=​ ​ AndExpression​ ​ ​ ​ ( ​ ​ ​ OP_OR​ ​ ​ AndExpression)*
 	* */
+	// Need to check first token for while statements
 
 	Expression orExpression() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = andExpression();
 		while (t.kind == OP_OR){
 			Token op = t;
@@ -333,6 +340,7 @@ public class Parser {
 	* */
 
 	Expression andExpression() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = eqExpression();
 		while (t.kind == OP_AND){
 			Token op = t;
@@ -348,6 +356,7 @@ public class Parser {
 	* */
 
 	Expression eqExpression() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = relExpression();
 		while (t.kind == OP_EQ || t.kind == OP_NEQ){
 			Token op = t;
@@ -363,6 +372,7 @@ public class Parser {
 	* */
 
 	Expression relExpression() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = addExpression();
 		while (t.kind == OP_LT || t.kind == OP_GT || t.kind == OP_LE || t.kind == OP_GE){
 			Token op = t;
@@ -378,6 +388,7 @@ public class Parser {
 	* */
 
 	Expression addExpression() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = multExpression();
 		while (t.kind == OP_PLUS || t.kind == OP_MINUS){
 			Token op = t;
@@ -393,6 +404,7 @@ public class Parser {
 	* */
 
 	Expression multExpression() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = unaryExpression();
 		while (t.kind == OP_TIMES || t.kind == OP_DIV || t.kind == OP_MOD){
 			Token op = t;
@@ -409,7 +421,8 @@ public class Parser {
 ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ | ​ ​ UnaryExpressionNotPlusMinus
 	* */
 
-	Expression unaryExpression() throws SyntaxException{	//Confusion here when to return
+	Expression unaryExpression() throws SyntaxException{	//Confusion here what to return
+		Token firstToken = t;
 		if (t.kind == OP_PLUS){
 			Token op = t;
 			consume();
@@ -433,22 +446,23 @@ public class Parser {
 		| ​ ​ KW_Z​ ​ | ​ ​ KW_A​ ​ | KW_R​ ​ | ​ ​ KW_DEF_X​ ​ | ​ ​ KW_DEF_Y
 	* */
 
-	Expression_PredefinedName unaryExpressionNotPlusMinus() throws SyntaxException{
+	Expression unaryExpressionNotPlusMinus() throws SyntaxException{
+		Token firstToken = t;
 		switch (t.kind){
 			case OP_EXCL:
 				consume();
-				unaryExpression();
-				break;
+				return unaryExpression();
+				//break;
 			case INTEGER_LITERAL:
 			case BOOLEAN_LITERAL:
 			case LPAREN:
 			case KW_sin: case KW_cos: case KW_atan: case KW_abs: case KW_cart_x:
 			case KW_cart_y: case KW_polar_a: case KW_polar_r:
-				primary();
-				break;
+				return primary();
+				//break;
 			case IDENTIFIER:
-				identOrPixelSelectorExpression();
-				break;
+				return identOrPixelSelectorExpression();
+				//break;
 			case KW_x: case KW_y: case KW_r: case KW_a: case KW_X: case KW_Y:
 			case KW_Z: case KW_A: case KW_R: case KW_DEF_X: case KW_DEF_Y:
 				Kind kind = t.kind;
@@ -459,7 +473,6 @@ public class Parser {
 				// Nothing matched
 				throw new SyntaxException(t, "Invalid token: " + t.kind + " at line: " + t.line + ", pos: " + t.pos_in_line);
 		}
-		return null;
 	}
 
 	/*
@@ -467,7 +480,8 @@ public class Parser {
 	* */
 
 	Expression primary() throws SyntaxException{
-	    if (t.kind == INTEGER_LITERAL){
+		Token firstToken = t;
+		if (t.kind == INTEGER_LITERAL){
 	        Token int_lit = t;
 	    	consume();
 	    	return new Expression_IntLit(firstToken, int_lit.intVal());
@@ -500,6 +514,7 @@ public class Parser {
 
 	Expression identOrPixelSelectorExpression() throws SyntaxException{
         Token temp = match(IDENTIFIER);
+		Token firstToken = temp;
         if (t.kind == LSQUARE){
             consume();
             Index index = selector();
@@ -514,6 +529,7 @@ public class Parser {
 	* */
 
 	Expression_FunctionApp functionApplication() throws SyntaxException{
+		Token firstToken = t;
 		Kind function = functionName();
 		if (t.kind == LPAREN){
 			consume();
@@ -557,6 +573,7 @@ public class Parser {
 	* */
 
 	LHS lhsSelector(Token name) throws SyntaxException{
+		Token firstToken = name;
 		match(LSQUARE);
 		Index index = null;
 		if (t.kind == KW_x){
@@ -576,6 +593,7 @@ public class Parser {
 
 	Index xySelector() throws SyntaxException{
 		Token t0 = match(KW_x);
+		Token firstToken = t0;
 		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
 		Token t1 = match(KW_y);
@@ -590,6 +608,7 @@ public class Parser {
 
 	Index raSelector() throws SyntaxException{
 		Token t0 = match(KW_r);
+		Token firstToken = t0;
 		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
 		Token t1 = match(KW_A);
@@ -602,6 +621,7 @@ public class Parser {
 	* */
 
 	Index selector() throws SyntaxException{
+		Token firstToken = t;
 		Expression e0 = expression();
 		match(COMMA);
 		Expression e1 = expression();
