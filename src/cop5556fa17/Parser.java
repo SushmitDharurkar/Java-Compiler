@@ -174,7 +174,7 @@ public class Parser {
     	if (t.kind == STRING_LITERAL){
             temp = t;
     		consume();
-    		return new Source_StringLiteral(firstToken, temp.toString());
+    		return new Source_StringLiteral(firstToken, temp.getText());
         }
         else if (t.kind == OP_AT){
             consume();
@@ -307,15 +307,14 @@ public class Parser {
 	Expression expression() throws SyntaxException {	//Check if this is working correctly
 		Token firstToken = t;
 		Expression condition = orExpression();
-		Expression trueExpression = null;
-		Expression falseExpression = null;
 		if(t.kind == OP_Q){
 			consume();
-			trueExpression = expression();
+			Expression trueExpression = expression();
 			match(OP_COLON);
-			falseExpression = expression();
+			Expression falseExpression = expression();
+			return new Expression_Conditional(firstToken, condition, trueExpression, falseExpression);
 		}
-		return new Expression_Conditional(firstToken, condition, trueExpression, falseExpression);
+		return condition;
 	}
 
 	/*
@@ -588,7 +587,7 @@ public class Parser {
 
 	/*
 	* XySelector​ ​ ::=​ ​ KW_x​ ​ COMMA​ ​ KW_y
-	* Not sure how to return expressions here
+	* Need to check firstTokens of KW_x and KW_y
 	* */
 
 	Index xySelector() throws SyntaxException{
@@ -597,7 +596,7 @@ public class Parser {
 		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
 		Token t1 = match(KW_y);
-		Expression e1 = new Expression_PredefinedName(firstToken, t1.kind);
+		Expression e1 = new Expression_PredefinedName(t1, t1.kind);
 		return new Index(firstToken, e0, e1);
 	}
 
@@ -612,7 +611,7 @@ public class Parser {
 		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
 		Token t1 = match(KW_A);
-		Expression e1 = new Expression_PredefinedName(firstToken, t1.kind);
+		Expression e1 = new Expression_PredefinedName(t1, t1.kind);
 		return new Index(firstToken, e0, e1);
 	}
 
