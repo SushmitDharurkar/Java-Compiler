@@ -449,8 +449,10 @@ public class Parser {
 		Token firstToken = t;
 		switch (t.kind){
 			case OP_EXCL:
+				Token op = t;
 				consume();
-				return unaryExpression();
+				Expression e = unaryExpression();	//Test case failed here
+				return new Expression_Unary(firstToken, op, e);
 				//break;
 			case INTEGER_LITERAL:
 			case BOOLEAN_LITERAL:
