@@ -2,10 +2,12 @@ package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_PredefinedName extends Expression {
 
 	public final Kind kind;
+	public TypeUtils.Type type;
 
 	public Expression_PredefinedName(Token firstToken, Kind kind) {
 		super(firstToken);

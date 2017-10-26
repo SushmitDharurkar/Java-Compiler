@@ -2,16 +2,20 @@ package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Declaration_SourceSink extends Declaration {
 	
-	public final Kind type;
+	//public final Kind type;	// NOTE Changing this to Token type
+	public final Token type;
 	public final String name;
 	public final Source source;
+	public TypeUtils.Type t;
 	
 	public Declaration_SourceSink(Token firstToken, Token type, Token name, Source source) {
 		super(firstToken);
-		this.type = type.kind;
+//		this.type = type.kind;
+		this.type = type;
 		this.name = name.getText();
 		this.source = source;
 	}

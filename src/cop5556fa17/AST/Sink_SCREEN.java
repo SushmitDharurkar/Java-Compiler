@@ -2,12 +2,15 @@ package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
+
 import static cop5556fa17.Scanner.Kind.*;
 
 
 public class Sink_SCREEN extends Sink {
 	
 	public final Kind kind;  //this is just here to allow generated hashcode, equals, and toString
+	public TypeUtils.Type type;
 
 	public Sink_SCREEN(Token firstToken) {
 		super(firstToken);

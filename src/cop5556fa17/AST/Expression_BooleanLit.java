@@ -1,10 +1,12 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_BooleanLit extends Expression {
 	
 	public final boolean value;
+	public TypeUtils.Type type;
 	
 	public Expression_BooleanLit(Token firstToken, boolean value) {
 		super(firstToken);

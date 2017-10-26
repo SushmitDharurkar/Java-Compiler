@@ -1,6 +1,7 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Declaration_Image extends Declaration {
 	
@@ -8,6 +9,7 @@ public class Declaration_Image extends Declaration {
 	public final Expression ySize;
 	public final String name;
 	public final Source source;
+	public TypeUtils.Type type;
 
 	public Declaration_Image(Token firstToken, Expression xSize, Expression ySize, Token name,
 			Source source) {

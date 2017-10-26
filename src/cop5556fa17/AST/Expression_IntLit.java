@@ -1,10 +1,12 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_IntLit extends Expression {
 
 	public final int value;
+	public TypeUtils.Type type;
 
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
