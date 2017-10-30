@@ -9,7 +9,6 @@ public class Declaration_Image extends Declaration {
 	public final Expression ySize;
 	public final String name;
 	public final Source source;
-	public TypeUtils.Type type;
 
 	public Declaration_Image(Token firstToken, Expression xSize, Expression ySize, Token name,
 			Source source) {
@@ -23,6 +22,16 @@ public class Declaration_Image extends Declaration {
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitDeclaration_Image(this, arg);
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

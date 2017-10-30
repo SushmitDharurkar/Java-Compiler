@@ -1,6 +1,7 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Index extends ASTNode {
 	
@@ -16,20 +17,24 @@ public class Index extends ASTNode {
 		this.e0 = e0;
 		this.e1 = e1;
 	}
-	
-	
 
 	public boolean isCartesian() {
 		return isCartesian;
 	}
 
-
-
 	public void setCartesian(boolean isCartesian) {
 		this.isCartesian = isCartesian;
 	}
 
+	@Override
+	public TypeUtils.Type getType(){
+		return type;
+	}
 
+	@Override
+	public void setType(TypeUtils.Type type){
+		this.type = type;
+	}
 
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {

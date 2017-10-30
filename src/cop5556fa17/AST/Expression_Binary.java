@@ -2,6 +2,7 @@ package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_Binary extends Expression {
 	public final Expression e0;
@@ -13,6 +14,16 @@ public class Expression_Binary extends Expression {
 		this.e0 = e0;
 		this.op = op.kind;
 		this.e1 = e1;
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

@@ -1,13 +1,14 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class LHS extends ASTNode{
 
 	public final String name;
 	public final Index index;
-
-
+	Declaration declaration;
+	boolean isCartesian;
 
 	public LHS(Token firstToken, Token name, Index index) {
 		super(firstToken);
@@ -15,9 +16,31 @@ public class LHS extends ASTNode{
 		this.index = index;
 	}
 
+	public boolean isCartesian() {
+		return isCartesian;
+	}
+
+	public void setCartesian(boolean isCartesian) {
+		this.isCartesian = isCartesian;
+	}
+
+	public void setDeclaration(Declaration declaration) {
+		this.declaration = declaration;
+	}
+
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitLHS(this,arg);
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

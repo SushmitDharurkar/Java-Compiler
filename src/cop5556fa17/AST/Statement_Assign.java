@@ -1,6 +1,7 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Statement_Assign extends Statement {
 	
@@ -8,31 +9,34 @@ public class Statement_Assign extends Statement {
 	public final Expression e;
 	
 	boolean isCartesian;
-	
 
 	public Statement_Assign(Token firstToken, LHS lhs, Expression e) {
 		super(firstToken);
 		this.lhs = lhs;
 		this.e = e;
 	}
-	
-	
 
 	public boolean isCartesian() {
 		return isCartesian;
 	}
 
-
-
 	public void setCartesian(boolean isCartesian) {
 		this.isCartesian = isCartesian;
 	}
 
-
-
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitStatement_Assign(this, arg);
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

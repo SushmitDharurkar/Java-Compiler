@@ -1,6 +1,7 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Source_StringLiteral extends Source {
 	
@@ -14,6 +15,16 @@ public class Source_StringLiteral extends Source {
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitSource_StringLiteral(this,arg);
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

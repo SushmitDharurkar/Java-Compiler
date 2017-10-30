@@ -6,12 +6,22 @@ import cop5556fa17.TypeUtils;
 public class Expression_BooleanLit extends Expression {
 	
 	public final boolean value;
-	public TypeUtils.Type type;
 	
 	public Expression_BooleanLit(Token firstToken, boolean value) {
 		super(firstToken);
 		this.value = value;
 	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
+	}
+
 
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {

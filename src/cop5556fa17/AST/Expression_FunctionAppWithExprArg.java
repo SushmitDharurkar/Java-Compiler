@@ -2,6 +2,7 @@ package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Kind;
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_FunctionAppWithExprArg extends Expression_FunctionApp {
 	
@@ -12,6 +13,16 @@ public class Expression_FunctionAppWithExprArg extends Expression_FunctionApp {
 		super(firstToken);
 		this.function = function;
 		this.arg = arg;
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

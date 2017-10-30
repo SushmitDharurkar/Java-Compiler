@@ -10,8 +10,6 @@ public class Declaration_Variable extends Declaration {
 	public final Token type;
 	public final String name;
 	public final Expression e;
-	public TypeUtils.Type t;
-	
 
 	public Declaration_Variable(Token firstToken,  Token type, Token name, Expression e) {
 		super(firstToken);
@@ -20,6 +18,17 @@ public class Declaration_Variable extends Declaration {
 		this.e = e;
 	}
 
+	//Note Is there a difference between super and this for type
+
+	@Override
+	public TypeUtils.Type getType() {
+		return super.type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		super.type = type;
+	}
 
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {

@@ -10,11 +10,20 @@ import static cop5556fa17.Scanner.Kind.*;
 public class Sink_SCREEN extends Sink {
 	
 	public final Kind kind;  //this is just here to allow generated hashcode, equals, and toString
-	public TypeUtils.Type type;
 
 	public Sink_SCREEN(Token firstToken) {
 		super(firstToken);
 		this.kind = KW_SCREEN;
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

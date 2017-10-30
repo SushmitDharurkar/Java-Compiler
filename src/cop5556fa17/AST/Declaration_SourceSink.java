@@ -10,7 +10,6 @@ public class Declaration_SourceSink extends Declaration {
 	public final Token type;
 	public final String name;
 	public final Source source;
-	public TypeUtils.Type t;
 	
 	public Declaration_SourceSink(Token firstToken, Token type, Token name, Source source) {
 		super(firstToken);
@@ -20,14 +19,22 @@ public class Declaration_SourceSink extends Declaration {
 		this.source = source;
 	}
 
-
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitDeclaration_SourceSink(this,arg);
 	}
 
+	//Note Is there a difference between super and this for type
 
+	@Override
+	public TypeUtils.Type getType() {
+		return super.type;
+	}
 
+	@Override
+	public void setType(TypeUtils.Type type) {
+		super.type = type;
+	}
 
 	@Override
 	public int hashCode() {

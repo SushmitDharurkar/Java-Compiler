@@ -6,7 +6,6 @@ import cop5556fa17.TypeUtils;
 public class Expression_IntLit extends Expression {
 
 	public final int value;
-	public TypeUtils.Type type;
 
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
@@ -17,6 +16,17 @@ public class Expression_IntLit extends Expression {
 		super(firstToken);
 		this.value = value;
 	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
+	}
+
 
 	@Override
 	public int hashCode() {

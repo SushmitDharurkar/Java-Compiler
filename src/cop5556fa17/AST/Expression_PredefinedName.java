@@ -7,7 +7,6 @@ import cop5556fa17.TypeUtils;
 public class Expression_PredefinedName extends Expression {
 
 	public final Kind kind;
-	public TypeUtils.Type type;
 
 	public Expression_PredefinedName(Token firstToken, Kind kind) {
 		super(firstToken);
@@ -17,6 +16,16 @@ public class Expression_PredefinedName extends Expression {
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitExpression_PredefinedName(this, arg);
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

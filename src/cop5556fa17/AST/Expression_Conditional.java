@@ -1,6 +1,7 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_Conditional extends Expression {
 	
@@ -14,6 +15,17 @@ public class Expression_Conditional extends Expression {
 		this.condition = condition;
 		this.trueExpression = trueExpression;
 		this.falseExpression = falseExpression;
+	}
+
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

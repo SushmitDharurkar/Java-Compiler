@@ -1,6 +1,7 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Sink_Ident extends Sink {
 	
@@ -14,6 +15,16 @@ public class Sink_Ident extends Sink {
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitSink_Ident(this,arg);
+	}
+
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
 	}
 
 	@Override

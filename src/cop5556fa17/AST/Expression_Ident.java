@@ -52,19 +52,26 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
+import cop5556fa17.TypeUtils;
 
 public class Expression_Ident extends Expression {
 	
 	public final String name;
-	
-	
 
 	public Expression_Ident(Token firstToken, Token ident) {
 		super(firstToken);
 		this.name = ident.getText();
 	}
 
+	@Override
+	public TypeUtils.Type getType() {
+		return type;
+	}
 
+	@Override
+	public void setType(TypeUtils.Type type) {
+		this.type = type;
+	}
 
 	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
