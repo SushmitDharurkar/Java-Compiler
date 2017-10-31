@@ -99,6 +99,31 @@ public class TypeCheckTest {
 	 String input = "prog int k = 42;";
 	 typeCheck(input);
 	 }
+
+	@Test
+	public void testDec2() throws Exception {
+		String input = "prog int k = 42; k = 2 + 2; boolean t; t= false;";
+		typeCheck(input);
+	}
+
+	@Test
+	public void testDec3() throws Exception {
+		String input = "prog int k = 42; k = 10; k = k+5;";
+		typeCheck(input);
+	}
+
+
+	@Test
+	public void testDecURL() throws Exception {
+		String input = "prog file k = \"file1\";";
+		typeCheck(input);
+	}
+
+	@Test
+	public void testCast() throws Exception {
+		String input = "prog int k; int b; b = k[2,2];";
+		typeCheck(input);
+	}
 	 
 	 /**
 	  * This program does not declare k. The TypeCheckVisitor should

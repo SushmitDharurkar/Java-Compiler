@@ -41,8 +41,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return program.name;
 	}
 
-	//Imp Do I need to visit every node even if type not assigned? Yes
-	//Imp Should I add null checks for each internal visit call?
+	//Imp Should I add null checks for each internal visit call? Yes
 
 //	Declaration_Variable​ ​ ::=​ ​ ​ Type​ ​ name​ ​ (Expression​ ​ | ​ ​ ε ​ ​ )
 
@@ -68,8 +67,14 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitExpression_Binary(Expression_Binary expression_Binary, Object arg) throws Exception {
-		expression_Binary.e0.visit(this, arg);
-		expression_Binary.e1.visit(this, arg);
+		//Note Correct null flow here
+		if(expression_Binary.e0 != null){
+			expression_Binary.e0.visit(this, arg);
+		}
+		if (expression_Binary.e1 != null){
+			expression_Binary.e1.visit(this, arg);
+		}
+
 		TypeUtils.Type e0Type = expression_Binary.e0.getType();
 		TypeUtils.Type e1Type = expression_Binary.e1.getType();
 		if (e0Type != e1Type){
@@ -89,7 +94,6 @@ public class TypeCheckVisitor implements ASTVisitor {
 				expression_Binary.setType(TypeUtils.Type.INTEGER);
 			}
 			else {
-				expression_Binary.setType(TypeUtils.Type.NONE);	//Note Should I write a different if case for type == None?
 				throw new SemanticException(expression_Binary.firstToken, "Semantic Exception found! Unable to determine type.");
 			}
 
@@ -101,18 +105,21 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitExpression_Unary(Expression_Unary expression_Unary, Object arg) throws Exception {
-		expression_Unary.e.visit(this, arg);
-		TypeUtils.Type eType = expression_Unary.e.getType();
+		//Note Should I throw exception in else?
+		if (expression_Unary.e != null){
+			expression_Unary.e.visit(this, arg);
 
-		if ((expression_Unary.op == Kind.OP_EXCL) && (eType == TypeUtils.Type.BOOLEAN || eType == TypeUtils.Type.INTEGER)){
-			expression_Unary.setType(eType);
-		}
-		else if ((expression_Unary.op == Kind.OP_PLUS || expression_Unary.op == Kind.OP_MINUS) && eType == TypeUtils.Type.INTEGER){
-			expression_Unary.setType(TypeUtils.Type.INTEGER);
-		}
-		else {
-			expression_Unary.setType(TypeUtils.Type.NONE);
-			throw new SemanticException(expression_Unary.firstToken, "Semantic Exception found! Unable to determine type.");
+			TypeUtils.Type eType = expression_Unary.e.getType();
+
+			if ((expression_Unary.op == Kind.OP_EXCL) && (eType == TypeUtils.Type.BOOLEAN || eType == TypeUtils.Type.INTEGER)){
+				expression_Unary.setType(eType);
+			}
+			else if ((expression_Unary.op == Kind.OP_PLUS || expression_Unary.op == Kind.OP_MINUS) && eType == TypeUtils.Type.INTEGER){
+				expression_Unary.setType(TypeUtils.Type.INTEGER);
+			}
+			else {
+				throw new SemanticException(expression_Unary.firstToken, "Semantic Exception found! Unable to determine type.");
+			}
 		}
 		return expression_Unary;
 	}
@@ -121,10 +128,15 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitIndex(Index index, Object arg) throws Exception {
-		index.e0.visit(this, arg);
-		index.e1.visit(this, arg);
+		//Note Correct null flow here
+		if (index.e0 != null){
+			index.e0.visit(this, arg);
+		}
+		if (index.e1 != null){
+			index.e1.visit(this, arg);
+		}
+
 		if (index.e0.getType() == TypeUtils.Type.INTEGER && index.e1.getType() == TypeUtils.Type.INTEGER){
-			//Note Check for Type Cast Exceptions
 			try{
 				Expression_PredefinedName e0 = (Expression_PredefinedName) index.e0;
 				Expression_PredefinedName e1 = (Expression_PredefinedName) index.e1;
@@ -150,6 +162,10 @@ public class TypeCheckVisitor implements ASTVisitor {
 		//Note Should Index and name type be checked for a match?
 		Declaration d = symbolTable.get(expression_PixelSelector.name);
 
+		if (expression_PixelSelector.index != null){
+			expression_PixelSelector.index.visit(this, arg);
+		}
+
 		if (d != null){
 			TypeUtils.Type type = d.getType();
 
@@ -174,9 +190,16 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitExpression_Conditional(Expression_Conditional expression_Conditional, Object arg) throws Exception {
-		expression_Conditional.condition.visit(this, arg);
-		expression_Conditional.trueExpression.visit(this, arg);
-		expression_Conditional.falseExpression.visit(this, arg);
+		//Note Correct null flow here
+		if (expression_Conditional.condition != null){
+			expression_Conditional.condition.visit(this, arg);
+		}
+		if (expression_Conditional.trueExpression != null){
+			expression_Conditional.trueExpression.visit(this, arg);
+		}
+		if (expression_Conditional.falseExpression != null){
+			expression_Conditional.falseExpression.visit(this, arg);
+		}
 
 		if ((expression_Conditional.condition.getType() == TypeUtils.Type.BOOLEAN) && (expression_Conditional.trueExpression.getType() == expression_Conditional.falseExpression.getType()) ){
 			expression_Conditional.setType(expression_Conditional.trueExpression.getType());
@@ -192,6 +215,23 @@ public class TypeCheckVisitor implements ASTVisitor {
 	@Override
 	public Object visitDeclaration_Image(Declaration_Image declaration_Image, Object arg) throws Exception {
 		if (!symbolTable.containsKey(declaration_Image.name)){
+			if (declaration_Image.xSize != null){
+				if (declaration_Image.ySize != null){
+					declaration_Image.xSize.visit(this, arg);
+					declaration_Image.ySize.visit(this, arg);
+					if (declaration_Image.xSize.getType() != TypeUtils.Type.INTEGER || declaration_Image.ySize.getType() != TypeUtils.Type.INTEGER){
+						throw new SemanticException(declaration_Image.firstToken, "Semantic Exception found! INTEGER type expected.");
+					}
+				}
+				else {
+					throw new SemanticException(declaration_Image.firstToken, "Semantic Exception found! ySize cannot be null.");
+				}
+			}
+
+			if (declaration_Image.source != null){
+				declaration_Image.source.visit(this, arg);
+			}
+
 			declaration_Image.setType(TypeUtils.Type.IMAGE);
 			symbolTable.put(declaration_Image.name, declaration_Image);
 			return declaration_Image;
@@ -205,7 +245,6 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitSource_StringLiteral(Source_StringLiteral source_StringLiteral, Object arg) throws Exception {
-		//Check this
 		try {
 			new URL(source_StringLiteral.fileOrUrl);
 			source_StringLiteral.setType(TypeUtils.Type.URL);
@@ -221,15 +260,17 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitSource_CommandLineParam(Source_CommandLineParam source_CommandLineParam, Object arg) throws Exception {
-		source_CommandLineParam.paramNum.visit(this, arg);
+		//Note Should I throw exception in else?
+		if (source_CommandLineParam.paramNum != null){
+			source_CommandLineParam.paramNum.visit(this, arg);
 
-		TypeUtils.Type type = source_CommandLineParam.paramNum.getType();
-		if (type == TypeUtils.Type.INTEGER) {
-			source_CommandLineParam.setType(type);
-		}
-		else {
-			source_CommandLineParam.setType(type);
-			throw new SemanticException(source_CommandLineParam.firstToken, "Semantic Exception found! INTEGER type expected.");
+			TypeUtils.Type type = source_CommandLineParam.paramNum.getType();
+			if (type == TypeUtils.Type.INTEGER) {
+				source_CommandLineParam.setType(type);
+			}
+			else {
+				throw new SemanticException(source_CommandLineParam.firstToken, "Semantic Exception found! INTEGER type expected.");
+			}
 		}
 		return source_CommandLineParam;
 	}
@@ -260,9 +301,20 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitDeclaration_SourceSink( Declaration_SourceSink declaration_SourceSink, Object arg) throws Exception {
-		if (!symbolTable.containsKey(declaration_SourceSink.name)){
+		if (!symbolTable.containsKey(declaration_SourceSink.name)) {
 			declaration_SourceSink.setType(TypeUtils.getType(declaration_SourceSink.type));
-			symbolTable.put(declaration_SourceSink.name, declaration_SourceSink);
+			if (declaration_SourceSink.source != null){
+				declaration_SourceSink.source.visit(this, arg);
+				if (declaration_SourceSink.source.getType() == declaration_SourceSink.getType()){
+					symbolTable.put(declaration_SourceSink.name, declaration_SourceSink);
+				}
+				else {
+					throw new SemanticException(declaration_SourceSink.firstToken, "Semantic Exception found! Type mismatch.");
+				}
+			}
+			else {
+				symbolTable.put(declaration_SourceSink.name, declaration_SourceSink);
+			}
 			return declaration_SourceSink;
 		}
 		else {
@@ -282,21 +334,28 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitExpression_FunctionAppWithExprArg(Expression_FunctionAppWithExprArg expression_FunctionAppWithExprArg, Object arg) throws Exception {
-		expression_FunctionAppWithExprArg.arg.visit(this, arg);
+		if (expression_FunctionAppWithExprArg.arg != null){
+			expression_FunctionAppWithExprArg.arg.visit(this, arg);
 
-		if (expression_FunctionAppWithExprArg.arg.getType() == TypeUtils.Type.INTEGER){
-			expression_FunctionAppWithExprArg.setType(TypeUtils.Type.INTEGER);
-			return expression_FunctionAppWithExprArg;
+			if (expression_FunctionAppWithExprArg.arg.getType() == TypeUtils.Type.INTEGER){
+				expression_FunctionAppWithExprArg.setType(TypeUtils.Type.INTEGER);
+			}
+			else {
+				throw new SemanticException(expression_FunctionAppWithExprArg.firstToken, "Semantic Exception found! INTEGER type expected.");
+			}
 		}
-		else {
-			throw new SemanticException(expression_FunctionAppWithExprArg.firstToken, "Semantic Exception found! INTEGER type expected.");
-		}
+		return expression_FunctionAppWithExprArg;
 	}
 
 //	Expression_FunctionAppWithIndexArg​ ​ ::=​ ​ ​ ​ function​ ​ Index
 
 	@Override
 	public Object visitExpression_FunctionAppWithIndexArg(Expression_FunctionAppWithIndexArg expression_FunctionAppWithIndexArg, Object arg) throws Exception {
+		//Note Should I throw exception in else?
+		if (expression_FunctionAppWithIndexArg.arg != null){
+			expression_FunctionAppWithIndexArg.arg.visit(this, arg);
+		}
+
 		expression_FunctionAppWithIndexArg.setType(TypeUtils.Type.INTEGER);
 		return expression_FunctionAppWithIndexArg;
 	}
@@ -316,14 +375,19 @@ public class TypeCheckVisitor implements ASTVisitor {
 		Declaration d = symbolTable.get(statement_Out.name);
 
 		if (d != null){
-			statement_Out.sink.visit(this, arg);
-			//Check this
-			if (((d.getType() == TypeUtils.Type.INTEGER || d.getType() == TypeUtils.Type.BOOLEAN) && statement_Out.sink.getType() == TypeUtils.Type.SCREEN) || (d.getType() == TypeUtils.Type.IMAGE && (statement_Out.sink.getType() == TypeUtils.Type.FILE || statement_Out.sink.getType() == TypeUtils.Type.SCREEN)))  {
-				statement_Out.setDec(d);
+			//Note Should I throw exception in else?
+			if (statement_Out.sink != null){
+				statement_Out.sink.visit(this, arg);
+
+				//Check this
+				if (((d.getType() == TypeUtils.Type.INTEGER || d.getType() == TypeUtils.Type.BOOLEAN) && statement_Out.sink.getType() == TypeUtils.Type.SCREEN) || (d.getType() == TypeUtils.Type.IMAGE && (statement_Out.sink.getType() == TypeUtils.Type.FILE || statement_Out.sink.getType() == TypeUtils.Type.SCREEN)))  {
+					statement_Out.setDec(d);
+				}
+				else {
+					throw new SemanticException(statement_Out.firstToken, "Semantic Exception found! Type mismatch.");
+				}
 			}
-			else {
-				throw new SemanticException(statement_Out.firstToken, "Semantic Exception found! Type mismatch.");
-			}
+
 		}
 		else {
 			throw new SemanticException(statement_Out.firstToken, "Semantic Exception found! Identifier not declared.");
@@ -338,12 +402,16 @@ public class TypeCheckVisitor implements ASTVisitor {
 		Declaration d = symbolTable.get(statement_In.name);
 
 		if (d != null){
-			statement_In.source.visit(this, arg);
-			if (d.getType() == statement_In.source.getType()){
-				statement_In.setDec(d);
-			}
-			else {
-				throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
+			//Note Should I throw exception in else?
+			if (statement_In.source != null) {
+				statement_In.source.visit(this, arg);
+
+				if (d.getType() == statement_In.source.getType()){
+					statement_In.setDec(d);
+				}
+				else {
+					throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
+				}
 			}
 		}
 		else {
@@ -356,8 +424,13 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 	@Override
 	public Object visitStatement_Assign(Statement_Assign statement_Assign, Object arg) throws Exception {
-		statement_Assign.lhs.visit(this, arg);
-		statement_Assign.e.visit(this, arg);
+		//Note Correct null flow here
+		if (statement_Assign.lhs != null){
+			statement_Assign.lhs.visit(this, arg);
+		}
+		if (statement_Assign.e != null){
+			statement_Assign.e.visit(this, arg);
+		}
 
 		if (statement_Assign.lhs.getType() == statement_Assign.e.getType()){
 			statement_Assign.setCartesian(statement_Assign.lhs.isCartesian());
@@ -375,10 +448,12 @@ public class TypeCheckVisitor implements ASTVisitor {
 		Declaration d = symbolTable.get(lhs.name);
 
 		if (d != null){
-			lhs.index.visit(this, arg);
+			if (lhs.index != null){
+				lhs.index.visit(this, arg);
+				lhs.setCartesian(lhs.index.isCartesian());
+			}
 			lhs.setDeclaration(d);
-			lhs.setType(d.getType());	//Check here if lhs type is being set by d
-			lhs.setCartesian(lhs.index.isCartesian());
+			lhs.setType(d.getType());
 			return lhs;
 		}
 		else {
