@@ -24,16 +24,6 @@ public class Statement_Out extends Statement {
 	}
 
 	@Override
-	public TypeUtils.Type getType() {
-		return type;
-	}
-
-	@Override
-	public void setType(TypeUtils.Type type) {
-		this.type = type;
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();

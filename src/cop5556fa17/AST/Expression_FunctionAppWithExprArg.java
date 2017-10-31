@@ -23,6 +23,7 @@ public class Expression_FunctionAppWithExprArg extends Expression_FunctionApp {
 	@Override
 	public void setType(TypeUtils.Type type) {
 		this.type = type;
+		super.setType(type);
 	}
 
 	@Override

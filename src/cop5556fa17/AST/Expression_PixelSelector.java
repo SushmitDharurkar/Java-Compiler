@@ -32,6 +32,7 @@ public class Expression_PixelSelector extends Expression {
 	@Override
 	public void setType(TypeUtils.Type type) {
 		this.type = type;
+		super.setType(type);
 	}
 
 	@Override

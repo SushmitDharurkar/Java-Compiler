@@ -10,6 +10,8 @@ public class LHS extends ASTNode{
 	Declaration declaration;
 	boolean isCartesian;
 
+	TypeUtils.Type type;
+
 	public LHS(Token firstToken, Token name, Index index) {
 		super(firstToken);
 		this.name = name.getText();
@@ -28,19 +30,17 @@ public class LHS extends ASTNode{
 		this.declaration = declaration;
 	}
 
-	@Override
-	public Object visit(ASTVisitor v, Object arg) throws Exception {
-		return v.visitLHS(this,arg);
-	}
-
-	@Override
 	public TypeUtils.Type getType() {
 		return type;
 	}
 
-	@Override
 	public void setType(TypeUtils.Type type) {
 		this.type = type;
+	}
+
+	@Override
+	public Object visit(ASTVisitor v, Object arg) throws Exception {
+		return v.visitLHS(this,arg);
 	}
 
 	@Override

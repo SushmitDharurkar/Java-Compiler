@@ -21,9 +21,11 @@ public class Sink_SCREEN extends Sink {
 		return type;
 	}
 
+	//Check if this works
 	@Override
 	public void setType(TypeUtils.Type type) {
 		this.type = type;
+		super.setType(type);
 	}
 
 	@Override

@@ -26,12 +26,12 @@ public class Declaration_Image extends Declaration {
 
 	@Override
 	public TypeUtils.Type getType() {
-		return type;
+		return typeName;
 	}
 
 	@Override
-	public void setType(TypeUtils.Type type) {
-		this.type = type;
+	public void setType(TypeUtils.Type typeName) {
+		this.typeName = typeName;
 	}
 
 	@Override

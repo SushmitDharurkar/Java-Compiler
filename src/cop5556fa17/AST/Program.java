@@ -11,9 +11,6 @@ public class Program extends ASTNode {
 	public final String name;
 	public final ArrayList<ASTNode> decsAndStatements;
 	
-
-
-	
 	public Program(Token firstToken, Token name, ArrayList<ASTNode> decsAndStatements) {
 		super(firstToken);
 		this.name=name.getText();

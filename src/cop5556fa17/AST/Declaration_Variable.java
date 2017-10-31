@@ -18,16 +18,14 @@ public class Declaration_Variable extends Declaration {
 		this.e = e;
 	}
 
-	//Note Is there a difference between super and this for type
-
 	@Override
 	public TypeUtils.Type getType() {
-		return super.type;
+		return typeName;
 	}
 
 	@Override
-	public void setType(TypeUtils.Type type) {
-		super.type = type;
+	public void setType(TypeUtils.Type typeName) {
+		this.typeName = typeName;
 	}
 
 	@Override

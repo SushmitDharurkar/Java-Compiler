@@ -20,6 +20,7 @@ public class Expression_BooleanLit extends Expression {
 	@Override
 	public void setType(TypeUtils.Type type) {
 		this.type = type;
+		super.setType(type);
 	}
 
 

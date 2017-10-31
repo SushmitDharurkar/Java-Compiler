@@ -1,13 +1,13 @@
 package cop5556fa17.AST;
 
 import cop5556fa17.Scanner.Token;
-import cop5556fa17.TypeUtils;
+//import cop5556fa17.TypeUtils;
 
 public abstract class ASTNode {
 	
 	final public Token firstToken;
 
-	TypeUtils.Type type;
+//	TypeUtils.Type type;	//Note Remove this if all works
 	
 	public ASTNode(Token firstToken) {
 		super();	//Don't know why super() called in base class?
@@ -15,9 +15,9 @@ public abstract class ASTNode {
 //		type = TypeUtils.Type.NONE;	//Note Not sure of this
 	}
 
-	public abstract TypeUtils.Type getType();
-
-	public abstract void setType(TypeUtils.Type type);
+//	public abstract TypeUtils.Type getType();
+//
+//	public abstract void setType(TypeUtils.Type type);
 
 	public abstract Object visit(ASTVisitor v, Object arg) throws Exception;
 

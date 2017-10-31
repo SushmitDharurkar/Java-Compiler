@@ -41,13 +41,17 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return program.name;
 	}
 
-	//Note Confirm what exactly to return from all these functions
+	//Imp Do I need to visit every node even if type not assigned? Yes
+	//Imp Should I add null checks for each internal visit call?
+
+//	Declaration_Variable​ ​ ::=​ ​ ​ Type​ ​ name​ ​ (Expression​ ​ | ​ ​ ε ​ ​ )
 
 	@Override
 	public Object visitDeclaration_Variable( Declaration_Variable declaration_Variable, Object arg) throws Exception {
 		if (!symbolTable.containsKey(declaration_Variable.name)){
 			declaration_Variable.setType(TypeUtils.getType(declaration_Variable.type));
 			if (declaration_Variable.e != null){
+				declaration_Variable.e.visit(this, arg);
 				if (declaration_Variable.e.getType() != declaration_Variable.getType()){
 					throw new SemanticException(declaration_Variable.firstToken, "Semantic Exception found! Type mismatch.");
 				}
@@ -60,8 +64,12 @@ public class TypeCheckVisitor implements ASTVisitor {
 		}
 	}
 
+//	Expression_Binary​ ​ ::=​ ​ Expression​_0​ ​ ​ op​ ​ Expression​_1
+
 	@Override
 	public Object visitExpression_Binary(Expression_Binary expression_Binary, Object arg) throws Exception {
+		expression_Binary.e0.visit(this, arg);
+		expression_Binary.e1.visit(this, arg);
 		TypeUtils.Type e0Type = expression_Binary.e0.getType();
 		TypeUtils.Type e1Type = expression_Binary.e1.getType();
 		if (e0Type != e1Type){
@@ -89,8 +97,11 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return expression_Binary;
 	}
 
+//	Expression_Unary​ ​ ::=​ ​ op​ ​ Expression
+
 	@Override
 	public Object visitExpression_Unary(Expression_Unary expression_Unary, Object arg) throws Exception {
+		expression_Unary.e.visit(this, arg);
 		TypeUtils.Type eType = expression_Unary.e.getType();
 
 		if ((expression_Unary.op == Kind.OP_EXCL) && (eType == TypeUtils.Type.BOOLEAN || eType == TypeUtils.Type.INTEGER)){
@@ -106,42 +117,67 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return expression_Unary;
 	}
 
+//	Index​ ​ ::=​ ​ Expression​_0​ ​ ​ Expression​_1
+
 	@Override
 	public Object visitIndex(Index index, Object arg) throws Exception {
+		index.e0.visit(this, arg);
+		index.e1.visit(this, arg);
 		if (index.e0.getType() == TypeUtils.Type.INTEGER && index.e1.getType() == TypeUtils.Type.INTEGER){
 			//Note Check for Type Cast Exceptions
-			Expression_PredefinedName e0 = (Expression_PredefinedName) index.e0;
-			Expression_PredefinedName e1 = (Expression_PredefinedName) index.e1;
-			if (!(e0.kind == Kind.KW_r && e1.kind == Kind.KW_A)){
-				index.setCartesian(true);
+			try{
+				Expression_PredefinedName e0 = (Expression_PredefinedName) index.e0;
+				Expression_PredefinedName e1 = (Expression_PredefinedName) index.e1;
+				if (!(e0.kind == Kind.KW_r && e1.kind == Kind.KW_A)){
+					index.setCartesian(true);
+				}
+				return index;
 			}
-			return index;
+			catch (ClassCastException e){	//For this case Selector​ ​ ::=​ ​ ​ Expression​ ​ COMMA​ ​ Expression
+				index.setCartesian(true);
+				return index;
+			}
 		}
 		else {
 			throw new SemanticException(index.firstToken, "Semantic Exception found! INTEGER types expected.");
 		}
 	}
 
+//	Expression_PixelSelector​ ​ ::=​ ​ ​ ​ name​ ​ Index
+
 	@Override
 	public Object visitExpression_PixelSelector(Expression_PixelSelector expression_PixelSelector, Object arg) throws Exception {
+		//Note Should Index and name type be checked for a match?
 		Declaration d = symbolTable.get(expression_PixelSelector.name);
-		TypeUtils.Type type = d.getType();
 
-		if (type == TypeUtils.Type.IMAGE){
-			expression_PixelSelector.setType(TypeUtils.Type.INTEGER);
-		}
-		else if (expression_PixelSelector.index == null){
-			expression_PixelSelector.setType(type);
+		if (d != null){
+			TypeUtils.Type type = d.getType();
+
+			if (type == TypeUtils.Type.IMAGE){
+				expression_PixelSelector.setType(TypeUtils.Type.INTEGER);
+			}
+			else if (expression_PixelSelector.index == null){
+				expression_PixelSelector.setType(type);
+			}
+			else {
+				expression_PixelSelector.setType(TypeUtils.Type.NONE);
+				throw new SemanticException(expression_PixelSelector.firstToken, "Semantic Exception found! Unable to determine type.");
+			}
+			return expression_PixelSelector;
 		}
 		else {
-			expression_PixelSelector.setType(TypeUtils.Type.NONE);
-			throw new SemanticException(expression_PixelSelector.firstToken, "Semantic Exception found! Unable to determine type.");
+			throw new SemanticException(expression_PixelSelector.firstToken, "Semantic Exception found! Identifier not declared.");
 		}
-		return expression_PixelSelector;
 	}
+
+//	Expression_Conditional​ ​ ::=​ ​ ​ Expression​_condition​ ​ ​ Expression​_true​ ​ ​ Expression​_false
 
 	@Override
 	public Object visitExpression_Conditional(Expression_Conditional expression_Conditional, Object arg) throws Exception {
+		expression_Conditional.condition.visit(this, arg);
+		expression_Conditional.trueExpression.visit(this, arg);
+		expression_Conditional.falseExpression.visit(this, arg);
+
 		if ((expression_Conditional.condition.getType() == TypeUtils.Type.BOOLEAN) && (expression_Conditional.trueExpression.getType() == expression_Conditional.falseExpression.getType()) ){
 			expression_Conditional.setType(expression_Conditional.trueExpression.getType());
 			return expression_Conditional;
@@ -150,6 +186,8 @@ public class TypeCheckVisitor implements ASTVisitor {
 			throw new SemanticException(expression_Conditional.firstToken, "Semantic Exception found! Type mismatch.");
 		}
 	}
+
+//	Declaration_Image​ ​ ​ ::=​ ​ name​ ​ ( ​ ​ ​ xSize​ ​ ySize​ ​ | ​ ​ ε )​ ​ Source
 
 	@Override
 	public Object visitDeclaration_Image(Declaration_Image declaration_Image, Object arg) throws Exception {
@@ -163,21 +201,28 @@ public class TypeCheckVisitor implements ASTVisitor {
 		}
 	}
 
+//	Source_StringLiteral​ ​ ::=​ ​ ​ fileOrURL
+
 	@Override
 	public Object visitSource_StringLiteral(Source_StringLiteral source_StringLiteral, Object arg) throws Exception {
 		//Check this
 		try {
 			new URL(source_StringLiteral.fileOrUrl);
 			source_StringLiteral.setType(TypeUtils.Type.URL);
+			return source_StringLiteral;
 		}
 		catch (MalformedURLException e){
 			source_StringLiteral.setType(TypeUtils.Type.FILE);
+			return source_StringLiteral;
 		}
-		return source_StringLiteral;
 	}
+
+//	Source_CommandLineParam​ ​ ​ ::=​ ​ Expression​_paramNum
 
 	@Override
 	public Object visitSource_CommandLineParam(Source_CommandLineParam source_CommandLineParam, Object arg) throws Exception {
+		source_CommandLineParam.paramNum.visit(this, arg);
+
 		TypeUtils.Type type = source_CommandLineParam.paramNum.getType();
 		if (type == TypeUtils.Type.INTEGER) {
 			source_CommandLineParam.setType(type);
@@ -189,16 +234,29 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return source_CommandLineParam;
 	}
 
+//	Source_Ident​ ​ ::=​ ​ name
+
 	@Override
 	public Object visitSource_Ident(Source_Ident source_Ident, Object arg) throws Exception {
-		source_Ident.setType(symbolTable.get(source_Ident.name).getType());
-		if (source_Ident.getType() == TypeUtils.Type.FILE || source_Ident.getType() == TypeUtils.Type.URL) {
-			return source_Ident;
+		Declaration d = symbolTable.get(source_Ident.name);
+
+		if (d != null){
+			source_Ident.setType(d.getType());
+			if (source_Ident.getType() == TypeUtils.Type.FILE || source_Ident.getType() == TypeUtils.Type.URL) {
+				return source_Ident;
+			}
+			else {
+				throw new SemanticException(source_Ident.firstToken, "Semantic Exception found! FILE or URL type expected.");
+			}
 		}
 		else {
-			throw new SemanticException(source_Ident.firstToken, "Semantic Exception found! FILE or URL type expected.");
+			throw new SemanticException(source_Ident.firstToken, "Semantic Exception found! Identifier not declared.");
 		}
+
+
 	}
+
+//	Declaration_SourceSink​ ​ ​ ::=​ ​ Type​ ​ name​ ​ ​ Source
 
 	@Override
 	public Object visitDeclaration_SourceSink( Declaration_SourceSink declaration_SourceSink, Object arg) throws Exception {
@@ -212,16 +270,20 @@ public class TypeCheckVisitor implements ASTVisitor {
 		}
 	}
 
+//	Expression_IntLit​ ​ ::=​ ​ ​ value
+
 	@Override
 	public Object visitExpression_IntLit(Expression_IntLit expression_IntLit, Object arg) throws Exception {
 		expression_IntLit.setType(TypeUtils.Type.INTEGER);
 		return expression_IntLit;
 	}
 
-	//Note Function App is an abstract class. How to assign type to it? Maybe add a super call
+//	Expression_FunctionAppWithExprArg​ ​ ::=​ ​ ​ function​ ​ Expression
 
 	@Override
 	public Object visitExpression_FunctionAppWithExprArg(Expression_FunctionAppWithExprArg expression_FunctionAppWithExprArg, Object arg) throws Exception {
+		expression_FunctionAppWithExprArg.arg.visit(this, arg);
+
 		if (expression_FunctionAppWithExprArg.arg.getType() == TypeUtils.Type.INTEGER){
 			expression_FunctionAppWithExprArg.setType(TypeUtils.Type.INTEGER);
 			return expression_FunctionAppWithExprArg;
@@ -231,11 +293,15 @@ public class TypeCheckVisitor implements ASTVisitor {
 		}
 	}
 
+//	Expression_FunctionAppWithIndexArg​ ​ ::=​ ​ ​ ​ function​ ​ Index
+
 	@Override
 	public Object visitExpression_FunctionAppWithIndexArg(Expression_FunctionAppWithIndexArg expression_FunctionAppWithIndexArg, Object arg) throws Exception {
 		expression_FunctionAppWithIndexArg.setType(TypeUtils.Type.INTEGER);
 		return expression_FunctionAppWithIndexArg;
 	}
+
+//	Expression_PredefinedName​ ​ ::=​ ​ ​ predefNameKind
 
 	@Override
 	public Object visitExpression_PredefinedName(Expression_PredefinedName expression_PredefinedName, Object arg) throws Exception {
@@ -243,10 +309,14 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return expression_PredefinedName;
 	}
 
+//	Statement_Out​ ​ ::=​ ​ name​ ​ Sink
+
 	@Override
 	public Object visitStatement_Out(Statement_Out statement_Out, Object arg) throws Exception {
 		Declaration d = symbolTable.get(statement_Out.name);
+
 		if (d != null){
+			statement_Out.sink.visit(this, arg);
 			//Check this
 			if (((d.getType() == TypeUtils.Type.INTEGER || d.getType() == TypeUtils.Type.BOOLEAN) && statement_Out.sink.getType() == TypeUtils.Type.SCREEN) || (d.getType() == TypeUtils.Type.IMAGE && (statement_Out.sink.getType() == TypeUtils.Type.FILE || statement_Out.sink.getType() == TypeUtils.Type.SCREEN)))  {
 				statement_Out.setDec(d);
@@ -256,25 +326,39 @@ public class TypeCheckVisitor implements ASTVisitor {
 			}
 		}
 		else {
-			throw new SemanticException(statement_Out.firstToken, "Semantic Exception found! Expression is set to null.");
+			throw new SemanticException(statement_Out.firstToken, "Semantic Exception found! Identifier not declared.");
 		}
 		return statement_Out;
 	}
 
+//	Statement_In​ ​ ::=​ ​ name​ ​ Source
+
 	@Override
 	public Object visitStatement_In(Statement_In statement_In, Object arg) throws Exception {
 		Declaration d = symbolTable.get(statement_In.name);
-		if (d != null && d.getType() == statement_In.source.getType()){
-			statement_In.setDec(d);
+
+		if (d != null){
+			statement_In.source.visit(this, arg);
+			if (d.getType() == statement_In.source.getType()){
+				statement_In.setDec(d);
+			}
+			else {
+				throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
+			}
 		}
 		else {
-			throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
+			throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Identifier not declared.");
 		}
 		return statement_In;
 	}
 
+//	Statement_Assign​ ​ ::=​ ​ ​ LHS​ ​ ​ Expression
+
 	@Override
 	public Object visitStatement_Assign(Statement_Assign statement_Assign, Object arg) throws Exception {
+		statement_Assign.lhs.visit(this, arg);
+		statement_Assign.e.visit(this, arg);
+
 		if (statement_Assign.lhs.getType() == statement_Assign.e.getType()){
 			statement_Assign.setCartesian(statement_Assign.lhs.isCartesian());
 		}
@@ -284,16 +368,25 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return statement_Assign;
 	}
 
+//	LHS​ ​ ::=​ ​ name​ ​ Index
+
 	@Override
 	public Object visitLHS(LHS lhs, Object arg) throws Exception {
 		Declaration d = symbolTable.get(lhs.name);
-		lhs.setDeclaration(d);
-		lhs.setType(d.getType());	//Check here if lhs type is being set by d
-		lhs.setCartesian(lhs.index.isCartesian());
-		return lhs;
+
+		if (d != null){
+			lhs.index.visit(this, arg);
+			lhs.setDeclaration(d);
+			lhs.setType(d.getType());	//Check here if lhs type is being set by d
+			lhs.setCartesian(lhs.index.isCartesian());
+			return lhs;
+		}
+		else {
+			throw new SemanticException(lhs.firstToken, "Semantic Exception found! Identifier not declared.");
+		}
 	}
 
-	//Note Need to assign Type for Sink abstract class
+//	Sink_SCREEN​ ​ ::=​ ​ SCREEN
 
 	@Override
 	public Object visitSink_SCREEN(Sink_SCREEN sink_SCREEN, Object arg) throws Exception {
@@ -301,16 +394,27 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return sink_SCREEN;
 	}
 
+//	Sink_Ident​ ​ ::=​ ​ name
+
 	@Override
 	public Object visitSink_Ident(Sink_Ident sink_Ident, Object arg) throws Exception {
-		sink_Ident.setType(symbolTable.get(sink_Ident.name).getType());
-		if (sink_Ident.getType() == TypeUtils.Type.FILE) {
-			return sink_Ident;
+		Declaration d = symbolTable.get(sink_Ident.name);
+
+		if (d != null){
+			sink_Ident.setType(d.getType());
+			if (sink_Ident.getType() == TypeUtils.Type.FILE) {
+				return sink_Ident;
+			}
+			else {
+				throw new SemanticException(sink_Ident.firstToken, "Semantic Exception found! FILE type expected.");
+			}
 		}
 		else {
-			throw new SemanticException(sink_Ident.firstToken, "Semantic Exception found! FILE type expected.");
+			throw new SemanticException(sink_Ident.firstToken, "Semantic Exception found! Identifier not declared.");
 		}
 	}
+
+//	Expression_BooleanLit​ ​ ::=​ ​ ​ value
 
 	@Override
 	public Object visitExpression_BooleanLit(Expression_BooleanLit expression_BooleanLit, Object arg) throws Exception {
@@ -318,10 +422,19 @@ public class TypeCheckVisitor implements ASTVisitor {
 		return expression_BooleanLit;
 	}
 
+//	Expression_Ident​ ​ ​ ::=​ ​ ​ ​ name
+
 	@Override
 	public Object visitExpression_Ident(Expression_Ident expression_Ident, Object arg) throws Exception {
-		expression_Ident.setType(symbolTable.get(expression_Ident.name).getType());
-		return expression_Ident;
+		Declaration d = symbolTable.get(expression_Ident.name);
+
+		if (d != null){
+			expression_Ident.setType(d.getType());
+			return expression_Ident;
+		}
+		else {
+			throw new SemanticException(expression_Ident.firstToken, "Semantic Exception found! Identifier not declared.");
+		}
 	}
 
 }

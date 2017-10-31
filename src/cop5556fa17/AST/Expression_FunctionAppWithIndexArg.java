@@ -28,6 +28,7 @@ public class Expression_FunctionAppWithIndexArg extends Expression_FunctionApp {
 	@Override
 	public void setType(TypeUtils.Type type) {
 		this.type = type;
+		super.setType(type);
 	}
 
 	@Override

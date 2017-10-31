@@ -27,16 +27,6 @@ public class Index extends ASTNode {
 	}
 
 	@Override
-	public TypeUtils.Type getType(){
-		return type;
-	}
-
-	@Override
-	public void setType(TypeUtils.Type type){
-		this.type = type;
-	}
-
-	@Override
 	public Object visit(ASTVisitor v, Object arg) throws Exception {
 		return v.visitIndex(this,arg);
 	}
