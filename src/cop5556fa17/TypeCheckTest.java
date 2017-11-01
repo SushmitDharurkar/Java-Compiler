@@ -112,6 +112,29 @@ public class TypeCheckTest {
 		typeCheck(input);
 	}
 
+	@Test
+	public void testDec4() throws Exception {
+		String input = "prog boolean flag; int sajk;";
+		typeCheck(input);
+	}
+
+	@Test
+	public void testDec5() throws Exception {
+		String input = "prog int k = 42; k = 2 + 2;";
+		typeCheck(input);
+	}
+
+	@Test
+	public void testDec6() throws Exception {
+		String input = "prog image k; k -> SCREEN;";
+		typeCheck(input);
+	}
+
+//	@Test
+//	public void testDec5() throws Exception {
+//		String input = "prog image imageName; image [1,2]array <- imageName;";
+//		typeCheck(input);
+//	}
 
 	@Test
 	public void testDecURL() throws Exception {
@@ -119,11 +142,11 @@ public class TypeCheckTest {
 		typeCheck(input);
 	}
 
-	@Test
-	public void testCast() throws Exception {
-		String input = "prog int k; int b; b = k[2,2];";
-		typeCheck(input);
-	}
+//	@Test
+//	public void testCast() throws Exception {
+//		String input = "prog int k; int b; b = k[2,2];";
+//		typeCheck(input);
+//	}
 	 
 	 /**
 	  * This program does not declare k. The TypeCheckVisitor should

@@ -107,4 +107,16 @@ public class ParserTest {
 		assertNull(dec.e);
 	}
 
+
+	@Test
+	public void testDec2() throws LexicalException, SyntaxException {
+		String input = "p image1 = Z;";
+		show(input);
+		Scanner scanner = new Scanner(input).scan();
+		show(scanner);
+		Parser parser = new Parser(scanner);
+		Program ast = parser.parse();
+		show(ast);
+	}
+
 }
