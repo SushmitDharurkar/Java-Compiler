@@ -135,7 +135,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 				try{
 					Expression_PredefinedName e0 = (Expression_PredefinedName) index.e0;
 					Expression_PredefinedName e1 = (Expression_PredefinedName) index.e1;
-					if (!(e0.kind == Kind.KW_r && e1.kind == Kind.KW_A)){
+					if (!(e0.kind == Kind.KW_r && e1.kind == Kind.KW_a)){
 						index.setCartesian(true);
 					}
 					else {

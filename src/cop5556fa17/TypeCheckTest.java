@@ -130,11 +130,24 @@ public class TypeCheckTest {
 		typeCheck(input);
 	}
 
-//	@Test
-//	public void testDec5() throws Exception {
-//		String input = "prog image imageName; image [1,2]array <- imageName;";
-//		typeCheck(input);
-//	}
+	@Test
+	public void testDec7() throws Exception {
+		String input = "prog int k = k + 1;";
+		thrown.expect(SemanticException.class);
+		typeCheck(input);
+	}
+
+	@Test
+	public void testDec8() throws Exception {
+		String input = "prog image imageName;int array;array[[r,a]]=imageName[5,6];";
+		typeCheck(input);
+	}
+
+	@Test
+	public void testDec9() throws Exception {
+		String input = "prog image image1; image image2; image1 <- image2;";
+		typeCheck(input);
+	}
 
 	@Test
 	public void testDecURL() throws Exception {

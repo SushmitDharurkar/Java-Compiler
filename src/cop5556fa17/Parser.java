@@ -502,7 +502,7 @@ public class Parser {
 				bool_lit = false;
 			}
         	consume();
-        	return new Expression_BooleanLit(firstToken, bool_lit);//Need to find the value bool_lit
+        	return new Expression_BooleanLit(firstToken, bool_lit);
         }
         else {
             return functionApplication();
@@ -603,7 +603,7 @@ public class Parser {
 	}
 
 	/*
-	* RaSelector​ ​ ::=​ ​ KW_r​ ​ , ​ ​ KW_A
+	* RaSelector​ ​ ::=​ ​ KW_r​ ​ , ​ ​ KW_a
 	* Not sure how to return expressions here
 	* */
 
@@ -612,7 +612,7 @@ public class Parser {
 		Token firstToken = t0;
 		Expression e0 = new Expression_PredefinedName(firstToken, t0.kind);
 		match(COMMA);
-		Token t1 = match(KW_A);
+		Token t1 = match(KW_a);
 		Expression e1 = new Expression_PredefinedName(t1, t1.kind);
 		return new Index(firstToken, e0, e1);
 	}
