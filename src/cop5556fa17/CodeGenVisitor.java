@@ -9,6 +9,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import cop5556fa17.TypeUtils.Type;
+import cop5556fa17.Scanner.Kind;
 import cop5556fa17.AST.ASTNode;
 import cop5556fa17.AST.ASTVisitor;
 import cop5556fa17.AST.Declaration;
@@ -135,9 +136,19 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitDeclaration_Variable(Declaration_Variable declaration_Variable, Object arg) throws Exception {
-		FieldVisitor fv = cw.visitField(ACC_STATIC, declaration_Variable.name, "Ljava/lang/String;", null, declaration_Variable.name);
-		if (declaration_Variable.e != null){
-			//todo insert value of exp in name field
+		FieldVisitor fv;
+		String name = declaration_Variable.name;
+		if (declaration_Variable.getType() == Type.INTEGER){
+			fv = cw.visitField(ACC_STATIC, name, "I", null, 0);//Note new Int.. or direct 0
+			if (declaration_Variable.e != null){
+				mv.visitFieldInsn(PUTSTATIC, className, name, "I");
+			}
+		}
+		else {	//Boolean
+			fv = cw.visitField(ACC_STATIC, name, "Z", null, false); //Note new Boolean.. or direct false
+			if (declaration_Variable.e != null){
+				mv.visitFieldInsn(PUTSTATIC, className, name, "Z");
+			}
 		}
 		fv.visitEnd();
 		return declaration_Variable;
@@ -149,17 +160,50 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	public Object visitExpression_Binary(Expression_Binary expression_Binary, Object arg) throws Exception {
 		expression_Binary.e0.visit(this, arg);
 		expression_Binary.e1.visit(this, arg);
-		//Todo Find opcodes of all operators
+
+		Kind op = expression_Binary.op;
+		if (op == Kind.OP_OR){
+			mv.visitInsn(IOR);
+		}
+		else if (op == Kind.OP_AND){
+			mv.visitInsn(IAND);
+		}
+		else if (op == Kind.OP_PLUS){
+			mv.visitInsn(IADD);
+		}
+		else if (op == Kind.OP_MINUS){
+			mv.visitInsn(ISUB);
+		}
+		else if (op == Kind.OP_DIV){
+			mv.visitInsn(IDIV);
+		}
+		else if (op == Kind.OP_TIMES){
+			mv.visitInsn(IMUL);
+		}
+		else if (op == Kind.OP_MOD){
+			mv.visitInsn(IREM);
+		}
+		//Todo Depending on the 2 values of exps and op push true or false on stack
+
 		CodeGenUtils.genLogTOS(GRADE, mv, expression_Binary.getType());
 		return expression_Binary;
 	}
 
+	//	Expression_Unary​ ​ ::=​ ​ op​ ​ Expression
+
 	@Override
 	public Object visitExpression_Unary(Expression_Unary expression_Unary, Object arg) throws Exception {
-		// TODO 
-		throw new UnsupportedOperationException();
-//		CodeGenUtils.genLogTOS(GRADE, mv, expression_Unary.getType());
-//		return null;
+		Type type = expression_Unary.getType();
+		Kind op = expression_Unary.op;
+		expression_Unary.e.visit(this, arg);
+		if (op == Kind.OP_MINUS){
+			mv.visitInsn(INEG);
+		}
+		else if (op == Kind.OP_EXCL){
+//			Todo Add inversion logic for boolean and confirm if it is only applied for booleans
+		}
+		CodeGenUtils.genLogTOS(GRADE, mv, type);
+		return expression_Unary;
 	}
 
 	// generate code to leave the two values on the stack
@@ -295,8 +339,14 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitLHS(LHS lhs, Object arg) throws Exception {
-		//TODO  (see comment)
-		throw new UnsupportedOperationException();
+		Type type = lhs.getType();
+		if (type == Type.INTEGER){
+			mv.visitFieldInsn(GETSTATIC, className, lhs.name, "I");
+		}
+		else if (type == Type.BOOLEAN){
+			mv.visitFieldInsn(GETSTATIC, className, lhs.name, "Z");
+		}
+		return lhs;
 	}
 	
 
@@ -327,13 +377,19 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		return expression_BooleanLit;
 	}
 
+	//	Expression_Ident​ ​ ​ ::=​ ​ ​ ​ name
+
 	@Override
-	public Object visitExpression_Ident(Expression_Ident expression_Ident,
-			Object arg) throws Exception {
-		//TODO
-		throw new UnsupportedOperationException();
-//		CodeGenUtils.genLogTOS(GRADE, mv, expression_Ident.getType());
-//		return null;
+	public Object visitExpression_Ident(Expression_Ident expression_Ident, Object arg) throws Exception {
+		Type type = expression_Ident.getType();
+		if (type == Type.INTEGER){
+			mv.visitFieldInsn(GETSTATIC, className, expression_Ident.name, "I");
+		}
+		else if (type == Type.BOOLEAN){
+			mv.visitFieldInsn(GETSTATIC, className, expression_Ident.name, "Z");
+		}
+		CodeGenUtils.genLogTOS(GRADE, mv, type);
+		return expression_Ident;
 	}
 
 }
