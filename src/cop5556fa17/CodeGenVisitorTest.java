@@ -181,7 +181,55 @@ public class CodeGenVisitorTest {
 		show("Log:\n"+RuntimeLog.globalLog);
 		assertEquals("entering main;0;true;1;34;2;56;true;34;34;leaving main;",RuntimeLog.globalLog.toString());
 	}
-	
+
+	@Test
+	public void prog5() throws Exception {
+		//scan, parse, and type check the program
+		String prog = "prog5";
+		String input = prog
+				+ " boolean g;\n"
+				+ "g <- @ 0;";
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {"true"}; //create command line argument array to initialize params, none in this case
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		assertEquals("entering main;0;leaving main;",RuntimeLog.globalLog.toString());
+	}
+
+	@Test
+	public void prog6() throws Exception {
+		//scan, parse, and type check the program
+		String prog = "prog6";
+		String input = prog
+				+ " boolean g;\n"
+				+ "g <- @ 0;\n"
+				+ "g -> SCREEN;";
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {"true"}; //create command line argument array to initialize params, none in this case
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		assertEquals("entering main;0;true;leaving main;",RuntimeLog.globalLog.toString());
+	}
+
+	@Test
+	public void prog7() throws Exception {
+		//scan, parse, and type check the program
+		String prog = "prog7";
+		String input = prog
+				+ " boolean g = false;\n"
+				+ "int h = 5;"
+				+ "int k = 10;"
+				+ "int chosen;"
+				+ "chosen = g ? h : k;\n"
+				+ "chosen -> SCREEN;"
+				;
+		show(input);
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {}; //create command line argument array to initialize params, none in this case
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		assertEquals("entering main;false;5;10;false;10;10;10;leaving main;",RuntimeLog.globalLog.toString());
+	}
 	
 	@Test
 	public void unaryExpr() throws Exception {

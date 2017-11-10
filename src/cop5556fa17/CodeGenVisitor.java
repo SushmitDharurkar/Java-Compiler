@@ -266,7 +266,7 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitExpression_Conditional(Expression_Conditional expression_Conditional, Object arg) throws Exception {
-		expression_Conditional.visit(this, arg);
+		expression_Conditional.condition.visit(this, arg);
 
 		Label l1 = new Label();
 		mv.visitJumpInsn(IFEQ, l1);	//False condition
@@ -298,13 +298,15 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		throw new UnsupportedOperationException();
 	}
 
-	
+	//	Source_CommandLineParam​ ​ ​ ::=​ ​ Expression​_paramNum
 
 	@Override
-	public Object visitSource_CommandLineParam(Source_CommandLineParam source_CommandLineParam, Object arg)
-			throws Exception {
-		// TODO 
-		throw new UnsupportedOperationException();
+	public Object visitSource_CommandLineParam(Source_CommandLineParam source_CommandLineParam, Object arg) throws Exception {
+		//Check this
+		mv.visitVarInsn(ALOAD, 0);
+		source_CommandLineParam.paramNum.visit(this, arg);
+		mv.visitInsn(AALOAD);
+		return source_CommandLineParam;
 	}
 
 	@Override
@@ -354,11 +356,25 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	/** For Integers and booleans, the only "sink"is the screen, so generate code to print to console.
 	 * For Images, load the Image onto the stack and visit the Sink which will generate the code to handle the image.
 	 */
+
+	//	Statement_Out​ ​ ::=​ ​ name​ ​ Sink
+
 	@Override
 	public Object visitStatement_Out(Statement_Out statement_Out, Object arg) throws Exception {
-		// TODO in HW5:  only INTEGER and BOOLEAN
-		// TODO HW6 remaining cases
-		throw new UnsupportedOperationException();
+		//Check if logging here is correct
+		Type type = statement_Out.getDec().getType();
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+		if (type == Type.INTEGER){
+			mv.visitFieldInsn(GETSTATIC, className, statement_Out.name, "I");
+			CodeGenUtils.genLogTOS(GRADE, mv, Type.INTEGER);
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);
+		}
+		else if (type == Type.BOOLEAN){
+			mv.visitFieldInsn(GETSTATIC, className, statement_Out.name, "Z");
+			CodeGenUtils.genLogTOS(GRADE, mv, Type.BOOLEAN);
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Z)V", false);
+		}
+		return statement_Out;
 	}
 
 	/**
@@ -370,10 +386,22 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	 *  
 	 *  TODO HW6 remaining types
 	 */
+
+	//	Statement_In​ ​ ::=​ ​ name​ ​ Source
+
 	@Override
 	public Object visitStatement_In(Statement_In statement_In, Object arg) throws Exception {
-		// TODO (see comment )
-		throw new UnsupportedOperationException();
+		statement_In.source.visit(this, arg);
+		Type type = statement_In.getDec().getType();
+		if (type == Type.INTEGER){
+			mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "parseInt", "(Ljava/lang/String;)I", false);
+			mv.visitFieldInsn(PUTSTATIC, className, statement_In.name, "I");
+		}
+		else if (type == Type.BOOLEAN){
+			mv.visitMethodInsn(INVOKESTATIC, "java/lang/Boolean", "parseBoolean", "(Ljava/lang/String;)Z", false);
+			mv.visitFieldInsn(PUTSTATIC, className, statement_In.name, "Z");
+		}
+		return statement_In;
 	}
 
 	
