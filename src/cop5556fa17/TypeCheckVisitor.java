@@ -400,7 +400,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 	}
 
 //	Statement_In​ ​ ::=​ ​ name​ ​ Source
-
+//Note Changed this afterwards
 	@Override
 	public Object visitStatement_In(Statement_In statement_In, Object arg) throws Exception {
 		Declaration d = symbolTable.get(statement_In.name);
@@ -408,17 +408,17 @@ public class TypeCheckVisitor implements ASTVisitor {
 		if (d != null){
 			if (statement_In.source != null) {
 				statement_In.source.visit(this, arg);
-
-				if (d.getType() == statement_In.source.getType()){
-					statement_In.setDec(d);
-				}
-				else {
-					throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
-				}
 			}
-			else {
-				throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Source cannot be null.");
-			}
+//				if (d.getType() == statement_In.source.getType()){
+			statement_In.setDec(d);
+//				}
+//				else {
+//					throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
+//				}
+//			}
+//			else {
+//				throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Source cannot be null.");
+//			}
 		}
 		else {
 			throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Identifier not declared.");
