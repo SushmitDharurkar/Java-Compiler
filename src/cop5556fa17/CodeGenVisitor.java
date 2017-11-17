@@ -139,14 +139,14 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		FieldVisitor fv;
 		String name = declaration_Variable.name;
 		if (declaration_Variable.getType() == Type.INTEGER){
-			fv = cw.visitField(ACC_STATIC, name, "I", null, 0);//Note new Int.. or direct 0
+			fv = cw.visitField(ACC_STATIC, name, "I", null, 0);
 			if (declaration_Variable.e != null){
 				declaration_Variable.e.visit(this, arg);
 				mv.visitFieldInsn(PUTSTATIC, className, name, "I");
 			}
 		}
 		else {	//Boolean
-			fv = cw.visitField(ACC_STATIC, name, "Z", null, false); //Note new Boolean.. or direct false
+			fv = cw.visitField(ACC_STATIC, name, "Z", null, false);
 			if (declaration_Variable.e != null){
 				declaration_Variable.e.visit(this, arg);
 				mv.visitFieldInsn(PUTSTATIC, className, name, "Z");
@@ -162,7 +162,7 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	public Object visitExpression_Binary(Expression_Binary expression_Binary, Object arg) throws Exception {
 		expression_Binary.e0.visit(this, arg);
 		expression_Binary.e1.visit(this, arg);
-		//Check this
+
 		Kind op = expression_Binary.op;
 		if (op == Kind.OP_OR){
 			mv.visitInsn(IOR);
@@ -231,18 +231,23 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			mv.visitInsn(INEG);
 		}
 		else if (op == Kind.OP_EXCL){
-//			Todo Confirm if it is only applied for booleans
-			Label l1 = new Label();
-			mv.visitJumpInsn(IFEQ, l1);	//If value is false
-			//If value is true make it false
-			mv.visitInsn(ICONST_0);
-			Label l2 = new Label();
-			mv.visitJumpInsn(GOTO, l2);
-			//If value is false make it true
-			mv.visitLabel(l1);
-			mv.visitInsn(ICONST_1);
-			//Goto
-			mv.visitLabel(l2);
+			if (type == Type.INTEGER){
+				mv.visitLdcInsn(2147483647);
+				mv.visitInsn(IXOR);
+			}
+			else if (type == Type.BOOLEAN){
+				Label l1 = new Label();
+				mv.visitJumpInsn(IFEQ, l1);	//If value is false
+				//If value is true make it false
+				mv.visitInsn(ICONST_0);
+				Label l2 = new Label();
+				mv.visitJumpInsn(GOTO, l2);
+				//If value is false make it true
+				mv.visitLabel(l1);
+				mv.visitInsn(ICONST_1);
+				//Goto
+				mv.visitLabel(l2);
+			}
 		}
 		CodeGenUtils.genLogTOS(GRADE, mv, type);
 		return expression_Unary;
@@ -302,7 +307,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitSource_CommandLineParam(Source_CommandLineParam source_CommandLineParam, Object arg) throws Exception {
-		//Check this
 		mv.visitVarInsn(ALOAD, 0);
 		source_CommandLineParam.paramNum.visit(this, arg);
 		mv.visitInsn(AALOAD);
@@ -345,7 +349,7 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		// TODO HW6
 		throw new UnsupportedOperationException();
 	}
-	//Note Is this HW5 or HW6 and how to do this?
+
 	@Override
 	public Object visitExpression_PredefinedName(Expression_PredefinedName expression_PredefinedName, Object arg)
 			throws Exception {
@@ -361,7 +365,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitStatement_Out(Statement_Out statement_Out, Object arg) throws Exception {
-		//Check if logging here is correct
 		Type type = statement_Out.getDec().getType();
 		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 		if (type == Type.INTEGER){
@@ -427,7 +430,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitLHS(LHS lhs, Object arg) throws Exception {
-		//Note Confirm if this is right?
 		Type type = lhs.getType();
 		if (type == Type.INTEGER){
 			mv.visitFieldInsn(PUTSTATIC, className, lhs.name, "I");
@@ -455,7 +457,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitExpression_BooleanLit(Expression_BooleanLit expression_BooleanLit, Object arg) throws Exception {
-		//Check if this works
 		if (expression_BooleanLit.value){
 			mv.visitInsn(ICONST_1);	//true opcode
 		}

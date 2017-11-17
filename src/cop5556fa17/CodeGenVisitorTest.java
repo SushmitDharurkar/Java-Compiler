@@ -157,7 +157,7 @@ public class CodeGenVisitorTest {
 	}
 	
 	@Test
-	public void prog4() throws Exception {
+	public void prog4() throws Exception {	//Note Confirm this test case
 		//scan, parse, and type check the program
 		String prog = "prog4";
 		String input = prog
@@ -179,7 +179,7 @@ public class CodeGenVisitorTest {
 		String[] commandLineArgs = {"true", "34", "56"}; //create command line argument array to initialize params, none in this case		
 		runCode(prog, bytecode, commandLineArgs);	
 		show("Log:\n"+RuntimeLog.globalLog);
-		assertEquals("entering main;0;true;1;34;2;56;true;34;34;leaving main;",RuntimeLog.globalLog.toString());
+		assertEquals("entering main;0;true;1;34;2;56;true;34;34;34;leaving main;",RuntimeLog.globalLog.toString());
 	}
 
 	@Test
@@ -246,6 +246,64 @@ public class CodeGenVisitorTest {
 		show("Log:\n"+RuntimeLog.globalLog);
 		assertEquals("entering main;false;false;false;true;true;leaving main;",RuntimeLog.globalLog.toString());
 										
+	}
+
+	@Test
+	public void unaryExpr1() throws Exception {
+		String prog = "unaryExpr1";
+		String input = prog +
+				"\nboolean g = false;\n" +
+				"g -> SCREEN;\n"
+				+ "g = !g;\n"
+				+ "g -> SCREEN;"
+				+ "int k = 1;"
+				+ "k -> SCREEN;"
+				+ "k = !k;"
+				+ "k -> SCREEN;";
+		show(input);
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {};
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		assertEquals("entering main;false;false;false;true;true;1;1;1;2147483646;2147483646;leaving main;",RuntimeLog.globalLog.toString());
+
+	}
+
+	@Test
+	public void binaryExpr() throws Exception {
+		String prog = "binaryExpr";
+		String input = prog +
+				"\nboolean g = false;\n" +
+				"g -> SCREEN;\n"
+				+ "boolean t = true;"
+				+ "t -> SCREEN;"
+				+ "t = t | g;"
+				+ "t -> SCREEN;";
+		show(input);
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {};
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		assertEquals("entering main;false;false;true;true;true;false;true;true;leaving main;",RuntimeLog.globalLog.toString());
+
+	}
+
+	@Test
+	public void binaryExpr1() throws Exception {
+		String prog = "binaryExpr1";
+		String input = prog +
+				"\nint g = 8;\n" +
+				 "int t = 4;"
+				+ "boolean ans;"
+				+ "ans = g >= t;"
+				+ "ans -> SCREEN;";
+		show(input);
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {};
+		runCode(prog, bytecode, commandLineArgs);
+		show("Log:\n"+RuntimeLog.globalLog);
+		assertEquals("entering main;8;4;8;4;true;true;leaving main;",RuntimeLog.globalLog.toString());
+
 	}
 
 }
