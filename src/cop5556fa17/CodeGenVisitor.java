@@ -316,24 +316,30 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			if (declaration_Image.xSize != null && declaration_Image.ySize != null){
 				//Note How can I visit Index from here?
 				//I think we need to visit xSize and ySize like below
+				declaration_Image.xSize.visit(this, arg);
+				mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+				declaration_Image.ySize.visit(this, arg);
+				mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
 			}
 			else {
 				mv.visitInsn(ACONST_NULL);
 				mv.visitInsn(ACONST_NULL);
-				//Check if these calls work without importing the class
-				mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "readImage", ImageSupport.readImageSig, false);
 			}
+			//Check if these calls work without importing the class
+			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "readImage", ImageSupport.readImageSig, false);
 		}
 		else {
 			if (declaration_Image.xSize != null && declaration_Image.ySize != null){
 				declaration_Image.xSize.visit(this, arg);
 				declaration_Image.ySize.visit(this, arg);
-				//Check if these calls work without importing the class
-				mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "makeImage", ImageSupport.makeImageSig, false);
 			}
 			else {
 				//Note add here predefined def_X and def_Y values
+				mv.visitLdcInsn(256);
+				mv.visitLdcInsn(256);
 			}
+			//Check if these calls work without importing the class
+			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "makeImage", ImageSupport.makeImageSig, false);
 		}
 		mv.visitFieldInsn(PUTSTATIC, className, declaration_Image.name, "Ljava/awt/image/BufferedImage;");
 
@@ -426,12 +432,64 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		return expression_FunctionAppWithIndexArg;
 	}
 
+	//	Expression_PredefinedName​ ​ ::=​ ​ ​ predefNameKind
+
 	@Override
 	public Object visitExpression_PredefinedName(Expression_PredefinedName expression_PredefinedName, Object arg)
 			throws Exception {
-		// TODO HW6
-		throw new UnsupportedOperationException();
+		Kind k = expression_PredefinedName.kind;
+		//Note doing with static class variables // How can I access mainStart and mainEnd from main?
+//		FieldVisitor fv;
+		//Note Just loading current values on stack
+		if (k == Kind.KW_x){
+//			mv.visitLocalVariable("x",​ ​ "I",​ ​ null,​ ​ mainStart,​ ​ mainEnd,​ ​ 1);
+//			fv = cw.visitField(ACC_STATIC, "x", "I", null, null);
+			mv.visitFieldInsn(GETSTATIC, className, "x", "I");
+		}
+		else if (k == Kind.KW_y){
+//			fv = cw.visitField(ACC_STATIC, "y", "I", null, null);
+			mv.visitFieldInsn(GETSTATIC, className, "y", "I");
+		}
+//		else if (k == Kind.KW_X){
+//
+//			fv = cw.visitField(ACC_STATIC, "X", "I", null, ImageSupport);
+//		}
+//		else if (k == Kind.KW_Y){
+//			fv = cw.visitField(ACC_STATIC, "Y", "I", null, ImageSupport.);
+//		}
+//		else if (k == Kind.KW_r){
+//			fv = cw.visitField(ACC_STATIC, "r", "I", null, ImageSupport.);
+//		}
+//		else if (k == Kind.KW_a){
+//			fv = cw.visitField(ACC_STATIC, "a", "I", null, ImageSupport.);
+//		}
+//		else if (k == Kind.KW_R){
+//			fv = cw.visitField(ACC_STATIC, "R", "I", null, ImageSupport.);
+//		}
+//		else if (k == Kind.KW_A){
+//			fv = cw.visitField(ACC_STATIC, "A", "I", null, ImageSupport.);
+//		}
+		//Just loading on stack
+		else if (k == Kind.KW_DEF_X){
+//			fv = cw.visitField(ACC_STATIC, "DEF_X", "I", null, 256);
+//			mv.visitFieldInsn(GETSTATIC, className, "DEF_X", "I");
+			mv.visitLdcInsn(256);
+		}
+		else if (k == Kind.KW_DEF_Y){
+//			fv = cw.visitField(ACC_STATIC, "DEF_Y", "I", null, 256);
+			mv.visitLdcInsn(256);
+		}
+		else if (k == Kind.KW_Z){
+//			fv = cw.visitField(ACC_STATIC, "Z", "I", null, 16777215);
+			mv.visitLdcInsn(16777215);
+		}
+//		fv.visitEnd();
+		return expression_PredefinedName;
 	}
+
+//	public void predefinedVariables(String s){
+//
+//	}
 
 	/** For Integers and booleans, the only "sink"is the screen, so generate code to print to console.
 	 * For Images, load the Image onto the stack and visit the Sink which will generate the code to handle the image.
@@ -485,18 +543,85 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		return statement_In;
 	}
 
-	
-	/**
-	 * In HW5, only handle INTEGER and BOOLEAN types.
-	 */
-
 	//	Statement_Assign​ ​ ::=​ ​ ​ LHS​ ​ ​ Expression
 
 	@Override
 	public Object visitStatement_Assign(Statement_Assign statement_Assign, Object arg) throws Exception {
-		//Note should I add type checks for lhs and exp?
-		statement_Assign.e.visit(this, arg);
-		statement_Assign.lhs.visit(this, arg);
+		Type type = statement_Assign.lhs.getType();
+		if (type == Type.INTEGER || type == Type.BOOLEAN ){
+			statement_Assign.e.visit(this, arg);
+			statement_Assign.lhs.visit(this, arg);
+		}
+		else if (type == Type.IMAGE){
+			//Adding x, y, X and Y static fields to class
+			FieldVisitor fv;
+			{
+				fv = cw.visitField(ACC_STATIC, "X", "I", null, 0);
+				fv.visitEnd();
+			}
+			{
+				fv = cw.visitField(ACC_STATIC, "Y", "I", null, 0);
+				fv.visitEnd();
+			}
+			{
+				fv = cw.visitField(ACC_STATIC, "x", "I", null, 0);
+				fv.visitEnd();
+			}
+			{
+				fv = cw.visitField(ACC_STATIC, "y", "I", null, 0);
+				fv.visitEnd();
+			}
+			//Setting X
+			mv.visitFieldInsn(GETSTATIC, className, statement_Assign.lhs.name, ImageSupport.ImageDesc);
+			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "getX", ImageSupport.getXSig, false);
+			mv.visitFieldInsn(PUTSTATIC, className, "X", "I");
+			//Setting Y
+			mv.visitFieldInsn(GETSTATIC, className, statement_Assign.lhs.name, ImageSupport.ImageDesc);
+			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "getY", ImageSupport.getYSig, false);
+			mv.visitFieldInsn(PUTSTATIC, className, "Y", "I");
+
+			//Add for loop here
+			//Initially using x and y as 0
+			mv.visitInsn(ICONST_0);
+			mv.visitFieldInsn(PUTSTATIC, className, "y", "I");
+			Label l0 = new Label();
+			mv.visitLabel(l0);
+//			mv.visitFrame(Opcodes.F_APPEND, 1, new Object[]{Opcodes.INTEGER}, 0, null);
+			mv.visitFieldInsn(GETSTATIC, className, "y", "I");
+			mv.visitFieldInsn(GETSTATIC, className, "Y", "I");
+			Label l1 = new Label();
+			mv.visitJumpInsn(IF_ICMPGE, l1);
+			//Initially using x as 0
+			mv.visitInsn(ICONST_0);
+			mv.visitFieldInsn(PUTSTATIC, className, "x", "I");
+			Label l2 = new Label();
+			mv.visitLabel(l2);
+//			mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			mv.visitFieldInsn(GETSTATIC, className, "x", "I");
+			mv.visitFieldInsn(GETSTATIC, className, "X", "I");
+			Label l3 = new Label();
+			mv.visitJumpInsn(IF_ICMPGE, l3);
+			//Innermost code in for loop
+			statement_Assign.e.visit(this, arg);
+			statement_Assign.lhs.visit(this, arg);
+			//Incrementing inner x
+			mv.visitFieldInsn(GETSTATIC, className, "x", "I");
+			mv.visitInsn(ICONST_1);
+			mv.visitInsn(IADD);
+			mv.visitFieldInsn(PUTSTATIC, className, "x", "I");
+			mv.visitJumpInsn(GOTO, l2);
+			mv.visitLabel(l3);
+//			mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+			//Incrementing outer y
+			mv.visitFieldInsn(GETSTATIC, className, "y", "I");
+			mv.visitInsn(ICONST_1);
+			mv.visitInsn(IADD);
+			mv.visitFieldInsn(PUTSTATIC, className, "y", "I");
+			mv.visitJumpInsn(GOTO, l0);
+			mv.visitLabel(l1);
+//			mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+//			mv.visitInsn(RETURN);
+		}
 		return statement_Assign;
 	}
 

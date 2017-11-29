@@ -149,6 +149,14 @@ public class TypeCheckTest {
 		typeCheck(input);
 	}
 
+//	@Test
+//	public void testDec10() throws Exception {
+//		String input = "prog image[512,512] g;" +
+//				"g[[x,y]] = 16711680;" +
+//				"g -> SCREEN;";
+//		typeCheck(input);
+//	}
+
 	@Test
 	public void testDecURL() throws Exception {
 		String input = "prog file k = \"file1\";";

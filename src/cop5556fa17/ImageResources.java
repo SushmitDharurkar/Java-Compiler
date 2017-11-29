@@ -2,7 +2,6 @@ package cop5556fa17;
 
 public interface ImageResources {
 
-	//Note Commented this
 //	public final static String imageFile1 =
 //	public final static String imageFile2 =
 //
