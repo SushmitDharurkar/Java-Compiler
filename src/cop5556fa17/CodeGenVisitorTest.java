@@ -254,50 +254,50 @@ public class CodeGenVisitorTest implements ImageResources{
 	}
 
 
-//	@Test
-//	//  reads an image from the filename passed as command line argument and displays it.
-//	//  Compares the image output (and logged) from our language and compares with the same image read directly from the file.
-//	public void image1() throws Exception{
-//		String prog = "image1";
-//		String input = prog
-//				+ "\nimage g; \n"
-//				+ "g <- @ 0;\n"
-//				+ "g -> SCREEN;\n"
-//				;
-//		byte[] bytecode = genCode(input);
-//		String[] commandLineArgs = {imageFile1};
-//		runCode(prog, bytecode, commandLineArgs);
-//		BufferedImage refImage0 = ImageSupport.readFromFile(imageFile1);
-//		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
-//		assertTrue(ImageSupport.compareImages(refImage0, loggedImage0 ));
-//		keepFrame();
-//	}
+	@Test
+	//  reads an image from the filename passed as command line argument and displays it.
+	//  Compares the image output (and logged) from our language and compares with the same image read directly from the file.
+	public void image1() throws Exception{
+		String prog = "image1";
+		String input = prog
+				+ "\nimage g; \n"
+				+ "g <- @ 0;\n"
+				+ "g -> SCREEN;\n"
+				;
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {imageFile1};
+		runCode(prog, bytecode, commandLineArgs);
+		BufferedImage refImage0 = ImageSupport.readFromFile(imageFile1);
+		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
+		assertTrue(ImageSupport.compareImages(refImage0, loggedImage0 ));
+		keepFrame();
+	}
 
 
 
-//	@Test
-//	/** reads and resizes image with filename taken from command line
-//	 *
-//	 * @throws Exception
-//	 */
-//	public void image2() throws Exception{
-//		devel = false;
-//		grade = true;
-//		String prog = "image2";
-//		String input = prog
-//				+ "\nimage[128,128] g; \n"
-//				+ "g <- @ 0;\n"
-//				+ "g -> SCREEN;\n"
-//				;
-//		byte[] bytecode = genCode(input);
-//		String[] commandLineArgs = {imageFile1};
-//		runCode(prog, bytecode, commandLineArgs);
-//
-//		BufferedImage refImage0 = ImageSupport.readImage(imageFile1, 128, 128);
-//		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
-//		assertTrue(ImageSupport.compareImages(refImage0,loggedImage0));
-//		keepFrame();
-//	}
+	@Test
+	/** reads and resizes image with filename taken from command line
+	 *
+	 * @throws Exception
+	 */
+	public void image2() throws Exception{
+		devel = false;
+		grade = true;
+		String prog = "image2";
+		String input = prog
+				+ "\nimage[128,128] g; \n"
+				+ "g <- @ 0;\n"
+				+ "g -> SCREEN;\n"
+				;
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {imageFile1};
+		runCode(prog, bytecode, commandLineArgs);
+
+		BufferedImage refImage0 = ImageSupport.readImage(imageFile1, 128, 128);
+		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
+		assertTrue(ImageSupport.compareImages(refImage0,loggedImage0));
+		keepFrame();
+	}
 
 
 
@@ -354,29 +354,29 @@ public class CodeGenVisitorTest implements ImageResources{
 
 
 
-//	@Test
-//	public void imageCopy() throws Exception{
-//		devel = false;
-//		grade = true;
-//		String prog = "imageCopy";
-//		String input = prog
-//				+ "\nimage[1024,1024] g; \n"
-//				+ "\nimage[1024,1024] h; \n"
-//				+ "g <- @ 0;\n"
-//				+ "g -> SCREEN;\n"
-//				+ "h[[x,y]] =  g[x,y];\n"
-//				+ "h -> SCREEN; \n"
-//				;
-//		byte[] bytecode = genCode(input);
-//		String[] commandLineArgs = {imageFile1};
-//		runCode(prog, bytecode, commandLineArgs);
-//
-//		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
-//		BufferedImage loggedImage1 = RuntimeLog.globalImageLog.get(1);
-//		assertTrue(ImageSupport.compareImages(loggedImage0,loggedImage1));
-//
-//		keepFrame();
-//	}
+	@Test
+	public void imageCopy() throws Exception{
+		devel = false;
+		grade = true;
+		String prog = "imageCopy";
+		String input = prog
+				+ "\nimage[1024,1024] g; \n"
+				+ "\nimage[1024,1024] h; \n"
+				+ "g <- @ 0;\n"
+				+ "g -> SCREEN;\n"
+				+ "h[[x,y]] =  g[x,y];\n"
+				+ "h -> SCREEN; \n"
+				;
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {imageFile1};
+		runCode(prog, bytecode, commandLineArgs);
+
+		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
+		BufferedImage loggedImage1 = RuntimeLog.globalImageLog.get(1);
+		assertTrue(ImageSupport.compareImages(loggedImage0,loggedImage1));
+
+		keepFrame();
+	}
 
 
 

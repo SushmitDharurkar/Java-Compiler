@@ -14,7 +14,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 public class ImageFrame {
 	
 	public static String desc = "Lcop5556fa17/ImageFrame;";
-	public static String JFrameDesc = "Ljavax/.swing/JFrame;";
+	public static String JFrameDesc = "Ljavax/.swing/JFrame;";  //Note Error was due to this '.'
 	public static String className = "cop5556fa17/ImageFrame";
 	
 //	public JFrame frame;  //FIX THIS

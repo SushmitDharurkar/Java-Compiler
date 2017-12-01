@@ -434,7 +434,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 			statement_Assign.lhs.visit(this, arg);
 			statement_Assign.e.visit(this, arg);
 
-			if (statement_Assign.lhs.getType() == statement_Assign.e.getType()){
+			if ((statement_Assign.lhs.getType() == statement_Assign.e.getType()) || (statement_Assign.lhs.getType() == TypeUtils.Type.IMAGE && statement_Assign.e.getType() == TypeUtils.Type.INTEGER)){
 				statement_Assign.setCartesian(statement_Assign.lhs.isCartesian());
 			}
 			else {
