@@ -392,7 +392,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		return expression_IntLit;
 	}
 
-	//Note We never matched KW_log in parser. Ask this on discussions
 	//	Expression_FunctionAppWithExprArg​ ​ ::=​ ​ ​ function​ ​ Expression
 
 	@Override
@@ -414,7 +413,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		expression_FunctionAppWithIndexArg.arg.e0.visit(this, arg);
 		expression_FunctionAppWithIndexArg.arg.e1.visit(this, arg);
 		Kind k = expression_FunctionAppWithIndexArg.function;
-		//Note I am already converting r,a to x,y in Index then what will happen here??
 		if (k == Kind.KW_cart_x){
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeFunctions.className, "cart_x", RuntimeFunctions.cart_xSig, false);
 		}
@@ -491,13 +489,14 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitStatement_Out(Statement_Out statement_Out, Object arg) throws Exception {
 		Type type = statement_Out.getDec().getType();
-		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 		if (type == Type.INTEGER){
+			mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 			mv.visitFieldInsn(GETSTATIC, className, statement_Out.name, "I");
 			CodeGenUtils.genLogTOS(GRADE, mv, Type.INTEGER);
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);
 		}
 		else if (type == Type.BOOLEAN){
+			mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 			mv.visitFieldInsn(GETSTATIC, className, statement_Out.name, "Z");
 			CodeGenUtils.genLogTOS(GRADE, mv, Type.BOOLEAN);
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Z)V", false);
@@ -529,7 +528,21 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			mv.visitFieldInsn(PUTSTATIC, className, statement_In.name, "Z");
 		}
 		else if (type == Type.IMAGE){
-			mv.visitFieldInsn(PUTSTATIC, className, statement_In.name, "Ljava/lang/String;");
+			Declaration_Image d = (Declaration_Image) statement_In.getDec();
+			if (d.xSize != null && d.ySize != null){
+				mv.visitFieldInsn(GETSTATIC, className, statement_In.name, ImageSupport.ImageDesc);
+				mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "getX", ImageSupport.getXSig, false);
+				mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+				mv.visitFieldInsn(GETSTATIC, className, statement_In.name, ImageSupport.ImageDesc);
+				mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "getY", ImageSupport.getYSig, false);
+				mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+			}
+			else {
+				mv.visitInsn(ACONST_NULL);
+				mv.visitInsn(ACONST_NULL);
+			}
+			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "readImage", ImageSupport.readImageSig, false);
+			mv.visitFieldInsn(PUTSTATIC, className, statement_In.name, "Ljava/awt/image/BufferedImage;");
 		}
 		return statement_In;
 	}

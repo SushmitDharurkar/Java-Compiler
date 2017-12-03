@@ -266,8 +266,10 @@ public class CodeGenVisitorTest implements ImageResources{
 				;
 		byte[] bytecode = genCode(input);
 		String[] commandLineArgs = {imageFile1};
+//		String[] commandLineArgs = {imageURL1};
 		runCode(prog, bytecode, commandLineArgs);
 		BufferedImage refImage0 = ImageSupport.readFromFile(imageFile1);
+//		BufferedImage refImage0 = ImageSupport.readImage(imageURL1, null, null);
 		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
 		assertTrue(ImageSupport.compareImages(refImage0, loggedImage0 ));
 		keepFrame();
@@ -291,9 +293,11 @@ public class CodeGenVisitorTest implements ImageResources{
 				;
 		byte[] bytecode = genCode(input);
 		String[] commandLineArgs = {imageFile1};
+//		String[] commandLineArgs = {imageURL1};
 		runCode(prog, bytecode, commandLineArgs);
 
 		BufferedImage refImage0 = ImageSupport.readImage(imageFile1, 128, 128);
+//		BufferedImage refImage0 = ImageSupport.readImage(imageURL1, 128, 128);
 		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);
 		assertTrue(ImageSupport.compareImages(refImage0,loggedImage0));
 		keepFrame();
@@ -352,7 +356,30 @@ public class CodeGenVisitorTest implements ImageResources{
 
 	}
 
+	@Test
+	public void imageGen5() throws Exception{
+		devel = false;
+		grade = true;
+		String prog = "imageGen5";
+		String input = prog
+				+ "\nimage[512,512] g; \n"
+				+ "g[[r,a]] = cart_x[r, a];"
+				+ "g -> SCREEN;\n"
+				;
+		byte[] bytecode = genCode(input);
+		String[] commandLineArgs = {};
+		runCode(prog, bytecode, commandLineArgs);
 
+		BufferedImage loggedImage = RuntimeLog.globalImageLog.get(0);
+		for(int y = 0; y < 512; y++) {
+			for (int x = 0; x < 512; x++) {
+				int pixelRef = RuntimeFunctions.cart_x(RuntimeFunctions.polar_r(x, y), RuntimeFunctions.polar_a(x, y));
+				int pixel = ImageSupport.getPixel(loggedImage, x,y);
+				assertEquals(pixelRef, pixel);
+			}
+		}
+		keepFrame();
+	}
 
 	@Test
 	public void imageCopy() throws Exception{
@@ -368,7 +395,8 @@ public class CodeGenVisitorTest implements ImageResources{
 				+ "h -> SCREEN; \n"
 				;
 		byte[] bytecode = genCode(input);
-		String[] commandLineArgs = {imageFile1};
+//		String[] commandLineArgs = {imageFile1};
+		String[] commandLineArgs = {imageURL1};
 		runCode(prog, bytecode, commandLineArgs);
 
 		BufferedImage loggedImage0 = RuntimeLog.globalImageLog.get(0);

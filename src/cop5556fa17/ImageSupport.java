@@ -263,11 +263,10 @@ public class ImageSupport {
     });
     return frame;
 	}
-	
+
 	/**
-	 * Compares the pixels after masking the alpha component.
-	 * Used for testing.
-	 *   
+	 * Compares the pixels after masking the alpha component. Used for testing.
+	 *
 	 * @param image1
 	 * @param image2
 	 * @return
@@ -277,16 +276,21 @@ public class ImageSupport {
 		System.out.println(image2.getColorModel());
 		int X = image1.getWidth();
 		int Y = image1.getHeight();
-		if (X != image2.getWidth()) {System.out.println("image widths did not match"); return false; }
-		if (Y != image2.getHeight()) {System.out.println("image heights did not match"); return false; }
-		for (int y = 0; y < 20; y++) {
-		for (int x = 0; x < 20; x++) {
-//			if ( getPixel(image1,x,y) != getPixel(image2,x,y)) {
-//				System.out.println("Image comparison failed at (x,y)=("+x+","+y+"). Expected " 
-//			+ getPixel(image1,x,y) + ", was " + getPixel(image2,x,y) ); 
-////				return false;
-			System.out.println("(x,y)=("+x+","+y+") " + getPixel(image1,x,y) + ", " + getPixel(image2,x,y));
-			
+		if (X != image2.getWidth()) {
+			System.out.println("image widths did not match");
+			return false;
+		}
+		if (Y != image2.getHeight()) {
+			System.out.println("image heights did not match");
+			return false;
+		}
+		for (int y = 0; y < Y; y++) {
+			for (int x = 0; x < X; x++) {
+				if (getPixel(image1, x, y) != getPixel(image2, x, y)) {
+					System.out.println("Image comparison failed at (x,y)=(" + x + "," + y + "). Expected "
+							+ getPixel(image1, x, y) + ", was " + getPixel(image2, x, y));
+					return false;
+				}
 			}
 		}
 		return true;
