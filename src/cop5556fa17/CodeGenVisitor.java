@@ -100,6 +100,25 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			node.visit(this, arg);
 		}
 
+		//Adding x, y, X and Y static fields to class
+		FieldVisitor fv;
+		{
+			fv = cw.visitField(ACC_STATIC, "X", "I", null, 0);
+			fv.visitEnd();
+		}
+		{
+			fv = cw.visitField(ACC_STATIC, "Y", "I", null, 0);
+			fv.visitEnd();
+		}
+		{
+			fv = cw.visitField(ACC_STATIC, "x", "I", null, 0);
+			fv.visitEnd();
+		}
+		{
+			fv = cw.visitField(ACC_STATIC, "y", "I", null, 0);
+			fv.visitEnd();
+		}
+
 		//generates code to add string to log
 //		CodeGenUtils.genLog(GRADE, mv, "leaving main");
 		
@@ -259,7 +278,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	public Object visitIndex(Index index, Object arg) throws Exception {
 		index.e0.visit(this, arg);
 		index.e1.visit(this, arg);
-		//Check this
 		if (!index.isCartesian()){
 			mv.visitInsn(DUP2);
 			mv.visitMethodInsn(INVOKESTATIC, RuntimeFunctions.className, "cart_x", RuntimeFunctions.cart_xSig, false);
@@ -347,7 +365,8 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 
 	@Override
 	public Object visitSource_StringLiteral(Source_StringLiteral source_StringLiteral, Object arg) throws Exception {
-		mv.visitFieldInsn(GETSTATIC, className, source_StringLiteral.fileOrUrl, "Ljava/lang/String;");
+//		mv.visitFieldInsn(GETSTATIC, className, source_StringLiteral.fileOrUrl, "Ljava/lang/String;");
+		mv.visitLdcInsn(source_StringLiteral.fileOrUrl);
 		return source_StringLiteral;
 	}
 
@@ -557,24 +576,9 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			statement_Assign.lhs.visit(this, arg);
 		}
 		else if (type == Type.IMAGE){
+			//Note Error was due to multiple declarations
 			//Adding x, y, X and Y static fields to class
-			FieldVisitor fv;
-			{
-				fv = cw.visitField(ACC_STATIC, "X", "I", null, 0);
-				fv.visitEnd();
-			}
-			{
-				fv = cw.visitField(ACC_STATIC, "Y", "I", null, 0);
-				fv.visitEnd();
-			}
-			{
-				fv = cw.visitField(ACC_STATIC, "x", "I", null, 0);
-				fv.visitEnd();
-			}
-			{
-				fv = cw.visitField(ACC_STATIC, "y", "I", null, 0);
-				fv.visitEnd();
-			}
+
 			//Setting X
 			mv.visitFieldInsn(GETSTATIC, className, statement_Assign.lhs.name, ImageSupport.ImageDesc);
 			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "getX", ImageSupport.getXSig, false);
@@ -651,7 +655,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	@Override
 	public Object visitSink_SCREEN(Sink_SCREEN sink_SCREEN, Object arg) throws Exception {
 		mv.visitMethodInsn(INVOKESTATIC, ImageFrame.className, "makeFrame", "(Ljava/awt/image/BufferedImage;)Ljavax/swing/JFrame;",false);
-		//Check if this works
 		mv.visitInsn(POP);
 		return sink_SCREEN;
 	}
@@ -690,6 +693,13 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		}
 		else if (type == Type.BOOLEAN){
 			mv.visitFieldInsn(GETSTATIC, className, expression_Ident.name, "Z");
+		}
+		//Note Check if this is needed
+		else if (type == Type.IMAGE){
+			mv.visitFieldInsn(GETSTATIC, className, expression_Ident.name, ImageSupport.ImageDesc);
+		}
+		else if (type == Type.FILE || type == Type.URL){
+			mv.visitFieldInsn(GETSTATIC, className, expression_Ident.name, "Ljava/lang/String;");
 		}
 //		CodeGenUtils.genLogTOS(GRADE, mv, type);
 		return expression_Ident;

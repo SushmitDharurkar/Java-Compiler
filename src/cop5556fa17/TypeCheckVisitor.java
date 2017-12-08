@@ -264,7 +264,8 @@ public class TypeCheckVisitor implements ASTVisitor {
 
 			TypeUtils.Type type = source_CommandLineParam.paramNum.getType();
 			if (type == TypeUtils.Type.INTEGER) {
-				source_CommandLineParam.setType(type);
+				//Note Changed this afterwards
+				source_CommandLineParam.setType(TypeUtils.Type.NONE);
 			}
 			else {
 				throw new SemanticException(source_CommandLineParam.firstToken, "Semantic Exception found! INTEGER type expected.");
@@ -307,7 +308,8 @@ public class TypeCheckVisitor implements ASTVisitor {
 			declaration_SourceSink.setType(TypeUtils.getType(declaration_SourceSink.type));
 			if (declaration_SourceSink.source != null){
 				declaration_SourceSink.source.visit(this, arg);
-				if (declaration_SourceSink.source.getType() == declaration_SourceSink.getType()){
+				//Note Changed this afterwards
+				if (declaration_SourceSink.source.getType() == declaration_SourceSink.getType() || declaration_SourceSink.source.getType() == TypeUtils.Type.NONE){
 					symbolTable.put(declaration_SourceSink.name, declaration_SourceSink);
 				}
 				else {
@@ -406,19 +408,21 @@ public class TypeCheckVisitor implements ASTVisitor {
 		Declaration d = symbolTable.get(statement_In.name);
 
 		if (d != null){
+			//Note What if source is null?
 			if (statement_In.source != null) {
 				statement_In.source.visit(this, arg);
+				statement_In.setDec(d);
 			}
 //				if (d.getType() == statement_In.source.getType()){
-			statement_In.setDec(d);
+
 //				}
 //				else {
 //					throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Type mismatch.");
 //				}
 //			}
-//			else {
-//				throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Source cannot be null.");
-//			}
+			else {
+				throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Source cannot be null.");
+			}
 		}
 		else {
 			throw new SemanticException(statement_In.firstToken, "Semantic Exception found! Identifier not declared.");
