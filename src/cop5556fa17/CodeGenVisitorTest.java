@@ -50,6 +50,7 @@ public class CodeGenVisitorTest implements ImageResources{
 		Scanner scanner = new Scanner(input);
 		show(input);
 		scanner.scan();
+		show(scanner);
 		Parser parser = new Parser(scanner);
 		Program program = parser.parse();
 		TypeCheckVisitor v = new TypeCheckVisitor();

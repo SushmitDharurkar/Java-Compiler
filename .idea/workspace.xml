@@ -1,0 +1,1368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="sushmit_dharurkar_14969578_hw6" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ea3cbb07-5d06-446a-ba20-ea8bfa77c0b3" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest.java" afterPath="$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest.java" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_1_test18.coverage" NAME="TypeCheckTest_1.test18 Coverage Results" MODIFIED="1512663324522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_1_test12.coverage" NAME="TypeCheckTest_1.test12 Coverage Results" MODIFIED="1509566546029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_prog5.coverage" NAME="CodeGenVisitorTest.prog5 Coverage Results" MODIFIED="1510330947740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDec5.coverage" NAME="TypeCheckTest.testDec5 Coverage Results" MODIFIED="1509573807134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_test_complex_expression3.coverage" NAME="CodeGenVisitorTest.test_complex_expression3 Coverage Results" MODIFIED="1512754470547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDec8.coverage" NAME="TypeCheckTest.testDec8 Coverage Results" MODIFIED="1509577942685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_image3.coverage" NAME="CodeGenVisitorTest.image3 Coverage Results" MODIFIED="1512316800982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testSmallest.coverage" NAME="TypeCheckTest.testSmallest Coverage Results" MODIFIED="1508644222736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_imageGenRed.coverage" NAME="CodeGenVisitorTest.imageGenRed Coverage Results" MODIFIED="1512085710114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_testFailed1.coverage" NAME="CodeGenVisitorTest.testFailed1 Coverage Results" MODIFIED="1512439709127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDec7.coverage" NAME="TypeCheckTest.testDec7 Coverage Results" MODIFIED="1512262984287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$ParserTest_testDec2.coverage" NAME="ParserTest.testDec2 Coverage Results" MODIFIED="1510959817171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testCast.coverage" NAME="TypeCheckTest.testCast Coverage Results" MODIFIED="1509469006249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testUndec.coverage" NAME="TypeCheckTest.testUndec Coverage Results" MODIFIED="1509391394291" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_prog0.coverage" NAME="CodeGenVisitorTest.prog0 Coverage Results" MODIFIED="1510274549058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_testFailed2.coverage" NAME="CodeGenVisitorTest.testFailed2 Coverage Results" MODIFIED="1512602260894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDecURL.coverage" NAME="TypeCheckTest.testDecURL Coverage Results" MODIFIED="1509474236031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDec3.coverage" NAME="TypeCheckTest.testDec3 Coverage Results" MODIFIED="1509573610618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_image2.coverage" NAME="CodeGenVisitorTest.image2 Coverage Results" MODIFIED="1512495131837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_imageGenGreen.coverage" NAME="CodeGenVisitorTest.imageGenGreen Coverage Results" MODIFIED="1512664910723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDec1.coverage" NAME="TypeCheckTest.testDec1 Coverage Results" MODIFIED="1509424639745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_prog7.coverage" NAME="CodeGenVisitorTest.prog7 Coverage Results" MODIFIED="1510929208931" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_prog1.coverage" NAME="CodeGenVisitorTest.prog1 Coverage Results" MODIFIED="1510329946802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$TypeCheckTest_testDec6.coverage" NAME="TypeCheckTest.testDec6 Coverage Results" MODIFIED="1509574256394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Compiler$CodeGenVisitorTest_image1.coverage" NAME="CodeGenVisitorTest.image1 Coverage Results" MODIFIED="1512264875113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cop5556fa17.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <expand />
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file leaf-file-name="Scanner.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cop5556fa17/Scanner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2523">
+              <caret line="601" column="46" lean-forward="true" selection-start-line="601" selection-start-column="46" selection-end-line="601" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cop5556fa17/Parser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2728">
+              <caret line="171" column="26" lean-forward="true" selection-start-line="171" selection-start-column="26" selection-end-line="171" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TypeCheckVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cop5556fa17/TypeCheckVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3944">
+              <caret line="232" column="0" lean-forward="false" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CodeGenVisitor.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4008">
+              <caret line="512" column="75" lean-forward="true" selection-start-line="512" selection-start-column="75" selection-end-line="512" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CodeGenVisitorTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6728">
+              <caret line="324" column="0" lean-forward="true" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>wr</find>
+      <find>command</find>
+      <find>scree</find>
+      <find>unar</find>
+      <find>pixe</find>
+      <find>pix</find>
+      <find>compa</find>
+      <find>pixel</find>
+      <find>lhs</find>
+      <find>statement</find>
+      <find>sink</find>
+      <find>statement_I</find>
+      <find>declaration_s</find>
+      <find>sourcesink</find>
+      <find>sources</find>
+      <find>lhsse</find>
+      <find>LhsSe</find>
+      <find>LSquare</find>
+      <find>visitl</find>
+      <find>visitL</find>
+      <find>_image</find>
+      <find>assign</find>
+      <find>state</find>
+      <find>statem</find>
+      <find>pixelse</find>
+      <find>esin</find>
+      <find>comman</find>
+      <find>declaration_i</find>
+      <find>KW_A</find>
+      <find>func</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>declaration_SourceSink</replace>
+      <replace>declaration_Image</replace>
+      <replace>sink</replace>
+      <replace>Out</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Source_CommandLineParam.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Source_Ident.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Source_StringLiteral.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Source.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Sink.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Program.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Declaration_Variable.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Declaration.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Declaration_SourceSink.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Declaration_Image.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Sink_Ident.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Sink_SCREEN.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Statement_Out.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Statement_In.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Statement_Assign.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Binary.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_BooleanLit.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Conditional.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_FunctionAppWithExprArg.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_FunctionApp.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_FunctionAppWithIndexArg.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Ident.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_IntLit.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_PixelSelector.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_PredefinedName.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Unary.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/Index.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/LHS.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/AST/ASTNode.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/CodeGenUtils.java" />
+        <option value="$PROJECT_DIR$/src/C.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/ParserTest.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest_1.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/TypeCheckTest.java" />
+        <option value="$PROJECT_DIR$/bin/imageGenRed.class" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/ImageFrame.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/RuntimeFunctions.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/C.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/C1.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/ImageSupport.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitor.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/ImageResources.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/TypeCheckVisitor.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/TypeCheckTest_1.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/Parser.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest.java" />
+        <option value="$PROJECT_DIR$/src/cop5556fa17/Scanner.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="300" />
+    <option name="y" value="56" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Compiler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Compiler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Compiler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Compiler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="cop5556fa17" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="asm&#9;ACTION&#9;ActivateASMToolWindow&#10;keyma&#9;ACTION&#9;ChangeKeymap" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/asm-5/asm-util-5.1.jar!/" />
+    <property name="TODO_SCOPE" value="Current File" />
+    <property name="findjar.last.used.dir" value="$USER_HOME$/Downloads" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/cop5556fa17" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.CodeGenVisitorTest.test_complex_expression3">
+    <configuration name="CodeGenVisitorTest.HW5fail1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cop5556fa17.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Compiler" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cop5556fa17" />
+      <option name="MAIN_CLASS_NAME" value="cop5556fa17.CodeGenVisitorTest" />
+      <option name="METHOD_NAME" value="HW5fail1" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="CodeGenVisitorTest.imageCopy" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cop5556fa17.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Compiler" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cop5556fa17" />
+      <option name="MAIN_CLASS_NAME" value="cop5556fa17.CodeGenVisitorTest" />
+      <option name="METHOD_NAME" value="imageCopy" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="CodeGenVisitorTest.testFailed3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cop5556fa17.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Compiler" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cop5556fa17" />
+      <option name="MAIN_CLASS_NAME" value="cop5556fa17.CodeGenVisitorTest" />
+      <option name="METHOD_NAME" value="testFailed3" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="CodeGenVisitorTest.test_complex_expression3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cop5556fa17.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Compiler" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cop5556fa17" />
+      <option name="MAIN_CLASS_NAME" value="cop5556fa17.CodeGenVisitorTest" />
+      <option name="METHOD_NAME" value="test_complex_expression3" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="ParserTest.testDec2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cop5556fa17.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Compiler" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cop5556fa17" />
+      <option name="MAIN_CLASS_NAME" value="cop5556fa17.ParserTest" />
+      <option name="METHOD_NAME" value="testDec2" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.testFailed3" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.imageCopy" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.HW5fail1" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.test_complex_expression3" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.ParserTest.testDec2" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.test_complex_expression3" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.ParserTest.testDec2" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.HW5fail1" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.testFailed3" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.CodeGenVisitorTest.imageCopy" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea3cbb07-5d06-446a-ba20-ea8bfa77c0b3" name="Default" comment="" />
+      <created>1508359592555</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1508359592555</updated>
+      <workItem from="1508359600049" duration="193000" />
+      <workItem from="1508458994475" duration="1205000" />
+      <workItem from="1508460217459" duration="1842000" />
+      <workItem from="1508522794772" duration="103000" />
+      <workItem from="1508604263483" duration="1406000" />
+      <workItem from="1508638915175" duration="733000" />
+      <workItem from="1508643963913" duration="6872000" />
+      <workItem from="1508958538837" duration="1528000" />
+      <workItem from="1508963334491" duration="3149000" />
+      <workItem from="1508979972972" duration="7692000" />
+      <workItem from="1509218607483" duration="4450000" />
+      <workItem from="1509290320359" duration="7151000" />
+      <workItem from="1509306958311" duration="4688000" />
+      <workItem from="1509324049303" duration="15369000" />
+      <workItem from="1509375710112" duration="1242000" />
+      <workItem from="1509387921218" duration="4085000" />
+      <workItem from="1509397431786" duration="253000" />
+      <workItem from="1509409362368" duration="7416000" />
+      <workItem from="1509422828969" duration="3892000" />
+      <workItem from="1509466253338" duration="4975000" />
+      <workItem from="1509483741219" duration="2196000" />
+      <workItem from="1509548432713" duration="3463000" />
+      <workItem from="1509556394627" duration="797000" />
+      <workItem from="1509566281875" duration="883000" />
+      <workItem from="1509571354297" duration="3154000" />
+      <workItem from="1509575713184" duration="3974000" />
+      <workItem from="1509583884018" duration="800000" />
+      <workItem from="1509988109642" duration="111000" />
+      <workItem from="1510015264014" duration="213000" />
+      <workItem from="1510015493748" duration="1696000" />
+      <workItem from="1510023682391" duration="3315000" />
+      <workItem from="1510188135228" duration="4760000" />
+      <workItem from="1510199217295" duration="4791000" />
+      <workItem from="1510231209269" duration="2326000" />
+      <workItem from="1510259094175" duration="4459000" />
+      <workItem from="1510267824515" duration="6516000" />
+      <workItem from="1510325264598" duration="7492000" />
+      <workItem from="1510680914725" duration="366000" />
+      <workItem from="1510681341196" duration="403000" />
+      <workItem from="1510926298313" duration="3467000" />
+      <workItem from="1510942372755" duration="618000" />
+      <workItem from="1510958091058" duration="3383000" />
+      <workItem from="1510975700748" duration="186000" />
+      <workItem from="1511446973153" duration="2957000" />
+      <workItem from="1511538484391" duration="3237000" />
+      <workItem from="1511542098627" duration="1897000" />
+      <workItem from="1511550573258" duration="2804000" />
+      <workItem from="1511571287548" duration="8872000" />
+      <workItem from="1511583311180" duration="1385000" />
+      <workItem from="1511621688920" duration="4639000" />
+      <workItem from="1511838534642" duration="162000" />
+      <workItem from="1511907905087" duration="5631000" />
+      <workItem from="1511919966718" duration="2408000" />
+      <workItem from="1511924665833" duration="483000" />
+      <workItem from="1511932665592" duration="2392000" />
+      <workItem from="1511977760104" duration="5225000" />
+      <workItem from="1512085213162" duration="12080000" />
+      <workItem from="1512142053468" duration="1014000" />
+      <workItem from="1512145155029" duration="1489000" />
+      <workItem from="1512262455678" duration="9969000" />
+      <workItem from="1512313958034" duration="5440000" />
+      <workItem from="1512360428738" duration="498000" />
+      <workItem from="1512425275071" duration="10319000" />
+      <workItem from="1512493560481" duration="3594000" />
+      <workItem from="1512596550169" duration="9593000" />
+      <workItem from="1512663128717" duration="4732000" />
+      <workItem from="1512685381312" duration="904000" />
+      <workItem from="1512751029021" duration="3929000" />
+      <workItem from="1513208562503" duration="5065000" />
+    </task>
+    <task id="LOCAL-00001" summary="test case failed due to ! operator in Unary_Expression">
+      <created>1508462037514</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1508462037514</updated>
+    </task>
+    <task id="LOCAL-00002" summary="started working in attribute tree and type checking">
+      <created>1508992928403</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1508992928403</updated>
+    </task>
+    <task id="LOCAL-00003" summary="implemented TypeCheckVisitor functions">
+      <created>1509338576197</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1509338576197</updated>
+    </task>
+    <task id="LOCAL-00004" summary="completed TypeCheckVisitor. Need to test it">
+      <created>1509416734747</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1509416734748</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added null checks in TypeCheckVisitor.java">
+      <created>1509485278551</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1509485278551</updated>
+    </task>
+    <task id="LOCAL-00006" summary="TypeCheckVisitor.java code completed and tested">
+      <created>1509574481755</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1509574481755</updated>
+    </task>
+    <task id="LOCAL-00007" summary="started working on Java bytecode generator for JVM">
+      <created>1510203972455</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1510203972455</updated>
+    </task>
+    <task id="LOCAL-00008" summary="completed a few bytecode generator functions">
+      <created>1510263437504</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1510263437504</updated>
+    </task>
+    <task id="LOCAL-00009" summary="bytecode generator almost done">
+      <created>1510274617902</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1510274617902</updated>
+    </task>
+    <task id="LOCAL-00010" summary="JVM bytecode generator code completed. Needs to be tested">
+      <created>1510332739610</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1510332739610</updated>
+    </task>
+    <task id="LOCAL-00011" summary="CodeGenVisitor.java code completed and tested.">
+      <created>1510958250780</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1510958250780</updated>
+    </task>
+    <task id="LOCAL-00012" summary="completing remaining functions of byte code generator.">
+      <created>1511584495756</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1511584495756</updated>
+    </task>
+    <task id="LOCAL-00013" summary="working on images of byte code generator.">
+      <created>1511982971548</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1511982971548</updated>
+    </task>
+    <task id="LOCAL-00014" summary="images code of byte code generator almost done.">
+      <created>1512098077697</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1512098077697</updated>
+    </task>
+    <task id="LOCAL-00015" summary="compiler completed, need to test it.">
+      <created>1512272755159</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1512272755160</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Compiler completed and tested.">
+      <created>1512753034509</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1512753034509</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 32m 40s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 32m 49s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 33m 17s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 33m 33s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 34m 31s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 38m 51s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 39m 24s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CodeGenVisitorTest_test_complex_expression3 - 2017.12.08 at 12h 42m 02s.xml">
+      <configuration name="CodeGenVisitorTest.test_complex_expression3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ParserTest_testDec2 - 2017.12.08 at 12h 41m 00s.xml">
+      <configuration name="ParserTest.testDec2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ParserTest_testDec2 - 2017.12.08 at 12h 41m 43s.xml">
+      <configuration name="ParserTest.testDec2" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="248331000" />
+  </component>
+  <component name="TodoView" selected-index="1">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="300" y="56" width="1841" height="1083" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32655245" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55139184" sideWeight="0.5062534" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3169165" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.33832976" sideWeight="0.4937466" order="2" side_tool="false" content_ui="tabs" x="81" y="33" width="1839" height="1047" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15062533" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.560087" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" x="81" y="33" width="1839" height="1047" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985932" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3993576" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="630" y="408" width="740" height="262" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.3257205" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="700" y="90" width="601" height="931" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test case failed due to ! operator in Unary_Expression" />
+    <MESSAGE value="started working in attribute tree and type checking" />
+    <MESSAGE value="implemented TypeCheckVisitor functions" />
+    <MESSAGE value="completed TypeCheckVisitor. Need to test it" />
+    <MESSAGE value="added null checks in TypeCheckVisitor.java" />
+    <MESSAGE value="TypeCheckVisitor.java code completed and tested" />
+    <MESSAGE value="started working on Java bytecode generator for JVM" />
+    <MESSAGE value="completed a few bytecode generator functions" />
+    <MESSAGE value="bytecode generator almost done" />
+    <MESSAGE value="JVM bytecode generator code completed. Needs to be tested" />
+    <MESSAGE value="CodeGenVisitor.java code completed and tested." />
+    <MESSAGE value="completing remaining functions of byte code generator." />
+    <MESSAGE value="working on images of byte code generator." />
+    <MESSAGE value="images code of byte code generator almost done." />
+    <MESSAGE value="compiler completed, need to test it." />
+    <MESSAGE value="Compiler completed and tested." />
+    <option name="LAST_COMMIT_MESSAGE" value="Compiler completed and tested." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="32" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_FunctionApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Conditional.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_PixelSelector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="764">
+          <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Sink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/ASTNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Declaration_SourceSink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-174">
+          <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Sink_SCREEN.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Sink_Ident.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="24" column="6" lean-forward="false" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/Compiler/cop5556fa17/C.class" />
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Declaration_Variable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_BooleanLit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Binary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/LHS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Ident.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="56" column="13" lean-forward="false" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_Unary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_IntLit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/C.java" />
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Source_CommandLineParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest_1.java" />
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_FunctionAppWithExprArg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Index.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_FunctionAppWithIndexArg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Statement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Statement_Out.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Statement_Assign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Expression_PredefinedName.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/imageGenRed.class" />
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/lang/ClassLoader.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2063">
+          <caret line="258" column="0" lean-forward="false" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/ImageFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-557">
+          <caret line="16" column="96" lean-forward="false" selection-start-line="16" selection-start-column="96" selection-end-line="16" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/C.java" />
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/C1.java" />
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/awt/image/BufferedImage.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="412" column="15" lean-forward="false" selection-start-line="412" selection-start-column="15" selection-end-line="412" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Declaration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Declaration_Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/AST/Statement_In.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="10" column="11" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/TypeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/CodeGenUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-483">
+          <caret line="138" column="23" lean-forward="false" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/RuntimeLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-238">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/TypeCheckTest_1.java" />
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/ImageSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2726">
+          <caret line="111" column="31" lean-forward="false" selection-start-line="111" selection-start-column="31" selection-end-line="111" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/RuntimeFunctions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="24" column="22" lean-forward="false" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/ImageResources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="20" lean-forward="false" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/ScannerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8381">
+          <caret line="310" column="9" lean-forward="true" selection-start-line="310" selection-start-column="9" selection-end-line="310" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/Scanner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2523">
+          <caret line="601" column="46" lean-forward="true" selection-start-line="601" selection-start-column="46" selection-end-line="601" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/ParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1398">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2728">
+          <caret line="171" column="26" lean-forward="true" selection-start-line="171" selection-start-column="26" selection-end-line="171" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/TypeCheckTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="179" column="44" lean-forward="true" selection-start-line="179" selection-start-column="44" selection-end-line="179" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6728">
+          <caret line="324" column="0" lean-forward="true" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/TypeCheckVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3944">
+          <caret line="232" column="0" lean-forward="false" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cop5556fa17/CodeGenVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4008">
+          <caret line="512" column="75" lean-forward="true" selection-start-line="512" selection-start-column="75" selection-end-line="512" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>sushmit_dharurkar_14969578_hw6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Compiler</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>asm-5</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
